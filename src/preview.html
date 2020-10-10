@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview</title>
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!--jQuery-->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!--Bootstrap css and js-->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <!--Barcode Script-->
+    <script src="plugins/barcode/jquery-barcode.min.js"></script>
+    <!-- Auto Complete css and js -->
+    <link rel="stylesheet" href="plugins/autocomplete/autocomplete.min.css" />
+    <script src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
+    <!--Summernote css and js-->
+    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css" />
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <!--Custom Styles-->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="bg-light">
+    <main class="container-md">
+        <div class="preview-paper border">
+            <div class="row m-0">
+                <div class="col-6 text-left">
+                    <div class="preview-header">
+                        <h4>Dr. Sultana Kamal</h4>
+                        <h4>MBBS MD</h4>
+                        <p>Medicine Specialist</p>
+                        <p>Department Of Medicine</p>
+                        <p>Chittagong Medical College</p>
+                        <p>BMDC Reg. No- 112589</p>
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <div class="preview-header">
+                        <h4>Chember</h4>
+                        <p>Crecent Diagnostic Center</p>
+                        <p>Chawkbazar, Chattogram</p>
+                        <p>Mobile: +8801616-666666</p>
+                        <p>Visit Time 4PM-10PM</p>
+                        <p class="font-weight-bold">Friday Off</p>
+                    </div>
+                </div>
+            </div>
+            <div class="patient-info">
+                <p>Name : <span>Aminul Islam</span></p>
+                <p>Age : <span>18</span></p>
+                <p>Sex : <span>Male</span></p>
+                <p>Date : <span>23-06-2020</span></p>
+                <p>Address : <span>Cumilla</span></p>
+                <p>Reg No : <span>1158713</span></p>
+                <p>Weight : <span>48.800 (KG)</span></p>
+                <p>Mobile : <span>+880150000000</span></p>
+            </div>
+            <div class="row middle">
+                <div class="col-5 border-right py-2">
+                    <div class="barcode-section border-bottom">
+                        <div class="barcode"></div>
+                    </div>
+                    <div class="cc border-bottom">
+                        <span>C/C</span>
+                    </div>
+                    <div class="oe border-bottom">
+                        <span>O/E</span>
+                        <p>Heart :<span>S1+S2+M0</span></p>
+                        <p>Lungs :<span>NAD</span></p>
+                        <p>Abd :<span>Soft, Non-Tender</span></p>
+                    </div>
+                    <div class="previewAdvice">
+                        <h6>Advice</h6>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
+                        mollitia aspernatur ducimus dolores, similique itaque in nam
+                        recusandae non facilis! Tenetur necessitatibus iste alias deserunt
+                        nobis recusandae dolorem rerum molestiae?
+                    </div>
+                </div>
+                <div class="col-7 py-2">
+                    <h3>Rx.</h3>
+                </div>
+            </div>
+            <div class="preview-footer border-top">
+                নিয়ম মাফিক ঔষধ খাবেন। ডাক্তারের পরামর্শ ব্যতীত ঔষধ পরিবর্তন নিষেধ।
+            </div>
+        </div>
+    </main>
+    <!-- 
+    --All Right Reserved by HurtleBee LTD
+    -->
+    <!--Custom scripts-->
+    <script>
+        $(".barcode").barcode(
+
+            "1234567890128", // Value barcode (dependent on the type of barcode)
+
+            "ean13" // type (string)
+
+        );
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

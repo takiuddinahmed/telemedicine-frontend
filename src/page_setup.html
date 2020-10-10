@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Setup</title>
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!--jQuery-->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!--Bootstrap css and js-->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <!--Barcode Script-->
+    <script src="plugins/barcode/jquery-barcode.min.js"></script>
+    <!-- Auto Complete css and js -->
+    <link rel="stylesheet" href="plugins/autocomplete/autocomplete.min.css" />
+    <script src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
+    <!--Summernote css and js-->
+    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css" />
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <!--Custom Styles-->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!--Header Section Start-->
+    <header>
+        <div class="container-fluid">
+            <div class="top-user-info">
+                <div class="save-options">
+                    <a href="preview.html">
+                        <i data-toggle="tooltip" data-placement="bottom" title="Preview" class="fas fa-eye"></i></a>
+                    <a href="#">
+                        <i data-toggle="tooltip" data-placement="bottom" title="Save and Mail"
+                            class="fas fa-envelope-open"></i></a>
+                    <a href="#"><i data-toggle="tooltip" data-placement="bottom" title="Save and Print Without Header"
+                            class="fas fa-save"></i></a>
+                    <a href="#"><i data-toggle="tooltip" data-placement="bottom" title="Only Save"
+                            class="far fa-save"></i></a>
+                </div>
+                <button type="button" class="btn btn-dark">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+    <!--Header Section End-->
+    <main class="container mt-3">
+        <div class="row">
+            <div class="col-md-4 border-right">
+                <form class="page-setup-form bg-light p-3">
+                    <h6>Header Size : </h6>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Height (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="5.7">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Weight (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="21.1">
+                        </div>
+                    </div>
+                    <h6>Patient Information : </h6>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Height (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="1.6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Weight (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="21.1">
+                        </div>
+                    </div>
+                    <h6>Others Info : </h6>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Height (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="19">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Weight (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="7.6">
+                        </div>
+                    </div>
+                    <h6>Rx Area : </h6>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Height (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="19">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Weight (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="13.3">
+                        </div>
+                    </div>
+                    <h6>Footer : </h6>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Height (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-8 col-form-label">Weight (cm) : </label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control form-control-sm" value="21.7">
+                        </div>
+                    </div>
+                    <div class="text-center pt-3 border-top mt-3">
+                        <button class="btn btn-sm btn-primary">Reset</button>
+                        <button class="btn btn-sm btn-info">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="preview-paper border mb-5">
+                    <div class="m-0 bg-light" style="min-height: 200px;">
+                        <h4 class="text-center pt-5">Header</h4>
+                    </div>
+                    <div class="patient-info" style="min-height: 70px;">
+                        <h4 class="text-center mb-0">Patient Information</h4>
+                    </div>
+                    <div class="row middle">
+                        <div class="col-5 border-right py-2" style="min-height: 250px;">
+                            <h3 class="text-center pt-5">Others Info</h3>
+                        </div>
+                        <div class="col-7 py-2" style="min-height: 250px;">
+                            <h3 class="text-center pt-5">Rx Area</h3>
+                        </div>
+                    </div>
+                    <div class=" preview-footer border-top">
+                        <h4 class="text-center mb-0">Footer</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- 
+        --All Right Reserved by HurtleBee LTD
+      -->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

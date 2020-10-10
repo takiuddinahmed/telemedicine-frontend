@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header Edit</title>
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!--jQuery-->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!--Bootstrap css and js-->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <!--Barcode Script-->
+    <script src="plugins/barcode/jquery-barcode.min.js"></script>
+    <!-- Auto Complete css and js -->
+    <link rel="stylesheet" href="plugins/autocomplete/autocomplete.min.css" />
+    <script src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
+    <!--Summernote css and js-->
+    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css" />
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <!--Custom Styles-->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!--Header Section Start-->
+    <header>
+        <div class="container-fluid">
+            <div class="top-user-info">
+                <div class="save-options">
+                    <a href="preview.html">
+                        <i data-toggle="tooltip" data-placement="bottom" title="Preview" class="fas fa-eye"></i></a>
+                    <a href="#">
+                        <i data-toggle="tooltip" data-placement="bottom" title="Save and Mail"
+                            class="fas fa-envelope-open"></i></a>
+                    <a href="#"><i data-toggle="tooltip" data-placement="bottom" title="Save and Print Without Header"
+                            class="fas fa-save"></i></a>
+                    <a href="#"><i data-toggle="tooltip" data-placement="bottom" title="Only Save"
+                            class="far fa-save"></i></a>
+                </div>
+                <button type="button" class="btn btn-dark">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+    <!--Header Section End-->
+
+    <main class="container mt-3">
+        <div class="preview-paper">
+            <div class="row m-0 custom-color-code border" style="background: #f8f9fa;">
+                <div class="col-6 text-left">
+                    <div class="preview-header">
+                        <h4 contenteditable="true">Dr. Sultana Kamal</h4>
+                        <h4 contenteditable="true">MBBS</h4>
+                        <p contenteditable="true">Medicine Specialist</p>
+                        <p contenteditable="true">Department Of Medicine</p>
+                        <p contenteditable="true">Chittagong Medical College</p>
+                        <p contenteditable="true">BMDC Reg. No- 112589</p>
+                        <div class="barcode"></div>
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <div class="preview-header">
+                        <h4>Chember</h4>
+                        <p contenteditable="true">Crecent Diagnostic Center</p>
+                        <p contenteditable="true">Chawkbazar, Chattogram</p>
+                        <p contenteditable="true">Mobile: +8801616-666666</p>
+                        <p contenteditable="true">Visit Time 4PM-10PM</p>
+                        <p contenteditable="true" class="font-weight-bold">Friday Off</p>
+                    </div>
+                </div>
+            </div>
+            <div class="custom-bg-color text-center mt-4">
+                <p>Select Background Color: <input type="color" class="mr-3 bg-color" value="#f8f9fa">
+                    <span>HEX Color Code : <span id="bg-colorCode">#f8f9fa</span></span>
+                </p>
+                <p>Select Font Color: <input type="color" class="mr-3 font-color" value="#333333">
+                    <span>HEX Color Code : <span id="font-colorCode">#333333</span></span>
+                </p>
+                <div class="text-center mt-3">
+                    <button class="btn btn-sm btn-primary reset">Reset</button>
+                    <button class="btn btn-sm btn-info">Save</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- 
+    --All Right Reserved by HurtleBee LTD
+    -->
+    <!--Custom scripts-->
+    <script>
+        $(".barcode").barcode(
+
+            "1234567890128", // Value barcode (dependent on the type of barcode)
+
+            "ean13" // type (string)
+
+        );
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
