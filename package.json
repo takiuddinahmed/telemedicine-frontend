@@ -1,24 +1,30 @@
 {
   "name": "telemedicine",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build src/*html"
+    "build": "parcel build src/*html",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
     "url": "n"
   },
-  "author": "",
+  "author": "AminulIslam",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.4",
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.5.2",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
-    "popper.js": "^1.16.1"
-  }
+    "popper.js": "^1.16.1",
+    "pug": "^3.0.0"
+  },
+  "description": ""
 }
