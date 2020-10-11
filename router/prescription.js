@@ -12,7 +12,9 @@ const patientID = 521;
 const doctorId = 125;
 const key = "XDXTBDOPQQRX69FD";
 
-router.get("/prescription", cors.corsWithOptions,(req, res, next) => {
+router.get("/prescription",
+    cors.corsWithOptions,
+    (req, res, next) => {
   //   res.sendFile(path.join(rootDir,'views','index.html'));
   res.render("index.ejs", { pageTitle: "Prescription",patientName:'Rofiq',patientWeight:"56",patientSex:'male' });
 });

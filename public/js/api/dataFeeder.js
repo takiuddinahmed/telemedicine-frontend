@@ -38,11 +38,24 @@ $(function(){
         type:'GET',
         dataType:'jsonp',
         url:'https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',
-        contentType:'application/json',
+        contentType: "application/json; charset=utf-8",
         crossDomain:true,
+        jsonpCallback:'processJSONresponse',
+        error: ((err, text, errThwon)=>{
+            console.log(err)
+            console.log(text)
+            console.log(errThwon)
+    }),
         success:function(data){
             console.log(data)
-        }
+        },
     })
+    // $.get('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',(data)=>{
+    //     console.log(data)
+    // }, 'jsonp')
+
+    const processJSONresponse = (data)=>{
+        console.log(data)
+    }
 })
 
