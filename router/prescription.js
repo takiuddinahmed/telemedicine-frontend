@@ -57,7 +57,7 @@ const previewdata={
     formation:"১+০+১",
     takingPeriod:"After Eat"
   }],
-}
+};
 
 router.get('/preview',cors.corsWithOptions,(req, res, next) => {
   res.render("preview.ejs",previewdata);
@@ -66,5 +66,4 @@ router.get('/preview',cors.corsWithOptions,(req, res, next) => {
 router.get('/prescription',cors.corsWithOptions,(req, res, next) => {
   res.render("index.ejs", {patientID:'321',doctorID:'123' });
 });
-
 module.exports = router;

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "parcel src/index.html",
     "build": "parcel build src/*html",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "db": "node database/rundb.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
+    "mysql": "^2.18.1",
     "popper.js": "^1.16.1",
     "pug": "^3.0.0"
   },
