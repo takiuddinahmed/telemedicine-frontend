@@ -106,18 +106,41 @@ const server = "http://localhost:3000/"
 const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N0b3JfaWQiOjEsImlhdCI6MTYwMTAxMzMxMX0.a0julIsHyIEnAZQD_mSZlmb-RhYZNzMfMI8z3JPwcwk";
 
-$("#cc_form").submit(e=>{
-  e.preventDefault();
-  update_cc($('#ixTemplate').val())
-})
-function update_cc(txt){
-  txt.trim()
-  if(txt.length){
-    let cc = $("#cc").val() + txt + '\n';
-    $("#cc").val(cc);
-  }
-}
+const template_source = [
+  {form: '#cc_form', source: '#ixTemplate', target: '#cc'},
+  {form: '#investigation_form', source: '#investigation_input', target: '#ix'},
+  // {form: '#advice_form', source: '#advice_input', target: '#ix'},
+]
 
+$(document).ready(()=>{
+  template_source.forEach((temp)=>{
+    $(temp.form).submit(e=>{
+      e.preventDefault();
+      console.log('llll');
+      let txt = $(temp.source).val();
+      $(temp.source).val('')
+      txt.trim();
+      if(txt.length){
+        let t = $(temp.target).val() + txt + '\n';
+        $(temp.target).val(t)
+
+      }
+    })
+  })
+
+// $("#cc_form").submit(e=>{
+//   e.preventDefault();
+//   console.log('lllllll')
+//   update_cc($('#ixTemplate').val())
+// })
+// function update_cc(txt){
+//   txt.trim()
+//   if(txt.length){
+//     let cc = $("#cc").val() + txt + '\n';
+//     $("#cc").val(cc);
+//   }
+// }
+})
 fetch(server + "template/", {
   headers: {
     authorization: "Bearer " + token,
