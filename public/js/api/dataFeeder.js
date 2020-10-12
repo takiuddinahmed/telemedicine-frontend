@@ -18,20 +18,6 @@ $('#saveDoctorInfo').on('click',()=>{
     console.log($('#doctorName').html());
 });
 
-// $(()=>{
-//     console.log("got here");
-//     fetch('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD')
-//     .then(res=>res.json())
-//     .then(resData=>console.log(resData))
-//     .catch(err=>console.log(err));
-// })
-
-// async function start(){
-//     const response=await fetch('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD');
-//     const data=await response.json();
-//     console.log(data);
-// }
-// start();
 
 $(function(){
     $.ajax({
@@ -50,10 +36,6 @@ $(function(){
             console.log(data)
         },
     })
-    // $.get('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',(data)=>{
-    //     console.log(data)
-    // }, 'jsonp')
-
     const processJSONresponse = (data)=>{
         console.log(data)
     }
