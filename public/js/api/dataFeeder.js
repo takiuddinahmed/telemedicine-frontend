@@ -36,9 +36,11 @@ $('#saveDoctorInfo').on('click',()=>{
 $(function(){
     $.ajax({
         type:'GET',
-        dataType:'jsonp',
+        dataType:'json',
         url:'https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',
+        headers:{'Access-Control-Allow-Origin':'https://localhost:3000'},
         contentType:'application/json',
+        contentLength:0,
         crossDomain:true,
         success:function(data){
             console.log(data)
