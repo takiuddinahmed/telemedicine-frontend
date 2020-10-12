@@ -100,3 +100,53 @@ function setPatient(data) {
   $("#patientAge").val("Age: " + data.age);
   $("#patientPregnancyStatus").val("yes");
 }
+
+// const server = "https://prescriptionapi.outdoorbd.com/"
+const server = "http://localhost:3000/"
+const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N0b3JfaWQiOjEsImlhdCI6MTYwMTAxMzMxMX0.a0julIsHyIEnAZQD_mSZlmb-RhYZNzMfMI8z3JPwcwk";
+
+$("#cc_form").submit(e=>{
+  e.preventDefault();
+  update_cc($('#ixTemplate').val())
+})
+function update_cc(txt){
+  txt.trim()
+  if(txt.length){
+    let cc = $("#cc").val() + txt + '\n';
+    $("#cc").val(cc);
+  }
+}
+
+fetch(server + "template/", {
+  headers: {
+    authorization: "Bearer " + token,
+  },
+})
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res);
+      if (res.ok) {
+        update_template_auto_complete(res.message[0], 'name', '#ixTemplate')
+        update_template_auto_complete(res.message[1], "rx", "#dose_type");
+        update_template_auto_complete(res.message[1], "rx", "#dose_duration-");
+        update_template_auto_complete(res.message[1], "rx", "#investigation_input");
+        update_template_auto_complete(res.message[1], "rx", "#advice_input");
+        update_template_auto_complete(res.message[1], "rx", "#counselling_input");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+const update_template_auto_complete = (data, entry, jquery_selector) =>{
+  $(jquery_selector).easyAutocomplete({
+    data: data,
+    getValue: entry,
+    list: {
+      match: {
+        enabled: true,
+      },
+    },
+  });
+}
