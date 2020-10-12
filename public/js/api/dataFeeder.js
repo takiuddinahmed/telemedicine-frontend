@@ -33,29 +33,51 @@ $('#saveDoctorInfo').on('click',()=>{
 // }
 // start();
 
-$(function(){
-    $.ajax({
-        type:'GET',
-        dataType:'jsonp',
-        url:'https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',
-        contentType: "application/json; charset=utf-8",
-        crossDomain:true,
-        jsonpCallback:'processJSONresponse',
-        error: ((err, text, errThwon)=>{
-            console.log(err)
-            console.log(text)
-            console.log(errThwon)
-    }),
-        success:function(data){
-            console.log(data)
-        },
-    })
-    // $.get('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',(data)=>{
-    //     console.log(data)
-    // }, 'jsonp')
+// fetch('https://outdoorbd.com/rest-api/search/017/XDXTBDOPQQRX69FD',{
+//     headers: {
+//         'Content-Type': 'application/json',
+//     }
+// }).then(response=>response.json())
+//     .then((res)=>{
+//         console.log(res)
+//     }).catch((err)=>{
+//         console.log(err)
+// })
+// fetch('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',{
+//     headers: {
+//         'Content-Type': 'application/json',
+//     }
+// }).then(response=>response.json())
+//     .then((res)=>{
+//         console.log(res)
+//     }).catch((err)=>{
+//         console.log(err)
+// })
 
-    const processJSONresponse = (data)=>{
+
+
+$(function(){
+    // $.ajax({
+    //     type:'GET',
+    //     dataType:'json',
+    //     url:'https://outdoorbd.com/rest-api/search/017/XDXTBDOPQQRX69FD',
+    //     contentType: "application/json; charset=utf-8",
+    //     crossDomain:true,
+    //     error: ((err, text, errThwon)=>{
+    //         console.log(err)
+    //         console.log(text)
+    //         console.log(errThwon)
+    // }),
+    //     success:function(data){
+    //         console.log(data)
+    //     },
+    // })
+    $.get('https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD',(data)=>{
         console.log(data)
-    }
+    }, 'json')
+    //
+    // const processJSONresponse = (data)=>{
+    //     console.log(data)
+    // }
 })
 
