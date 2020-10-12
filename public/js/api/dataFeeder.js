@@ -19,7 +19,10 @@ $("#updateDoctorInfo").on("click", () => {
   doctorInfo.key="XDXTBDOPQQRX69FD";
   doctorInfo.name= $("#doctorName").html();
   doctorInfo.phone=$("#doctorNumber").html();
-  console.log(doctorInfo);
+  updateDoctorInfo(doctorInfo);
+});
+
+function updateDoctorInfo(data) {
   $.ajax({
     type: "POST",
     url: "https://outdoorbd.com/rest-api/doctor/",
@@ -35,12 +38,12 @@ $("#updateDoctorInfo").on("click", () => {
       console.log(errThwon);
     },
   });
-});
+}
 
-$("#chemberAddressUpdate").on("click",()=>{
-  doctorInfo.address=$("#doctorChemberAddress").text();
-  // doctorInfo.number=$("#doctorChemberContactNumber").text();
-})
+// $("#chemberAddressUpdate").on("click",()=>{
+//   doctorInfo.address=$("#doctorChemberAddress").text();
+//   updateDoctorInfo(doctorInfo);
+// })
 
 $(function () {
   $.ajax({
@@ -87,6 +90,7 @@ function setDoctor(data) {
   $("#doctorBMDC").text("BMDC Reg. No-" + data.bmdc);
   $("#doctorCollege").text("Medical College");
   $("#doctorNumber").text(data.phone);
+  $("#doctorChemberAddress").text(data.address);
 }
 
 function setPatient(data) {
