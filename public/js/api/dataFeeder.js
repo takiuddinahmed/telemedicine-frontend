@@ -1,12 +1,11 @@
 $("#updateDoctorInfo").on("click", () => {
-    const updatedData={
-        key: 'XDXTBDOPQQRX69FD',
-        id: 1,
-        name: $("#doctorName").html(),
-        // college:$("#doctorCollege").html(),      API is not available yet
-        phone:$("#doctorNumber").html(),
-      }
-    
+  const updatedData = {
+    key: "XDXTBDOPQQRX69FD",
+    id: 1,
+    name: $("#doctorName").html(),
+    phone: $("#doctorNumber").html(),
+  };
+  console.log("its also ruinning");
   $.ajax({
     type: "POST",
     url: "https://outdoorbd.com/rest-api/doctor/",
@@ -39,6 +38,7 @@ $(function () {
     },
     success: function (data) {
       setDoctor(data);
+      console.log(data)
     },
   });
 });
@@ -65,8 +65,8 @@ $(function () {
 function setDoctor(data) {
   $("#doctorName").text(data.name);
   $("#doctorBMDC").text("BMDC Reg. No-" + data.bmdc);
-  $("#doctorCollege").text("Unknown");
-  $("#doctorNumber").text("Call :" + data.phone);
+  $("#doctorCollege").text("Medical College");
+  $("#doctorNumber").text(data.phone);
   //   $('doctorChemberContactNumber').text(data.name);
 }
 
