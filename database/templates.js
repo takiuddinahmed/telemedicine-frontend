@@ -37,8 +37,6 @@ const total_data = [
         ]
     }
 ]
-
-
 function upload_data (){
     total_data.forEach((each_table)=>{
         let sql = `
