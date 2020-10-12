@@ -3,37 +3,64 @@ const db = require("./db");
 
 const initScripts = [
   `  CREATE TABLE IF NOT EXISTS cc_template (
-        cc_id INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
     name TEXT NOT NULL,
-    PRIMARY KEY (cc_id)
-)
-`,
-`
-CREATE TABLE IF NOT EXISTS drug_database (
-    drug_id INT NOT NULL AUTO_INCREMENT,
-    rx VARCHAR(50) NOT NULL,
-    generic VARCHAR(50) NOT NULL,
-    drug_interection VARCHAR(50) NOT NULL DEFAULT 'no',
-    pregnancy_category VARCHAR(50) NOT NULL DEFAULT 'no',
-    description TEXT,
-PRIMARY KEY (drug_id)
+    PRIMARY KEY (id)
 )
 `,
 `
 CREATE TABLE IF NOT EXISTS dose_list (
-    dose_id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     dose VARCHAR(50) NOT NULL,
-    PRIMARY KEY (dose_id)
+    PRIMARY KEY (id)
 )
 `,
 `
 CREATE TABLE IF NOT EXISTS duration_list (
-    duration_id INT NOT NULL AUTO_INCREMENT,
-    duration VARCHAR(50) NOT NULL,
-    PRIMARY KEY (duration_id)
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
 )
-`
+`,
+    `
+    CREATE TABLE IF NOT EXISTS investigation (
+      id INT NOT NULL AUTO_INCREMENT,
+      name TEXT NOT NULL,
+      PRIMARY KEY (id)
+    )
+    `,`
+    CREATE TABLE IF NOT EXISTS advice (
+      id INT NOT NULL AUTO_INCREMENT,
+      name TEXT NOT NULL,
+      PRIMARY KEY (id)
+    )
+    `,
+    `CREATE TABLE IF NOT EXISTS counselling (
+      id INT NOT NULL AUTO_INCREMENT,
+      name TEXT NOT NULL,
+      PRIMARY KEY (id)
+    )
+    `,
+    `
+    CREATE TABLE IF NOT EXISTS disease_data (
+    id INT NOT NULL AUTO_INCREMENT,
+    bp VARCHAR(45) NULL,
+    palse VARCHAR(45) NULL,
+    temp VARCHAR(45) NULL,
+    heart VARCHAR(45) NULL,
+    lungs VARCHAR(45) NULL,
+    abd VARCHAR(45) NULL,
+    anamia VARCHAR(45) NULL,
+    jaundice VARCHAR(45) NULL,
+    cuamosis VARCHAR(45) NULL,
+    oedema VARCHAR(45) NULL,
+    se_nervousSystem VARCHAR(45) NULL,
+   specialNote VARCHAR(45) NULL,
+    PRIMARY KEY (id));
+    `
 ]
+
+
 
 initScripts.forEach((sql) => {
   db.query(sql, (err, result) => {
@@ -42,19 +69,19 @@ initScripts.forEach((sql) => {
   });
 });
 
-// const fs = require('fs');
-//
-// let writeData = ''
-//
-// initScripts.forEach((s)=>{
-//     writeData += s
-// })
-//
-// fs.writeFile('db.sql', writeData, (err)=>{
-//     if(err){
-//         console.log('Error')
-//     }
-//     else {
-//         console.log('Successfull')
-//     }
-// })
+const fs = require('fs');
+
+let writeData = ''
+
+initScripts.forEach((s)=>{
+    writeData += s
+})
+
+fs.writeFile('db.sql', writeData, (err)=>{
+    if(err){
+        console.log('Error')
+    }
+    else {
+        console.log('Successfull')
+    }
+})
