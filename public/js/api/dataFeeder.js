@@ -1,17 +1,31 @@
+var doctorInfo = {
+  key: "XDXTBDOPQQRX69FD",
+  id: 1,
+  avatar:
+    "https://outdoorbd.com/storage/uploads/avatars/defaults/doctor_male.png",
+  address:"chember Address",
+  bmdc: "012311122399",
+  gender: "m",
+  id: 1,
+  name: "name",
+  offline_from: "ending time",
+  online_from: "opening time",
+  phone: "phone",
+  speciality: "Dentist",
+  working_days: "working days of doctor",
+};
+
 $("#updateDoctorInfo").on("click", () => {
-  const updatedData = {
-    key: "XDXTBDOPQQRX69FD",
-    id: 1,
-    name: $("#doctorName").html(),
-    phone: $("#doctorNumber").html(),
-  };
-  console.log("its also ruinning");
+  doctorInfo.key="XDXTBDOPQQRX69FD";
+  doctorInfo.name= $("#doctorName").html();
+  doctorInfo.phone=$("#doctorNumber").html();
+  console.log(doctorInfo);
   $.ajax({
     type: "POST",
     url: "https://outdoorbd.com/rest-api/doctor/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
-    data: JSON.stringify(updatedData),
+    data: JSON.stringify(doctorInfo),
     success: function (data) {
       console.log("updated", data);
     },
@@ -22,6 +36,11 @@ $("#updateDoctorInfo").on("click", () => {
     },
   });
 });
+
+$("#chemberAddressUpdate").on("click",()=>{
+  doctorInfo.address=$("#doctorChemberAddress").text();
+  // doctorInfo.number=$("#doctorChemberContactNumber").text();
+})
 
 $(function () {
   $.ajax({
@@ -38,7 +57,8 @@ $(function () {
     },
     success: function (data) {
       setDoctor(data);
-      console.log(data)
+      doctorInfo = data;
+      console.log(data);
     },
   });
 });
@@ -67,7 +87,6 @@ function setDoctor(data) {
   $("#doctorBMDC").text("BMDC Reg. No-" + data.bmdc);
   $("#doctorCollege").text("Medical College");
   $("#doctorNumber").text(data.phone);
-  //   $('doctorChemberContactNumber').text(data.name);
 }
 
 function setPatient(data) {
