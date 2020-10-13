@@ -1,47 +1,47 @@
 const db = require("./db");
 
-
 const initScripts = [
-  `  CREATE TABLE IF NOT EXISTS cc_template (
-        id INT NOT NULL AUTO_INCREMENT,
+`CREATE TABLE IF NOT EXISTS cc_template (
+    id INT NOT NULL AUTO_INCREMENT,
     name TEXT NOT NULL,
     PRIMARY KEY (id)
 )
 `,
-`
+  `
 CREATE TABLE IF NOT EXISTS dose_list (
     id INT NOT NULL AUTO_INCREMENT,
     dose VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 )
 `,
-`
+  `
 CREATE TABLE IF NOT EXISTS duration_list (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 )
 `,
-    `
+  `
     CREATE TABLE IF NOT EXISTS investigation (
       id INT NOT NULL AUTO_INCREMENT,
       name TEXT NOT NULL,
       PRIMARY KEY (id)
     )
-    `,`
+    `,
+  `
     CREATE TABLE IF NOT EXISTS advice (
       id INT NOT NULL AUTO_INCREMENT,
       name TEXT NOT NULL,
       PRIMARY KEY (id)
     )
     `,
-    `CREATE TABLE IF NOT EXISTS counselling (
+  `CREATE TABLE IF NOT EXISTS counselling (
       id INT NOT NULL AUTO_INCREMENT,
       name TEXT NOT NULL,
       PRIMARY KEY (id)
     )
     `,
-    `
+  `
     CREATE TABLE IF NOT EXISTS disease_data (
     id INT NOT NULL AUTO_INCREMENT,
     bp VARCHAR(45) NULL,
@@ -55,12 +55,14 @@ CREATE TABLE IF NOT EXISTS duration_list (
     cuamosis VARCHAR(45) NULL,
     oedema VARCHAR(45) NULL,
     se_nervousSystem VARCHAR(45) NULL,
-   specialNote VARCHAR(45) NULL,
+    se_respiratorySystem VARCHAR(45) NULL,
+    se_cvs VARCHAR(45) NULL,
+    se_alimentarySystem VARCHAR(45) NULL,
+    se_musculoskeletalSystem VARCHAR(45) NULL,
+    specialNote VARCHAR(45) NULL,
     PRIMARY KEY (id));
-    `
-]
-
-
+    `,
+];
 
 initScripts.forEach((sql) => {
   db.query(sql, (err, result) => {
@@ -69,19 +71,18 @@ initScripts.forEach((sql) => {
   });
 });
 
-const fs = require('fs');
+const fs = require("fs");
 
-let writeData = ''
+let writeData = "";
 
-initScripts.forEach((s)=>{
-    writeData += s
-})
+initScripts.forEach((s) => {
+  writeData += s;
+});
 
-fs.writeFile('db.sql', writeData, (err)=>{
-    if(err){
-        console.log('Error')
-    }
-    else {
-        console.log('Successfull')
-    }
-})
+fs.writeFile("db.sql", writeData, (err) => {
+  if (err) {
+    console.log("Error");
+  } else {
+    console.log("Successfull");
+  }
+});
