@@ -22,7 +22,7 @@ $("#updateDoctorInfo").on("click", () => {
   updateDoctorInfo(doctorInfo);
 });
 
-function updateDoctorInfo(data) {
+async function updateDoctorInfo(data) {
   $.ajax({
     type: "POST",
     url: "https://outdoorbd.com/rest-api/doctor/",
@@ -45,7 +45,7 @@ function updateDoctorInfo(data) {
 //   updateDoctorInfo(doctorInfo);
 // })
 
-$(function () {
+$(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -66,7 +66,7 @@ $(function () {
   });
 });
 
-$(function () {
+$( async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -85,7 +85,7 @@ $(function () {
   });
 });
 
-function setDoctor(data) {
+async function setDoctor(data) {
   $("#doctorName").text(data.name);
   $("#doctorBMDC").text("BMDC Reg. No-" + data.bmdc);
   $("#doctorCollege").text("Medical College");
@@ -93,7 +93,7 @@ function setDoctor(data) {
   $("#doctorChemberAddress").text(data.address);
 }
 
-function setPatient(data) {
+async function setPatient(data) {
   $("#patientName").val(data.name);
   $("#patientWeight").val("wight: " + data.weight);
   $("#patientSex").val(data.gender);
@@ -128,19 +128,7 @@ $(document).ready(()=>{
     })
   })
 
-// $("#cc_form").submit(e=>{
-//   e.preventDefault();
-//   console.log('lllllll')
-//   update_cc($('#ixTemplate').val())
-// })
-// function update_cc(txt){
-//   txt.trim()
-//   if(txt.length){
-//     let cc = $("#cc").val() + txt + '\n';
-//     $("#cc").val(cc);
-//   }
-// }
-})
+$(document).ready(()=>{
 fetch(server + "template/", {
   headers: {
     authorization: "Bearer " + token,
@@ -151,11 +139,11 @@ fetch(server + "template/", {
       console.log(res);
       if (res.ok) {
         update_template_auto_complete(res.message[0], 'name', '#ixTemplate')
-        update_template_auto_complete(res.message[1], "rx", "#dose_type");
-        update_template_auto_complete(res.message[1], "rx", "#dose_duration-");
-        update_template_auto_complete(res.message[1], "rx", "#investigation_input");
-        update_template_auto_complete(res.message[1], "rx", "#advice_input");
-        update_template_auto_complete(res.message[1], "rx", "#counselling_input");
+        update_template_auto_complete(res.message[1], "name", "#dose_type");
+        update_template_auto_complete(res.message[2], "name", "#dose_duration-");
+        update_template_auto_complete(res.message[3], "name", "#investigation_input");
+        update_template_auto_complete(res.message[4], "name", "#advice_input");
+        update_template_auto_complete(res.message[5], "name", "#counselling_input");
       }
     })
     .catch((err) => {
@@ -173,3 +161,4 @@ const update_template_auto_complete = (data, entry, jquery_selector) =>{
     },
   });
 }
+})})

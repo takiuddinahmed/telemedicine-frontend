@@ -11,7 +11,7 @@ const initScripts = [
 `
 CREATE TABLE IF NOT EXISTS dose_list (
     id INT NOT NULL AUTO_INCREMENT,
-    dose VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 )
 `,
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     `
     CREATE TABLE IF NOT EXISTS disease_data (
     id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45) UNIQUE NOT NULL,
     bp VARCHAR(45) NULL,
     palse VARCHAR(45) NULL,
     temp VARCHAR(45) NULL,
@@ -57,6 +58,13 @@ CREATE TABLE IF NOT EXISTS duration_list (
     se_nervousSystem VARCHAR(45) NULL,
    specialNote VARCHAR(45) NULL,
     PRIMARY KEY (id));
+    `,
+    `
+    CREATE TABLE IF NOT EXISTS disease_template_data (
+        id INT NOT NULL AUTO_INCREMENT,
+        disease_id INT NOT NULL,
+        
+    )
     `
 ]
 
