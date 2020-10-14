@@ -396,7 +396,9 @@
                 role="tabpanel"
                 aria-labelledby="oe-tab"
               >
-                <textarea rows="6" class="form-control"></textarea>
+                <textarea rows="6" class="form-control"
+                id="special-note-input"
+                ></textarea>
               </div>
             </div>
 
@@ -978,7 +980,9 @@
                 </select>
               </div>
               <div class="col-sm-3 my-3 my-sm-0">
-                <button class="btn btn-sm btn-info text-nowrap">
+                <button class="btn btn-sm btn-info text-nowrap"
+                id="new-prescription-btn"
+                >
                   New Prescription
                 </button>
               </div>
@@ -1160,7 +1164,7 @@
               />
               </form>
             </div>
-            <div class="customTextbox"></div>
+            <div class="customTextbox"  id="advice-summernote"></div>
             <div class="form-row mt-3">
               <div class="form-group pr-0" style="width: 70px">
                 <input
@@ -1187,14 +1191,18 @@
               <button class="btn-sm btn btn-info">Preview</button>
             </h4>
             <div class="input-group mb-3">
+              <form id="counselling_form">
               <input
                 type="text"
                 class="suggest-box form-control"
                 placeholder="Get Counselling Template"
                 id="counselling_input"
               />
+              </form>
             </div>
-            <div class="customTextbox"></div>
+            <div class="customTextbox" id="counselling_summernote">
+
+            </div>
           </div>
           <i class="fas fa-bars right-bar bar"></i>
           <aside class="col-lg-3 py-4 border-left right-sidebar">
@@ -1661,6 +1669,7 @@
           ["view", ["fullscreen", "help"]],
         ],
       });
+
       $(".editor").summernote({
         tabsize: 2,
         height: 350,
@@ -1678,5 +1687,6 @@
     </script>
     <script src="js/scripts.js"></script>
     <script src="js/api/dataFeeder.js"></script>
+    <script src="js/api/main.js"></script>
   </body>
 </html>
