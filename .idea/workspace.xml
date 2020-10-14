@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f4c4a10b-be21-4143-8f26-1c4a60ed5606" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/database/addDiseaseData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/api/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Frontend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/dx.js" beforeDir="false" afterPath="$PROJECT_DIR$/database/dx.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/rundb.js" beforeDir="false" afterPath="$PROJECT_DIR$/database/rundb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/templates.js" beforeDir="false" afterPath="$PROJECT_DIR$/database/templates.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/api/dataFeeder.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/api/dataFeeder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/templete.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/templete.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -27,7 +56,36 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../server" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -38,6 +96,8 @@
       <option name="presentableId" value="Default" />
       <updated>1602612325930</updated>
       <workItem from="1602612327178" duration="504000" />
+      <workItem from="1602696720013" duration="1045000" />
+      <workItem from="1602699286791" duration="3419000" />
     </task>
     <servers />
   </component>
@@ -54,19 +114,48 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="744" y="309" key="FileChooserDialogImpl" timestamp="1602612340382">
+    <state x="419" y="209" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602697047892">
       <screen x="0" y="22" width="1920" height="1058" />
     </state>
-    <state x="744" y="309" key="FileChooserDialogImpl/0.22.1920.1058@0.22.1920.1058" timestamp="1602612340382" />
+    <state x="419" y="209" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.22.1920.1058@0.22.1920.1058" timestamp="1602697047892" />
+    <state x="744" y="309" key="FileChooserDialogImpl" timestamp="1602696743447">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state x="744" y="309" key="FileChooserDialogImpl/0.22.1920.1058@0.22.1920.1058" timestamp="1602696743447" />
+    <state width="1899" height="271" key="GridCell.Tab.0.bottom" timestamp="1602702539727">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state width="1899" height="271" key="GridCell.Tab.0.bottom/0.22.1920.1058@0.22.1920.1058" timestamp="1602702539727" />
+    <state width="1899" height="271" key="GridCell.Tab.0.center" timestamp="1602702539726">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state width="1899" height="271" key="GridCell.Tab.0.center/0.22.1920.1058@0.22.1920.1058" timestamp="1602702539726" />
+    <state width="1899" height="271" key="GridCell.Tab.0.left" timestamp="1602702539725">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state width="1899" height="271" key="GridCell.Tab.0.left/0.22.1920.1058@0.22.1920.1058" timestamp="1602702539725" />
+    <state width="1899" height="271" key="GridCell.Tab.0.right" timestamp="1602702539726">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state width="1899" height="271" key="GridCell.Tab.0.right/0.22.1920.1058@0.22.1920.1058" timestamp="1602702539726" />
+    <state x="188" y="113" key="MergeDialog" timestamp="1602696846119">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state x="188" y="113" key="MergeDialog/0.22.1920.1058@0.22.1920.1058" timestamp="1602696846119" />
+    <state x="586" y="307" key="MultipleFileMergeDialog" timestamp="1602696846129">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state x="586" y="307" key="MultipleFileMergeDialog/0.22.1920.1058@0.22.1920.1058" timestamp="1602696846129" />
     <state x="556" y="283" key="Vcs.Push.Dialog.v2" timestamp="1602612730104">
       <screen x="0" y="22" width="1920" height="1058" />
     </state>
     <state x="556" y="283" key="Vcs.Push.Dialog.v2/0.22.1920.1058@0.22.1920.1058" timestamp="1602612730104" />
-    <state x="750" y="467" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602612830859">
+    <state x="750" y="467" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602696763720">
       <screen x="0" y="22" width="1920" height="1058" />
     </state>
-    <state x="750" y="467" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.22.1920.1058@0.22.1920.1058" timestamp="1602612830859" />
+    <state x="750" y="467" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.22.1920.1058@0.22.1920.1058" timestamp="1602696763720" />
   </component>
 </project>

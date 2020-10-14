@@ -19,6 +19,7 @@ router.get("/", cors.corsWithOptions, (req, res) => {
   SELECT * FROM investigation; 
   SELECT * FROM advice; 
   SELECT * FROM counselling;
+  SELECT * FROM disease_data;
   `;
     utilDB.responseGetReq(sql,[], res);
 })

@@ -44,15 +44,16 @@ CREATE TABLE IF NOT EXISTS duration_list (
   `
     CREATE TABLE IF NOT EXISTS disease_data (
     id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE,
     bp VARCHAR(45) NULL,
-    palse VARCHAR(45) NULL,
+    pulse VARCHAR(45) NULL,
     temp VARCHAR(45) NULL,
     heart VARCHAR(45) NULL,
     lungs VARCHAR(45) NULL,
     abd VARCHAR(45) NULL,
-    anamia VARCHAR(45) NULL,
+    anaemia VARCHAR(45) NULL,
     jaundice VARCHAR(45) NULL,
-    cuamosis VARCHAR(45) NULL,
+    cyanosis VARCHAR(45) NULL,
     oedema VARCHAR(45) NULL,
     se_nervousSystem VARCHAR(45) NULL,
     se_respiratorySystem VARCHAR(45) NULL,
@@ -60,6 +61,10 @@ CREATE TABLE IF NOT EXISTS duration_list (
     se_alimentarySystem VARCHAR(45) NULL,
     se_musculoskeletalSystem VARCHAR(45) NULL,
     specialNote VARCHAR(45) NULL,
+    cc VARCHAR(50),
+    investigation VARCHAR(50),
+    advice VARCHAR(50),
+    counselling VARCHAR(50), 
     PRIMARY KEY (id));
     `,
 ];
