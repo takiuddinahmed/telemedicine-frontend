@@ -69,3 +69,57 @@ dx.forEach((data)=>{
     })
 
 })
+
+const drugInfo=[
+    { 
+        genericName:{
+            CompanyName:{
+                BrandName:'',
+                typeOfDose:'',
+                Strength:'',
+                RetailPrice:'',
+                useFor:'Human',
+            }
+        },
+        Cisplatin:{
+            'Beacon Pharmaceuticals Ltd.':{
+                BrandName:'Platinex 50',
+                typeOfDose:'Injection',
+                Strength:'50 mg/vial',
+                RetailPrice:'',
+                useFor:'Human',
+            },
+            'Drug International Ltd. Unit-2':{
+                BrandName:'Neoplat',
+                typeOfDose:'Injection',
+                Strength:'50 mg/vial',
+                RetailPrice:'',
+                useFor:'Human',
+            },
+            'Healthcare Pharmaceuticals Ltd.':{
+                BrandName:'Cisplat 50mg	',
+                typeOfDose:'Injection',
+                Strength:'50 mg/vial',
+                RetailPrice:'',
+                useFor:'Human',
+            },
+        },
+        Acarbose:{
+            'The ACME Laboratories Ltd.':{
+                BrandName:'Acarbose 100',
+                typeOfDose:'Tablet',
+                Strength:'100mg',
+                RetailPrice:'12.03',
+                useFor:'Human',
+            },
+            'Kemiko Pharmaceuticals Ltd.':{
+                BrandName:'Sugatrol 100',
+                typeOfDose:'Tablet',
+                Strength:'100mg',
+                RetailPrice:'15.00',
+                useFor:'Human',
+            }
+        }
+
+    }
+]
