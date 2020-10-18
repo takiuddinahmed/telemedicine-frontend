@@ -241,3 +241,57 @@ const preview_handle = () => {
   prescription.patient = patientInfo;
   console.log(prescription);
 };
+
+let patient_disease_id = null;
+
+const save_patient_disease = () => {
+  const d = {};
+  d.bp = $("#bp").val();
+  d.pulse = $("#pluse").val();
+  d.temp = $("#temp").val();
+  d.heart = $("#heart").val();
+  d.lungs = $("#lungs").val();
+  d.abd = $("#abd").val();
+  d.anaemia = $("#anaemia").val();
+  d.jaundice = $("#jaundice").val();
+  d.cyanosis = $("#cyanosis").val();
+  d.oedema = $("#oedema").val();
+  d.specialNote = $("#special-note-input").val();
+  d.cc = $("#cc").val();
+  d.investigation = $("#ix").val();
+  d.advice = $("#advice-summernote").summernote("code");
+  d.counselling = $("#counselling_summernote").summernote("code");
+  d.medicine = $("#medicine_prescription").summernote("code");
+  d.patient_id = patientInfo?.id;
+  d.doctor_id = doctorInfo?.id;
+  d.disease_name = $("#disease").val();
+  d.se_nervousSystem = "";
+  d.se_respiratorySystem = "";
+  d.se_cvs = "";
+  d.se_alimentarySystem = "";
+  d.se_musculoskeletalSystem = "";
+  console.log(d);
+  fetch(server + "save", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify(d),
+  })
+    .then((response) => {
+      console.log(response.body);
+      return response.json();
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.ok) {
+        patient_disease_id = res.id;
+      } else {
+        // alert(res.message);
+      }
+    })
+    .catch((e) => {
+      // console.log(e);
+    });
+};

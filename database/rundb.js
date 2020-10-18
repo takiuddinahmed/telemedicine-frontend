@@ -68,6 +68,35 @@ CREATE TABLE IF NOT EXISTS duration_list (
     PRIMARY KEY (id));
     `,
   `
+    CREATE TABLE IF NOT EXISTS patient_disease_data (
+    id INT NOT NULL AUTO_INCREMENT,
+    patient_id INT NOT NULL,
+    doctor_id  INT,
+    disease_name VARCHAR(50) NOT NULL UNIQUE,
+    bp VARCHAR(45) NULL,
+    pulse VARCHAR(45) NULL,
+    temp VARCHAR(45) NULL,
+    heart VARCHAR(45) NULL,
+    lungs VARCHAR(45) NULL,
+    abd VARCHAR(45) NULL,
+    anaemia VARCHAR(45) NULL,
+    jaundice VARCHAR(45) NULL,
+    cyanosis VARCHAR(45) NULL,
+    oedema VARCHAR(45) NULL,
+    se_nervousSystem VARCHAR(45) NULL,
+    se_respiratorySystem VARCHAR(45) NULL,
+    se_cvs VARCHAR(45) NULL,
+    se_alimentarySystem VARCHAR(45) NULL,
+    se_musculoskeletalSystem VARCHAR(45) NULL,
+    specialNote TEXT NULL,
+    cc TEXT,
+    investigation TEXT,
+    advice TEXT,
+    counselling TEXT, 
+    medicine TEXT,
+    PRIMARY KEY (id));
+    `,
+  `
   CREATE TABLE IF NOT EXISTS drug_data (
     id INT NOT NULL AUTO_INCREMENT,
     brand_name VARCHAR(50) NOT NULL UNIQUE,
