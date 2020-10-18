@@ -76,6 +76,6 @@ router.get("/preview", cors.corsWithOptions, (req, res, next) => {
 });
 
 router.get("/prescription", cors.corsWithOptions, (req, res, next) => {
-  res.render("index.ejs", { patientID: "321", doctorID: "123" });
+  res.render("index.ejs",previewdata);
 });
 module.exports = router;
