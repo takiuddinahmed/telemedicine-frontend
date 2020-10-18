@@ -31,6 +31,7 @@ let investigationList = [];
 let adviceList = [];
 let counsellingList = [];
 let diseaseList = [];
+let drugList = [];
 
 // disease selection
 
@@ -48,7 +49,6 @@ $(document).ready(() => {
     }
   });
 });
-
 $(document).ready(() => {
   fetch(server + "template/", {
     headers: {
@@ -66,6 +66,7 @@ $(document).ready(() => {
         adviceList = res.message[4];
         counsellingList = res.message[5];
         diseaseList = res.message[6];
+        drugList = res.message[7];
         update_template_auto_complete(res.message[0], "name", "#ixTemplate");
         update_template_auto_complete(res.message[1], "name", "#dose_type");
         update_template_auto_complete(
@@ -85,6 +86,11 @@ $(document).ready(() => {
           "#counselling_input"
         );
         update_template_auto_complete(res.message[6], "name", "#disease");
+        update_template_auto_complete(
+          res.message[7],
+          "brand_name",
+          "#drug_brand_name"
+        );
       }
     })
     .catch((err) => {
@@ -123,7 +129,6 @@ $(document).ready(() => {
     });
   });
 });
-
 const updateDiseaseComponentSection = (d) => {
   $(".bpBox").text(d.bp);
   $(".pluseBox").text(d.pulse);
@@ -180,4 +185,59 @@ const updateDiseaseComponentSection = (d) => {
     "#counselling_summernote",
     true
   );
+};
+
+// drug add event
+$(document).ready(() => {
+  $("#add-drug-btn").click(() => {
+    const medicine = {};
+    medicine.brandName = $("#drug_brand_name").val();
+    medicine.genericName = drugList.filter(
+      (d) => d.brand_name == medicine.brandName
+    )[0]?.generic_name;
+    medicine.duration = $("#dose_duration-").val();
+    medicine.dose = $("#dose_type").val();
+    medicine.dose_time = $("#dose_time_khabar").val();
+    if (medicine.brandName) {
+      addMedicineToPrescription(medicine);
+    }
+  });
+});
+
+const addMedicineToPrescription = (medicine) => {
+  $("#medicine_prescription").summernote(
+    "code",
+    $("#medicine_prescription").summernote("code") +
+      medicinePrescriptionHtmlFormat(medicine)
+  );
+};
+
+const medicinePrescriptionHtmlFormat = (medicine) => {
+  return `
+   <div class="tab-name">
+                <strong>
+                  ${medicine.brandName}
+                </strong>
+                <span>
+                  ------- ${medicine.duration}
+
+<!--                  <span>${medicine.genericName}</span>-->
+                </span>
+               <br />
+                ${medicine.dose}    ${medicine.dose_time}
+              </div>
+  
+  `;
+};
+
+const preview_handle = () => {
+  const prescription = {};
+  prescription.cc = $("#cc").val();
+  prescription.heart = $("#heart").val();
+  prescription.lungs = $("#lungs").val();
+  prescription.abd = $("#abd").val();
+  prescription.advice = $("#advice-summernote").summernote("code");
+  prescription.medicine = $("#medicine_prescription").summernote("code");
+  prescription.patient = patientInfo;
+  console.log(prescription);
 };

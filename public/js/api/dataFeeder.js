@@ -3,7 +3,7 @@ var doctorInfo = {
   id: 1,
   avatar:
     "https://outdoorbd.com/storage/uploads/avatars/defaults/doctor_male.png",
-  address:"chember Address",
+  address: "chember Address",
   bmdc: "012311122399",
   gender: "m",
   id: 1,
@@ -15,10 +15,12 @@ var doctorInfo = {
   working_days: "working days of doctor",
 };
 
+let patientInfo = {};
+
 $("#updateDoctorInfo").on("click", () => {
-  doctorInfo.key="XDXTBDOPQQRX69FD";
-  doctorInfo.name= $("#doctorName").html();
-  doctorInfo.phone=$("#doctorNumber").html();
+  doctorInfo.key = "XDXTBDOPQQRX69FD";
+  doctorInfo.name = $("#doctorName").html();
+  doctorInfo.phone = $("#doctorNumber").html();
   updateDoctorInfo(doctorInfo);
 });
 
@@ -66,7 +68,7 @@ $(async function () {
   });
 });
 
-$( async function () {
+$(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -80,6 +82,7 @@ $( async function () {
       console.log(errThwon);
     },
     success: function (data) {
+      patientInfo = data;
       setPatient(data);
     },
   });
@@ -100,4 +103,3 @@ async function setPatient(data) {
   $("#patientAge").val("Age: " + data.age);
   $("#patientPregnancyStatus").val("yes");
 }
-

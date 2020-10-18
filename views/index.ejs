@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="save-options">
-            <a href="preview">
+            <a onclick="preview_handle()" >
               <i
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -991,6 +991,7 @@
                   type="text"
                   class="suggest-box form-control form-control-sm"
                   placeholder="Type Brand Name"
+                  id="drug_brand_name"
                 />
               </div>
               <div class="form-group col-3">
@@ -1017,9 +1018,11 @@
                 />
               </div>
               <div class="form-group col-sm-2">
-                <select class="custom-select custom-select-sm">
-                  <option value="beforeEat">খাবার আগে</option>
-                  <option value="afterEat">খাবার পরে</option>
+                <select class="custom-select custom-select-sm"
+                id="dose_time_khabar"
+                >
+                  <option selected value="খাবার আগে">খাবার আগে</option>
+                  <option value="খাবার আগে">খাবার পরে</option>
                 </select>
               </div>
               <div class="col-sm-4">
@@ -1030,114 +1033,12 @@
                 />
               </div>
               <div class="col text-right">
-                <button class="btn btn-sm btn-dark">Add</button>
+                <button class="btn btn-sm btn-dark"
+                id="add-drug-btn"
+                >Add</button>
               </div>
             </div>
-            <div class="bg-white p-3 border editor">
-              <div class="tab-name">
-                <strong
-                  >Tab. <span class="genericName">Napa</span>
-                  <span
-                    class="brandName"
-                    style="display: none"
-                    class="genericBrand"
-                    >Paracetamol</span
-                  >
-                  625 mg
-                </strong>
-                <span>
-                  ------- ৭ দিন <i class="reload fas fa-sync-alt"></i>
-                  <div class="medicin-name">
-                    <input
-                      type="text"
-                      class="form-control form-control-sm mb-2"
-                      placeholder="Search"
-                    />
-                    <table class="table table-sm">
-                      <tr>
-                        <td>Sqaure</td>
-                        <td>Paracetamol</td>
-                      </tr>
-                      <tr>
-                        <td>Sqaure</td>
-                        <td>Paracetamol</td>
-                      </tr>
-                      <tr>
-                        <td>Sqaure</td>
-                        <td>Paracetamol</td>
-                      </tr>
-                    </table>
-                  </div>
-                  <span>Paracetamol</span><span class="ddIneraction"></span>
-                  <i
-                    class="fas fa-exclamation-triangle text-warning warn-btn"
-                  ></i>
-                  <div class="warn-text" style="display: none">
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Consequatur, officiis expedita voluptatum corrupti
-                      praesentium illo accusantium dolor accusamus? Praesentium
-                      iste rem debitis quis saepe. Cum ipsum nihil eum
-                      voluptatum doloremque?
-                    </p>
-                  </div>
-                </span>
-                <span class="float-right"><i class="fas fa-hand-rock"></i></span
-                ><br />
-                ১+০+১
-              </div>
-              <div class="tab-name">
-                <strong
-                  >Tab. <span class="genericName">Napa</span>
-                  <span
-                    class="brandName"
-                    style="display: none"
-                    class="genericBrand"
-                    >Paracetamol</span
-                  >
-                  625 mg
-                </strong>
-                <span>
-                  ------- ৭ দিন <i class="reload fas fa-sync-alt"></i>
-                  <div class="medicin-name">
-                    <input
-                      type="text"
-                      class="form-control form-control-sm mb-2"
-                      placeholder="Search"
-                    />
-                    <table class="table table-sm">
-                      <tr>
-                        <td>Sqaure</td>
-                        <td>Paracetamol</td>
-                      </tr>
-                      <tr>
-                        <td>Sqaure</td>
-                        <td>Paracetamol</td>
-                      </tr>
-                      <tr>
-                        <td>Sqaure</td>
-                        <td>Paracetamol</td>
-                      </tr>
-                    </table>
-                  </div>
-                  <span>Paracetamol</span><span class="ddIneraction"></span>
-                  <i
-                    class="fas fa-exclamation-triangle text-warning warn-btn"
-                  ></i>
-                  <div class="warn-text" style="display: none">
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Consequatur, officiis expedita voluptatum corrupti
-                      praesentium illo accusantium dolor accusamus? Praesentium
-                      iste rem debitis quis saepe. Cum ipsum nihil eum
-                      voluptatum doloremque?
-                    </p>
-                  </div>
-                </span>
-                <span class="float-right"><i class="fas fa-hand-rock"></i></span
-                ><br />
-                ১+০+১
-              </div>
+            <div class="bg-white p-3 border editor" id="medicine_prescription">
             </div>
             <label for="ix" class="mt-4">
               <h4 class="m-0">Investigation</h4>
@@ -1645,6 +1546,21 @@
               </div>
             </div>
           </aside>
+        </div>
+        <div class="msg-alert" style="display: none">
+        <div
+                class="alert alert-success alert-dismissible fade show"
+                role="alert"
+        >
+<!--          <i class="fas fa-check-circle"></i>-->
+          <span id="msg-text">Helllo</span>
+          <button
+                  type="button"
+                  class="close"
+          }}
+          >
+          <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       </div>
     </main>

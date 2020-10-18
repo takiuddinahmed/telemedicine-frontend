@@ -1,7 +1,7 @@
 const db = require("./db");
 
 const initScripts = [
-`CREATE TABLE IF NOT EXISTS cc_template (
+  `CREATE TABLE IF NOT EXISTS cc_template (
     id INT NOT NULL AUTO_INCREMENT,
     name TEXT NOT NULL,
     PRIMARY KEY (id)
@@ -67,6 +67,18 @@ CREATE TABLE IF NOT EXISTS duration_list (
     counselling VARCHAR(50), 
     PRIMARY KEY (id));
     `,
+  `
+  CREATE TABLE IF NOT EXISTS drug_data (
+    id INT NOT NULL AUTO_INCREMENT,
+    brand_name VARCHAR(50) NOT NULL UNIQUE,
+    company_name VARCHAR(60),
+    generic_name VARCHAR(50) NOT NULL,
+    retail_price VARCHAR(30),
+    use_for VARCHAR(30) DEFAULT 'Human',
+    limitation TEXT,
+    PRIMARY KEY (id)
+  )
+  `,
 ];
 
 initScripts.forEach((sql) => {

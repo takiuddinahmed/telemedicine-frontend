@@ -656,3 +656,27 @@ i.hide-btn-reload {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.msg-alert,
+.msg-alert-fail {
+  position: fixed;
+  z-index: 11;
+  right: 2rem;
+  top: 50px;
+  font-size: 1.4rem;
+  width: 400px;
+  white-space: nowrap;
+}
+
+.msg-alert .alert i,
+.msg-alert-fail .alert i {
+  font-size: 2rem;
+  position: relative;
+  top: 3px;
+  margin-right: 1rem;
+}
+
+.msg-alert .alert button.close,
+.msg-alert-fail .alert button.close {
+  top: 0.4rem;
+}
