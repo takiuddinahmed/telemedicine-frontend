@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const rootDir = require("../util/path");
 const cors = require("../cors");
+const db = require("../database/db");
 
 router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
@@ -73,6 +74,64 @@ const previewdata = {
 
 router.get("/preview", cors.corsWithOptions, (req, res, next) => {
   res.render("preview.ejs", previewdata);
+});
+
+router.post("/save", cors.corsWithOptions, (req, res) => {
+  let d = req.body;
+  console.log(req);
+  if (d) {
+    let sql = `
+    INSERT INTO patient_disease_data (
+    patient_id, doctor_id, disease_name, bp, pulse, temp, heart, lungs, 
+    abd, anaemia, jaundice, cyanosis, oedema, se_nervousSystem, se_respiratorySystem, se_cvs,
+    se_alimentarySystem, se_musculoskeletalSystem, specialNote, cc, investigation, advice, 
+    counselling, medicine
+    )
+    VALUES(?)
+    `;
+    db.query(
+      sql,
+      [
+        [
+          d.patient_id,
+          d.doctor_id,
+          d.disease_name,
+          d.bp,
+          d.pulse,
+          d.heart,
+          d.lungs,
+          d.abd,
+          d.anaemia,
+          d.jaundice,
+          d.cyanosis,
+          d.oedema,
+          d.se_nervousSystem,
+          d.se_respiratorySystem,
+          d.se_cvs,
+          d.se_alimentarySystem,
+          d.se_musculoskeletalSystem,
+          d.specialNote,
+          d.cc,
+          d.investigation,
+          d.advice,
+          d.counselling,
+          d.medicine,
+        ],
+      ],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ ok: false, message: "Internal server error" });
+        } else {
+          res
+            .status(500)
+            .json({ ok: true, message: "success", id: result.insertId });
+        }
+      }
+    );
+  } else {
+    res.status(400).json({ ok: false });
+  }
 });
 
 router.get("/prescription", cors.corsWithOptions, (req, res, next) => {
