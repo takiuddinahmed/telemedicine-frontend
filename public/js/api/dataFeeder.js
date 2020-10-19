@@ -7,7 +7,7 @@ var doctorInfo = {
   bmdc: "012311122399",
   gender: "m",
   id: 1,
-  name: "name",
+  name: "Ismail Hossien",
   offline_from: "ending time",
   online_from: "opening time",
   phone: "phone",
@@ -42,11 +42,6 @@ async function updateDoctorInfo(data) {
   });
 }
 
-// $("#chemberAddressUpdate").on("click",()=>{
-//   doctorInfo.address=$("#doctorChemberAddress").text();
-//   updateDoctorInfo(doctorInfo);
-// })
-
 $(async function () {
   $.ajax({
     type: "GET",
@@ -63,7 +58,7 @@ $(async function () {
     success: function (data) {
       setDoctor(data);
       doctorInfo = data;
-      console.log(data);
+      // console.log(data);
     },
   });
 });
@@ -101,5 +96,9 @@ async function setPatient(data) {
   $("#patientWeight").val("wight: " + data.weight);
   $("#patientSex").val(data.gender);
   $("#patientAge").val("Age: " + data.age);
-  $("#patientPregnancyStatus").val("yes");
+  $("#patientPregnancyStatus").val("No");
+  patientInfo=data;
+    console.log(patientInfo)
 }
+
+

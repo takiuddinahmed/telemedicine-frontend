@@ -23,7 +23,7 @@ const previewdata = {
   doctorChember: "Crecent Diagnostic Center",
   doctorChemberDetails: "Chawkbazar, Chattogram",
   doctorChemberPhone: "+8801616-666666",
-  doctorVisitTime: "4PM - &PM",
+  doctorVisitTime: "4PM - 8PM",
   doctorOffDay: "friday",
 
   patientName: "Kamal Uddin",

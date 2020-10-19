@@ -218,10 +218,10 @@ const medicinePrescriptionHtmlFormat = (medicine) => {
                 <strong>
                   ${medicine.brandName}
                 </strong>
-                <span>
+                <span style="">
                   ------- ${medicine.duration}
 
-<!--                  <span>${medicine.genericName}</span>-->
+             <span>${medicine.genericName}</span>
                 </span>
                <br />
                 ${medicine.dose}    ${medicine.dose_time}
@@ -229,17 +229,20 @@ const medicinePrescriptionHtmlFormat = (medicine) => {
   
   `;
 };
-
+const prescription = {};
 const preview_handle = () => {
-  const prescription = {};
+  
   prescription.cc = $("#cc").val();
   prescription.heart = $("#heart").val();
   prescription.lungs = $("#lungs").val();
   prescription.abd = $("#abd").val();
+  
   prescription.advice = $("#advice-summernote").summernote("code");
-  prescription.medicine = $("#medicine_prescription").summernote("code");
+  prescription.medicine = $("#medicine_prescription").summernote("code").replace(/tab-name/g,'').replace(/style=""/g,'style="display:none;"');
   prescription.patient = patientInfo;
-  console.log(prescription);
+  prescription.doctorInfo=doctorInfo;
+  console.log(prescription.medicine);
+  $("#previewPrescriptionModal").html(prescriptionPreview())
 };
 
 let patient_disease_id = null;
