@@ -10,7 +10,7 @@ router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
 });
 
-router.get("/", cors.corsWithOptions, (req, res) => {
+router.get("/template", cors.corsWithOptions, (req, res) => {
   let sql = `
   SELECT * FROM cc_template; 
   SELECT * FROM dose_list; 

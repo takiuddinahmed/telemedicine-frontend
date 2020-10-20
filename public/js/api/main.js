@@ -1,5 +1,6 @@
 // const server = "https://prescriptionapi.outdoorbd.com/"
 const server = "http://localhost:3000/";
+// const server = "https://outdoorbd.com/prescription/";
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N0b3JfaWQiOjEsImlhdCI6MTYwMTAxMzMxMX0.a0julIsHyIEnAZQD_mSZlmb-RhYZNzMfMI8z3JPwcwk";
 
@@ -230,19 +231,24 @@ const medicinePrescriptionHtmlFormat = (medicine) => {
   `;
 };
 const prescription = {};
-const preview_handle = () => {
-  
+
+const getPreviewInfo = () => {
   prescription.cc = $("#cc").val();
   prescription.heart = $("#heart").val();
   prescription.lungs = $("#lungs").val();
   prescription.abd = $("#abd").val();
-  
   prescription.advice = $("#advice-summernote").summernote("code");
-  prescription.medicine = $("#medicine_prescription").summernote("code").replace(/tab-name/g,'').replace(/style=""/g,'style="display:none;"');
+  prescription.medicine = $("#medicine_prescription")
+    .summernote("code")
+    .replace(/tab-name/g, "")
+    .replace(/style=""/g, 'style="display:none;"');
   prescription.patient = patientInfo;
-  prescription.doctorInfo=doctorInfo;
-  console.log(prescription.medicine);
-  $("#previewPrescriptionModal").html(prescriptionPreview())
+  prescription.doctorInfo = doctorInfo;
+  return prescription;
+};
+
+const preview_handle = () => {
+  $("#previewPrescriptionModal").html(prescriptionPreview());
 };
 
 let patient_disease_id = null;
@@ -273,28 +279,26 @@ const save_patient_disease = () => {
   d.se_cvs = "";
   d.se_alimentarySystem = "";
   d.se_musculoskeletalSystem = "";
-  console.log(d);
-  fetch(server + "save", {
-    headers: {
-      "Content-Type": "application/json",
+  $.post("save", d, (res) => {
+    console.log(res);
+    if (res.ok) {
+      patient_disease_id = res.id;
+    }
+  });
+};
+
+const generatePDF = () => {
+  getPreviewInfo();
+  console.log(prescription);
+  let doc = new jsPDF();
+  let specialElementHandlers = {
+    "#editor": function (element, renderer) {
+      return true;
     },
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify(d),
-  })
-    .then((response) => {
-      console.log(response.body);
-      return response.json();
-    })
-    .then((res) => {
-      console.log(res);
-      if (res.ok) {
-        patient_disease_id = res.id;
-      } else {
-        // alert(res.message);
-      }
-    })
-    .catch((e) => {
-      // console.log(e);
-    });
+  };
+  doc.fromHTML(prescriptionPreview(), 15, 15, {
+    width: 170,
+    elemmentHandlers: specialElementHandlers,
+  });
+  doc.save("sample-file.pdf");
 };

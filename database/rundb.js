@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     id INT NOT NULL AUTO_INCREMENT,
     patient_id INT NOT NULL,
     doctor_id  INT,
-    disease_name VARCHAR(50) NOT NULL UNIQUE,
+    disease_name VARCHAR(50) NOT NULL,
     bp VARCHAR(45) NULL,
     pulse VARCHAR(45) NULL,
     temp VARCHAR(45) NULL,
