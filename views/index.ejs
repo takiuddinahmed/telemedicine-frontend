@@ -1550,6 +1550,9 @@
           </button>
         </div>
       </div>
+        <div
+        id="prescription-pdf"
+        ></div>
     </main>
     <!--Middle Content End-->
     <!-- 
@@ -1557,8 +1560,6 @@
   -->
     <!-- preview modal -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="previewPrescriptionModal"></div>
-
-
     <!--Custom scripts-->
     <script>
       $(".customTextbox").summernote({
@@ -1596,8 +1597,11 @@
           ["view", ["fullscreen", "help"]],
         ],
       });
+
+
       
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js" integrity="sha512-jzL0FvPiDtXef2o2XZJWgaEpVAihqquZT/tT89qCVaxVuHwJ/1DFcJ+8TBMXplSJXE8gLbVAUv+Lj20qHpGx+A==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
    <script src="js/scripts.js"></script>
     <script src="js/api/dataFeeder.js"></script>

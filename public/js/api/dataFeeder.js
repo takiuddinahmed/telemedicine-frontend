@@ -1,4 +1,4 @@
-var doctorInfo = {
+let doctorInfo = {
   key: "XDXTBDOPQQRX69FD",
   id: 1,
   avatar:
@@ -97,8 +97,6 @@ async function setPatient(data) {
   $("#patientSex").val(data.gender);
   $("#patientAge").val("Age: " + data.age);
   $("#patientPregnancyStatus").val("No");
-  patientInfo=data;
-    console.log(patientInfo)
+  patientInfo = data;
+  console.log(patientInfo);
 }
-
-

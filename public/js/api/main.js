@@ -1,6 +1,6 @@
 // const server = "https://prescriptionapi.outdoorbd.com/"
-const server = "http://localhost:3000/";
-// const server = "https://outdoorbd.com/prescription/";
+// const server = "http://localhost:3000/";
+const server = "https://outdoorbd.com/prescription/";
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N0b3JfaWQiOjEsImlhdCI6MTYwMTAxMzMxMX0.a0julIsHyIEnAZQD_mSZlmb-RhYZNzMfMI8z3JPwcwk";
 
@@ -248,7 +248,9 @@ const getPreviewInfo = () => {
 };
 
 const preview_handle = () => {
+  getPreviewInfo();
   $("#previewPrescriptionModal").html(prescriptionPreview());
+  console.log(prescription);
 };
 
 let patient_disease_id = null;
@@ -290,15 +292,20 @@ const save_patient_disease = () => {
 const generatePDF = () => {
   getPreviewInfo();
   console.log(prescription);
-  let doc = new jsPDF();
-  let specialElementHandlers = {
-    "#editor": function (element, renderer) {
-      return true;
-    },
-  };
-  doc.fromHTML(prescriptionPreview(), 15, 15, {
-    width: 170,
-    elemmentHandlers: specialElementHandlers,
+  const pdfDiv = document.getElementById("prescription-pdf");
+  pdfDiv.innerHTML = prescriptionPDF();
+  html2canvas(pdfDiv).then(function (canvasObj) {
+    const pdf = new jsPDF("p", "pt", "a4");
+    pdfConf = {
+      pagesplit: false,
+      background: "#fff",
+    };
+    pdfDiv.innerHTML = "";
+    document.body.appendChild(canvasObj);
+    pdf.addHTML(canvasObj, 0, 0, pdfConf, () => {
+      // document.body.removeChild(canvasObj);
+
+      pdf.save("test11" + ".pdf");
+    });
   });
-  doc.save("sample-file.pdf");
 };
