@@ -1,78 +1,72 @@
 const express = require("express");
 const router = express.Router();
+const session = require("express-session");
 const path = require("path");
+const jwt = require("jsonwebtoken");
 const rootDir = require("../util/path");
 const cors = require("../cors");
 const db = require("../database/db");
+const sendGetReq = require("./requests").sendGetReq;
+const config = require("../config");
 router.use(express.json());
+
 router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
 });
 
-const patientID = 521;
-const doctorId = 125;
-const key = "XDXTBDOPQQRX69FD";
+router.get("/", cors.corsWithOptions, (req, res, next) => {
+  const patientId = req.query.patientid;
+  const doctorId = req.query.doctorid;
+  if (patientId && doctorId) {
+    const token = jwt.sign(
+      { patientId: patientId, doctorId: patientId },
+      config.jwtKey
+    );
+    req.session.token = token;
+    req.session.patientID = patientId;
+    req.session.doctorId = doctorId;
+    res.redirect("/");
+  } else {
+    if (req.session.token) {
+      res.render("index.ejs", {
+        patientID: req.session.patientInfo,
+        doctorID: req.session.doctorId,
+      });
+    } else {
+      res.send("Not valid");
+    }
+  }
+});
 
-const previewdata = {
-  doctorName: "Gorge leo",
-  doctorDegree: "MBBS MD",
-  doctorSpecializaton: "Medicine Specialist",
-  doctorBrunch: "Department Of Medicine",
-  doctorCollege: "Chittagong Medical College",
-  doctorBMDC: "12345",
-  doctorChember: "Crecent Diagnostic Center",
-  doctorChemberDetails: "Chawkbazar, Chattogram",
-  doctorChemberPhone: "+8801616-666666",
-  doctorVisitTime: "4PM - &PM",
-  doctorOffDay: "friday",
-
-  patientName: "Kamal Uddin",
-  patientAge: "24",
-  patientSex: "male",
-  patientDate: "10/12/2020",
-  patientAddress: "Rajbari,comillah ",
-  patientResistration: "20586",
-  patientWeight: "63",
-  patientMobile: "0159864825465",
-
-  patientCC: "Data is not available yet",
-  patientHeart: "S1+S2+M0",
-  patientLungs: "NAD",
-  patientAbd: "SOFT",
-  patientAdvice: "lorem ipsome color sit di amolet Eat fresh live long",
-
-  medicine: [
-    {
-      type: "Tab",
-      brandName: "Napa",
-      genericName: "Paracetamol",
-      dose: "625g",
-      day: "৭ দিন",
-      formation: "১+০+১",
-      takingPeriod: "After Eat",
-    },
-    {
-      type: "Sol",
-      brandName: "Napa",
-      genericName: "Paracetamol",
-      dose: "100ml",
-      day: "৭ দিন",
-      formation: "১+০+১",
-      takingPeriod: "After Eat",
-    },
-    {
-      type: "Sol",
-      brandName: "Napa",
-      genericName: "Paracetamol",
-      dose: "100ml",
-      day: "৭ দিন",
-      formation: "১+০+১",
-      takingPeriod: "After Eat",
-    },
-  ],
+const getPatientDoctorInfo = async (patientID, doctorId) => {
+  let patientInfo = {};
+  let doctorInfo = {};
+  patientInfo = await sendGetReq(
+    `https://outdoorbd.com/rest-api/patient/${patientID}/${config.restKey}`
+  );
+  doctorInfo = await sendGetReq(
+    `https://outdoorbd.com/rest-api/doctor/${doctorId}/${config.restKey}`
+  );
+  console.log(patientInfo);
+  console.log(doctorInfo);
+  if (
+    patientInfo.ok &&
+    patientInfo.res.id &&
+    doctorInfo.ok &&
+    doctorInfo.res.id
+  ) {
+    const returnVal = {
+      ok: true,
+      patientInfo: patientInfo.res,
+      doctorInfo: doctorInfo.res,
+    };
+    console.log(returnVal);
+    return returnVal;
+  } else {
+    const returnValue = { ok: false };
+    console.log(returnValue);
+    return returnValue;
+  }
 };
 
-router.get("/", cors.corsWithOptions, (req, res, next) => {
-  res.render("index.ejs", { patientID: "321", doctorID: "123" });
-});
 module.exports = router;
