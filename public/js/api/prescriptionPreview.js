@@ -50,14 +50,15 @@ function prescriptionPreview() {
                  <p>Lungs :<span>${prescription.lungs}</span></p>
                  <p>Abd :<span>${prescription.abd}</span></p>
                </div>
-               <div class="previewAdvice">
-                 <h6>Advice</h6>
-                 ${prescription.advice}
-               </div>
              </div>
              <div class="col-7 py-2">
                <h3>Rx.</h3>
                ${prescription.medicine}
+
+               <div class="previewAdvice">
+                 <h6>Advice</h6>
+                 ${prescription.advice}
+               </div>
    
              </div>
            </div>

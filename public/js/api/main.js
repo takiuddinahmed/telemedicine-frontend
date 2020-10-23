@@ -201,6 +201,8 @@ $(document).ready(() => {
     medicine.dose_time = $("#dose_time_khabar").val();
     if (medicine.brandName) {
       addMedicineToPrescription(medicine);
+      $("#drug_brand_name").val("");
+      $("#dose_duration-").val("");
     }
   });
 });
