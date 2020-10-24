@@ -46,7 +46,7 @@ $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/prescription/doctor/",
+    url: "/prescription/info/doctor/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
     jsonpCallback: "processJSONresponse",
@@ -67,7 +67,7 @@ $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/prescription/patient/",
+    url: "/prescription/info/patient/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
     jsonpCallback: "processJSONresponse",

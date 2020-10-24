@@ -125,17 +125,22 @@ router.get("/logout", cors.corsWithOptions, authDoctor, (req, res) => {
 });
 
 //doctor patient info update
-router.get("/:type", cors.corsWithOptions, authDoctor, async (req, res) => {
-  const type = req.params.type;
-  const id = req.params.id;
-  const result = await getReq(
-    `https://outdoorbd.com/rest-api/${type}/${req[type]}/${config.restKey}`
-  );
-  if (result.ok) {
-    res.json(result.res);
-  } else {
-    res.status(404).json({ err: "error happened" });
+router.get(
+  "/info/:type",
+  cors.corsWithOptions,
+  authDoctor,
+  async (req, res) => {
+    const type = req.params.type;
+    const id = req.params.id;
+    const result = await getReq(
+      `https://outdoorbd.com/rest-api/${type}/${req[type]}/${config.restKey}`
+    );
+    if (result.ok) {
+      res.json(result.res);
+    } else {
+      res.status(404).json({ err: "error happened" });
+    }
   }
-});
+);
 
 module.exports = router;
