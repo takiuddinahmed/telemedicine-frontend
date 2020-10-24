@@ -39,7 +39,8 @@ app.use("/feed", feed);
 // app.use("/prescription", template);
 
 app.use((req, res, next) => {
-  res.status(404).send("<h2>" + req.path + " NOT FOUND</h2>");
+  // res.status(404).send("<h2>" + req.path + " NOT FOUND</h2>");
+  res.status(404).render("error.ejs",{errorCode:404,errorText:"Data Not Found"})
 });
 
 app.listen(3000);
