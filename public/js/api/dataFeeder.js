@@ -24,29 +24,29 @@ $("#updateDoctorInfo").on("click", () => {
   updateDoctorInfo(doctorInfo);
 });
 
-async function updateDoctorInfo(data) {
-  $.ajax({
-    type: "POST",
-    url: "https://outdoorbd.com/rest-api/doctor/",
-    contentType: "application/json; charset=utf-8",
-    crossDomain: true,
-    data: JSON.stringify(doctorInfo),
-    success: function (data) {
-      console.log("updated", data);
-    },
-    error: (err, text, errThwon) => {
-      console.log(err);
-      console.log(text);
-      console.log(errThwon);
-    },
-  });
-}
+// async function updateDoctorInfo(data) {
+//   $.ajax({
+//     type: "POST",
+//     url: "https://outdoorbd.com/rest-api/doctor/",
+//     contentType: "application/json; charset=utf-8",
+//     crossDomain: true,
+//     data: JSON.stringify(doctorInfo),
+//     success: function (data) {
+//       console.log("updated", data);
+//     },
+//     error: (err, text, errThwon) => {
+//       console.log(err);
+//       console.log(text);
+//       console.log(errThwon);
+//     },
+//   });
+// }
 
 $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "https://outdoorbd.com/rest-api/doctor/1/XDXTBDOPQQRX69FD",
+    url: "/prescription/doctor/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
     jsonpCallback: "processJSONresponse",
@@ -67,7 +67,7 @@ $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "https://outdoorbd.com/rest-api/patient/1/XDXTBDOPQQRX69FD",
+    url: "/prescription/patient/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
     jsonpCallback: "processJSONresponse",

@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const jwt = require("jsonwebtoken");
 const rootDir = require("../util/path");
 const cors = require("../cors");
+const config = require("../config");
 const db = require("../database/db");
 const utilDB = require("./basicDBOperation");
+const getReq = require("./requests").sendGetReq;
+const authDoctor = require("./auth").authDoctor;
 router.use(express.json());
 router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
@@ -88,12 +92,50 @@ router.get("/template", cors.corsWithOptions, (req, res) => {
 });
 
 router.get("/", cors.corsWithOptions, (req, res, next) => {
-  res.render("index.ejs");
+  const patientId = req.query.patientid;
+  const doctorId = req.query.doctorid;
+  const key = req.query.key;
+  if (patientId && doctorId) {
+    if (key == config.validateKey) {
+      const token = jwt.sign(
+        { patientId: patientId, doctorId: doctorId },
+        config.jwtKey,
+        { expiresIn: "1h" }
+      );
+      req.session.token = token;
+      req.session.patientId = patientId;
+      req.session.doctorId = doctorId;
+      res.redirect("/prescription");
+    } else {
+      req.session.destroy();
+      res.send("Not authorised");
+    }
+  } else {
+    if (req.session.token) {
+      res.render("index.ejs");
+    } else {
+      res.send("Not valid");
+    }
+  }
 });
 
-router.get("/logout", cors.corsWithOptions, (req, res) => {
+router.get("/logout", cors.corsWithOptions, authDoctor, (req, res) => {
   req.session.destroy();
-  res.redirect("/");
+  res.redirect("/prescription");
+});
+
+//doctor patient info update
+router.get("/:type", cors.corsWithOptions, authDoctor, async (req, res) => {
+  const type = req.params.type;
+  const id = req.params.id;
+  const result = await getReq(
+    `https://outdoorbd.com/rest-api/${type}/${req[type]}/${config.restKey}`
+  );
+  if (result.ok) {
+    res.json(result.res);
+  } else {
+    res.status(404).json({ err: "error happened" });
+  }
 });
 
 module.exports = router;

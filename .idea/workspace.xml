@@ -19,15 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4c4a10b-be21-4143-8f26-1c4a60ed5606" name="Default Changelist" comment="preview done">
-      <change afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/router/requests.js" afterDir="false" />
+    <list default="true" id="f4c4a10b-be21-4143-8f26-1c4a60ed5606" name="Default Changelist" comment="session add">
+      <change afterPath="$PROJECT_DIR$/router/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/indexRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/indexRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/api/dataFeeder.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/api/dataFeeder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/router/prescription.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/prescription.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/requests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +45,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1iplHN6EvDKKGKENQ0tFt6Rli4g" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -128,7 +128,7 @@
       <workItem from="1603384689258" duration="217000" />
       <workItem from="1603395142011" duration="805000" />
       <workItem from="1603468756209" duration="5755000" />
-      <workItem from="1603479900762" duration="1966000" />
+      <workItem from="1603479900762" duration="11063000" />
     </task>
     <task id="LOCAL-00001" summary="disease data update">
       <created>1602702723419</created>
@@ -172,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603291522682</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="session add">
+      <created>1603481890842</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1603481890842</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +203,8 @@
     <MESSAGE value="add medicine" />
     <MESSAGE value="update save" />
     <MESSAGE value="preview done" />
-    <option name="LAST_COMMIT_MESSAGE" value="preview done" />
+    <MESSAGE value="session add" />
+    <option name="LAST_COMMIT_MESSAGE" value="session add" />
   </component>
   <component name="WindowStateProjectService">
     <state x="419" y="209" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602697047892">
@@ -245,11 +253,11 @@
       <screen x="0" y="22" width="1920" height="1058" />
     </state>
     <state x="685" y="285" width="540" height="540" key="StructurePopup/0.22.1920.1058/1920.0.1920.1080@0.22.1920.1058" timestamp="1603023993443" />
-    <state x="556" y="283" key="Vcs.Push.Dialog.v2" timestamp="1603291527122">
+    <state x="556" y="283" key="Vcs.Push.Dialog.v2" timestamp="1603481895561">
       <screen x="0" y="22" width="1920" height="1058" />
     </state>
     <state x="556" y="283" key="Vcs.Push.Dialog.v2/0.22.1920.1058/1920.0.1920.1080@0.22.1920.1058" timestamp="1603291527122" />
-    <state x="556" y="283" key="Vcs.Push.Dialog.v2/0.22.1920.1058@0.22.1920.1058" timestamp="1602711470647" />
+    <state x="556" y="283" key="Vcs.Push.Dialog.v2/0.22.1920.1058@0.22.1920.1058" timestamp="1603481895561" />
     <state x="750" y="467" width="421" height="172" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603177301198">
       <screen x="0" y="22" width="1920" height="1058" />
     </state>
