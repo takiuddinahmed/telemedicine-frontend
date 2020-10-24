@@ -29,7 +29,8 @@ app.use("/feed", feed);
 // app.use("/prescription", template);
 
 app.use((req, res, next) => {
-  res.status(404).send("<h2>" + req.path + " NOT FOUND</h2>");
+  // res.status(404).send("<h2>" + req.path + " NOT FOUND</h2>");
+  res.status(404).render("404.ejs")
 });
 
 app.listen(3000);
