@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.maateen.me/solaiman-lipi/font.css");
+@import url("https://fonts.googleapis.com/css2?family=Red+Rose&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 1rem;
+  font-family: "Poppins", "SolaimanLipi", sans-serif;
+  color: #323232;
+}
+#sidebarMenu {
+  height: calc(100vh - 43.69px);
+}
+main {
+  height: calc(100vh - 43.69px);
+  overflow: auto;
+}
+.nav-item {
+  .nav-title {
+    display: block;
+    margin: 0 -15px;
+    padding: 0.8rem;
+    border-top: 1px solid #838383;
+    cursor: pointer;
+    &:hover {
+      background: #323232;
+    }
+  }
+  .nav-links {
+    display: none;
+    .nav-link {
+      color: #fff;
+    }
+  }
+  .nav-links.active {
+    display: block !important;
+  }
+}
+
+.se {
+  list-style: none;
+  .input-section {
+    input {
+      margin: 1rem 0;
+      margin-left: 1rem;
+    }
+  }
+}
+.altLists {
+  position: relative;
+  left: 20%;
+  transform: translateX(10%);
+}
+
+@media (max-width: 998.98px) {
+  html {
+    font-size: 90% !important;
+  }
+}
+
+@media (max-width: 768.98px) {
+  html {
+    font-size: 85% !important;
+  }
+}
+
+@media (max-width: 576.98px) {
+  html {
+    font-size: 80% !important;
+  }
+}
+
+@media (max-width: 400px) {
+  html {
+    font-size: 75% !important;
+  }
+}

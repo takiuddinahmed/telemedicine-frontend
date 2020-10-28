@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Jekyll v4.1.1" />
+    <title>Drug</title>
+
+    <!--Fontawesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!--jQuery-->
+    <script src="../plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="../plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../plugins/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow"
+    >
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"
+        ><img width="150" src="./images/main logo.png" alt=""
+      /></a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-2 text-white col-lg-2 d-md-block bg-dark sidebar"
+        >
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <span class="nav-title">Member Management</span>
+                <span class="nav-links">
+                  <a class="nav-link" href="./index.html"> Doctor list </a>
+                  <a class="nav-link" href="./paitentTable.html">
+                    Prescription Generate
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span class="nav-title">Disease</span>
+                <span class="nav-links">
+                  <a class="nav-link active" href="./disease.html">
+                    Add disease
+                  </a>
+                  <a class="nav-link" href="./diseaseList.htm"> Disease list </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span class="nav-title">Drug</span>
+                <span class="nav-links">
+                  <a class="nav-link active" href="./drug.html"> Add drug </a>
+                  <a class="nav-link" href="./drugList.htm"> Drug list </a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <div class="row mt-5 mb-3">
+            <h4 class="mb-3 col-md-3">Generic Name</h4>
+            <div class="col-md-9">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Trade Name</th>
+                  <th scope="col">Company Name</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>This is trade name</td>
+                  <td>This is company name</td>
+                  <td>This is price</td>
+                </tr>
+                <tr>
+                  <td>This is trade name</td>
+                  <td>This is company name</td>
+                  <td>This is price</td>
+                </tr>
+                <tr>
+                  <td>This is trade name</td>
+                  <td>This is company name</td>
+                  <td>This is price</td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="form-control" /></td>
+                  <td><input type="text" class="form-control" /></td>
+                  <td><input type="text" class="form-control" /></td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <button class="btn btn-sm btn-info">Add</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 class="mt-4">Dosing</h4>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="3">According to range</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">1 month to 1 year</td>
+                  <td>2 TSF daily</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">1 month to 1 year</td>
+                  <td>2 TSF daily</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">1 month to 1 year</td>
+                  <td>2 TSF daily</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm mr-2"
+                        placeholder="Range"
+                      />
+                      <select
+                        style="width: 100px"
+                        class="custom-select custom-select-sm"
+                      >
+                        <option value="">Month</option>
+                        <option value="">Year</option>
+                      </select>
+                      <span class="mx-3">to</span>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm mr-2"
+                        placeholder="Range"
+                      />
+                      <select
+                        style="width: 100px"
+                        class="custom-select custom-select-sm"
+                      >
+                        <option value="">Month</option>
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control form-control-sm" />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="3">According to weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">1 KG to 1 KG</td>
+                  <td>2 TSF daily</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">1 KG to 1 KG</td>
+                  <td>2 TSF daily</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">1 KG to 1 KG</td>
+                  <td>2 TSF daily</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm mr-2"
+                        placeholder="Range"
+                      />
+                      <select
+                        style="width: 100px"
+                        class="custom-select custom-select-sm"
+                      >
+                        <option value="">Gram</option>
+                        <option value="">KG</option>
+                      </select>
+                      <span class="mx-3">to</span>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm mr-2"
+                        placeholder="Range"
+                      />
+                      <select
+                        style="width: 100px"
+                        class="custom-select custom-select-sm"
+                      >
+                        <option value="">Gram</option>
+                        <option value="">KG</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control form-control-sm" />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="3">Special Dose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">Disease Name</td>
+                  <td>Dose</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Disease Name</td>
+                  <td>Dose</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Disease Name</td>
+                  <td>Dose</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Disease Name"
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control form-control-sm" />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="2">Drug Drug Interection</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">Paracetamol</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Calcium</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Iron Preparation</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Drug Name"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="2">Indications</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">Headache</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Cough</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Vomiting</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Drug Name"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="2">Contraindications</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">Pregnancy</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">CLD</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">CRF</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Drug Name"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="2">Precautions and warnings</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">Severe Headaches</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Vomiting</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Sudden fall</td>
+                  <td><i class="fas text-danger fa-trash"></i></td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Drug Name"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button class="btn btn-sm btn-info">Add new</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="2">Prangnency category</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 50%">
+                    <select class="custom-select custom-select-sm">
+                      <option value="">Category A</option>
+                      <option value="">Category B</option>
+                      <option value="">Category C</option>
+                      <option value="">Category D</option>
+                      <option value="">Category E</option>
+                      <option value="">Category X</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-right mb-3">
+            <button class="btn btn-info">Save</button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="../plugins/bootstrap/bootstrap.bundle.min.js"></script>
+	<!-- HurtleeBEE -->
+    <script src="scripts.js"></script>
+  </body>
+</html>
