@@ -24,9 +24,4 @@ router.get("/template", cors.corsWithOptions, (req, res) => {
   utilDB.responseGetReq(sql, [], res);
 });
 
-// router.get("/cc", cors.corsWithOptions, authenticate.checkDoctor, (req, res) => {
-//     let sql = `SELECT * FROM cc_template;`
-//     utilDB.responseGetReq(sql, [], res);
-// })
-
 module.exports = router;

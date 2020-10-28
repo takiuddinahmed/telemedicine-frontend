@@ -8,7 +8,8 @@ const config = require("../config");
 const db = require("../database/db");
 const utilDB = require("./basicDBOperation");
 const getReq = require("./requests").sendGetReq;
-const authDoctor = require("./auth").authDoctor;
+const authDoctor = require("./auth").authDoctorMiddleware;
+const adminRouter = require("./admin");
 router.use(express.json());
 router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
@@ -17,6 +18,8 @@ router.options("*", cors.corsWithOptions, (req, res) => {
 const patientID = 521;
 const doctorId = 125;
 const key = "XDXTBDOPQQRX69FD";
+
+router.use("/admin", adminRouter);
 
 router.post("/save", cors.corsWithOptions, (req, res) => {
   let d = req.body;
@@ -95,6 +98,7 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
   const patientId = req.query.patientid;
   const doctorId = req.query.doctorid;
   const key = req.query.key;
+  console.log({ patientId, doctorId, key });
   if (patientId && doctorId) {
     if (key == config.validateKey) {
       const token = jwt.sign(
@@ -108,13 +112,29 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
       res.redirect("/prescription");
     } else {
       req.session.destroy();
-      res.send("Not authorised");
+      res.render("error", {
+        errorCode: 401,
+        errorText: "Unauthorized User",
+      });
     }
   } else {
     if (req.session.token) {
-      res.render("index.ejs");
+      jwt.verify(req.session.token, config.jwtKey, (err, jwtresult) => {
+        if (err) {
+          res.render("error", {
+            errorCode: 401,
+            errorText: "Unauthorized User",
+          });
+        } else {
+          console.log(req.session);
+          res.render("index.ejs");
+        }
+      });
     } else {
-      res.send("Not valid");
+      res.render("error", {
+        errorCode: 403,
+        errorText: "Forbidden Request",
+      });
     }
   }
 });

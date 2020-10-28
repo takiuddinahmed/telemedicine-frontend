@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config");
-const authDoctor = (req, res, next) => {
+
+const authDoctorMiddleware = (req, res, next) => {
   let token = "";
-  console.log(req.session);
   if (req.session) token = req.session.token;
-  console.log(token);
   if (token) {
     jwt.verify(token, config.jwtKey, (err, decoded) => {
       if (err) {
@@ -23,5 +22,5 @@ const authDoctor = (req, res, next) => {
 };
 
 module.exports = {
-  authDoctor,
+  authDoctorMiddleware,
 };
