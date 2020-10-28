@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Jekyll v4.1.1" />
+    <title>Add Disease</title>
+
+    <!--Fontawesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!--jQuery-->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- Auto Complete css and js -->
+    <link
+      rel="stylesheet"
+      href="plugins/autocomplete/autocomplete.min.css"
+    />
+    <script src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="backend/css/styles.css" />
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow"
+    >
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"
+        ><img width="150" src="./images/main logo.png" alt=""
+      /></a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-2 text-white col-lg-2 d-md-block bg-dark sidebar"
+        >
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <span class="nav-title">Member Management</span>
+                <span class="nav-links">
+                  <a class="nav-link" href="./index.html"> Doctor list </a>
+                  <a class="nav-link" href="./paitentTable.html">
+                    Prescription Generate
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span class="nav-title">Disease</span>
+                <span class="nav-links">
+                  <a class="nav-link active" href="./disease.html">
+                    Add disease
+                  </a>
+                  <a class="nav-link" href="./diseaseList.htm">
+                    Disease list
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span class="nav-title">Drug</span>
+                <span class="nav-links">
+                  <a class="nav-link active" href="./drug.html"> Add drug </a>
+                  <a class="nav-link" href="./drugList.htm"> Drug list </a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-7 mt-5">
+                <div class="border-bottom pb-3 mb-3">
+                  <div class="row form-group">
+                    <label for="" class="col-sm-3 col-form-label"
+                      >Disease name</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Disease name"
+                      />
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label for="" class="col-sm-3 col-form-label"
+                      >Alt name</label
+                    >
+                    <div class="col-sm-9 d-flex">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Alternative name"
+                      />
+                      <button class="btn btn-sm btn-info ml-2">Add</button>
+                    </div>
+                  </div>
+                  <div class="border-top pt-3">
+                    <div class="altLists">
+                      <ol>
+                        <li>CLD</li>
+                        <li>Chronic Liver Diease</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+                <h3>C/C</h3>
+                <textarea rows="8" class="form-control">C/C</textarea>
+                <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a
+                      class="nav-link active"
+                      id="home-tab"
+                      data-toggle="tab"
+                      href="#oeToBox"
+                      role="tab"
+                      aria-controls="home"
+                      aria-selected="true"
+                      >G/E</a
+                    >
+                  </li>
+                  <li class="nav-item" id="boxToOeNav" role="presentation">
+                    <a
+                      class="nav-link"
+                      id="profile-tab"
+                      data-toggle="tab"
+                      href="#boxToOe"
+                      role="tab"
+                      aria-controls="profile"
+                      aria-selected="false"
+                      >S/E</a
+                    >
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a
+                      class="nav-link"
+                      id="contact-tab"
+                      data-toggle="tab"
+                      href="#oe"
+                      role="tab"
+                      aria-controls="contact"
+                      aria-selected="false"
+                      >Special Note</a
+                    >
+                  </li>
+                </ul>
+                <div class="tab-content mt-3" id="myTabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="oeToBox"
+                    role="tabpanel"
+                    aria-labelledby="oe-tab"
+                  >
+                    <form class="form-group row">
+                      <label for="bp" class="col-sm-3 col-form-label">BP</label>
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="bp"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="pluse" class="col-sm-3 col-form-label"
+                        >Pluse</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="pluse"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="temp" class="col-sm-3 col-form-label"
+                        >Temp</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="temp"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="heart" class="col-sm-3 col-form-label"
+                        >Heart</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="heart"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="lungs" class="col-sm-3 col-form-label"
+                        >Lungs</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="lungs"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="abd" class="col-sm-3 col-form-label"
+                        >Abd</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="abd"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="anaemia" class="col-sm-3 col-form-label"
+                        >Anaemia</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="anaemia"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="jaundice" class="col-sm-3 col-form-label"
+                        >Jaundice</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="jaundice"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="cyanosis" class="col-sm-3 col-form-label"
+                        >Cyanosis</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="cyanosis"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                      <label for="oedema" class="col-sm-3 col-form-label"
+                        >Oedema</label
+                      >
+                      <div class="col-sm-9 d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="oedema"
+                          required
+                        />
+                        <input
+                          type="checkbox"
+                          class="custom-checkbox ml-3 mt-2"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="tab-pane fade py-2"
+                    id="boxToOe"
+                    role="tabpanel"
+                    aria-labelledby="boxToOe-tab"
+                  >
+                    <form>
+                      <ul class="se">
+                        <li>Nervous System</li>
+                        <div class="input-section">
+                          <div class="d-flex">
+                            <input
+                              placeholder="Inspection"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Palpation "
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Percussion"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Auscultation"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                        </div>
+                        <li>Respiratory System</li>
+                        <div class="input-section">
+                          <div class="d-flex">
+                            <input
+                              placeholder="Inspection"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Palpation "
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Percussion"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Auscultation"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                        </div>
+                        <li>CVS</li>
+                        <div class="input-section">
+                          <div class="d-flex">
+                            <input
+                              placeholder="Inspection"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Palpation "
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Percussion"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Auscultation"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                        </div>
+                        <li>Alimentary System</li>
+                        <div class="input-section">
+                          <div class="d-flex">
+                            <input
+                              placeholder="Inspection"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Palpation "
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Percussion"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Auscultation"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                        </div>
+                        <li>Musculoskeletal System</li>
+                        <div class="input-section">
+                          <div class="d-flex">
+                            <input
+                              placeholder="Inspection"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Palpation "
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Percussion"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                          <div class="d-flex">
+                            <input
+                              placeholder="Auscultation"
+                              type="text"
+                              class="form-control form-control-sm"
+                              required
+                            />
+                            <input
+                              type="checkbox"
+                              class="custom-checkbox mt-4"
+                            />
+                          </div>
+                        </div>
+                      </ul>
+                    </form>
+                  </div>
+                  <div
+                    class="tab-pane fade py-2"
+                    id="oe"
+                    role="tabpanel"
+                    aria-labelledby="oe-tab"
+                  >
+                    <textarea
+                      rows="6"
+                      class="form-control"
+                      placeholder="Special Note"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 mt-5 border-left">
+                <h3 class="border-bottom pb-2">Drug History</h3>
+                <div class="row mx-0 pt-2">
+                  <div class="col-9">
+                    <input
+                      type="text"
+                      class="form-control suggest-box"
+                      placeholder="Search..."
+                    />
+                  </div>
+                  <div class="col-3 pr-0 text-right">
+                    <button class="btn btn-info">Add</button>
+                  </div>
+                </div>
+                <ol class="ml-5 mt-3">
+                  <li>Paracitamol</li>
+                  <li>Ace</li>
+                  <li>Fenadin</li>
+                  <li>Paracitamol</li>
+                  <li>Ace</li>
+                  <li>Fenadin</li>
+                  <li>Paracitamol</li>
+                  <li>Ace</li>
+                  <li>Fenadin</li>
+                  <li>Paracitamol</li>
+                  <li>Ace</li>
+                  <li>Fenadin</li>
+                </ol>
+              </div>
+              <div class="col-12 my-5">
+                <h3>Investigation</h3>
+                <textarea
+                  rows="7"
+                  class="form-control"
+                  placeholder="Investigation"
+                ></textarea>
+                <h3 class="mt-4">Advice</h3>
+                <textarea
+                  rows="7"
+                  class="form-control"
+                  placeholder="Advice"
+                ></textarea>
+                <h3 class="mt-4">Counciling</h3>
+                <textarea
+                  rows="7"
+                  class="form-control"
+                  placeholder="Counciling"
+                ></textarea>
+                <div class="text-right mt-4">
+                  <button class="btn btn-info" type="submit">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+	<!-- HurtleeBEE -->
+    <script src="backend/scripts.js"></script>
+  </body>
+</html>
