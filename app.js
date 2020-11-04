@@ -14,6 +14,8 @@ const index = require("./router/indexRouter");
 
 const app = express();
 
+
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -30,6 +32,10 @@ app.use(
     },
   })
 );
+app.use((req,res,next)=>{
+  console.log(req.method+" "+req.url);
+  next()
+})
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
 app.use("/", index);

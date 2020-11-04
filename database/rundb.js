@@ -108,6 +108,15 @@ CREATE TABLE IF NOT EXISTS duration_list (
     PRIMARY KEY (id)
   )
   `,
+
+  `
+  CREATE TABLE IF NOT EXISTS admin_user (
+    id INT NOT NULL AUTO_INCREMENT,
+    email varchar(100) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL,
+    PRIMARY KEY(id)
+  )
+  `
 ];
 
 initScripts.forEach((sql) => {
