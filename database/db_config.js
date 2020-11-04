@@ -29,4 +29,9 @@ module.exports = {
   user: 'root',
   database: 'prescription',
   port: 3306
+  // host: 'localhost',
+  // password: '$*#%&JX3s$%34#$',
+  // user: 'root',
+  // database: 'prescription',
+  // port: 3306
 };

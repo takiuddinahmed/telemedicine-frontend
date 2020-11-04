@@ -6,42 +6,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <nav
-          id="sidebarMenu"
-          class="col-md-2 text-white col-lg-2 d-md-block bg-dark sidebar"
-        >
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <span class="nav-title">Member Management</span>
-                <span class="nav-links">
-                  <a class="nav-link" href="./doctor"> Doctor list </a>
-                  <a class="nav-link" href="./patient">
-                    Prescription Generate
-                  </a>
-                </span>
-              </li>
-              <li class="nav-item">
-                <span class="nav-title">Disease</span>
-                <span class="nav-links">
-                  <a class="nav-link active" href="./disease?add=true">
-                    Add disease
-                  </a>
-                  <a class="nav-link" href="./disease">
-                    Disease list
-                  </a>
-                </span>
-              </li>
-              <li class="nav-item">
-                <span class="nav-title">Drug</span>
-                <span class="nav-links">
-                  <a class="nav-link active" href="./drug?add=true"> Add drug </a>
-                  <a class="nav-link" href="./drug"> Drug list </a>
-                </span>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        <%-include('partials/sidebar.ejs')%>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
           <div class="container-fluid">
             <div class="row">
@@ -81,8 +46,6 @@
                     </div>
                   </div>
                 </div>
-                <h3>C/C</h3>
-                <textarea rows="8" class="form-control">C/C</textarea>
                 <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <a
@@ -559,54 +522,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-5 mt-5 border-left">
-                <h3 class="border-bottom pb-2">Drug History</h3>
-                <div class="row mx-0 pt-2">
-                  <div class="col-9">
-                    <input
-                      type="text"
-                      class="form-control suggest-box"
-                      placeholder="Search..."
-                    />
-                  </div>
-                  <div class="col-3 pr-0 text-right">
-                    <button class="btn btn-info">Add</button>
-                  </div>
-                </div>
-                <ol class="ml-5 mt-3">
-                  <li>Paracitamol</li>
-                  <li>Ace</li>
-                  <li>Fenadin</li>
-                  <li>Paracitamol</li>
-                  <li>Ace</li>
-                  <li>Fenadin</li>
-                  <li>Paracitamol</li>
-                  <li>Ace</li>
-                  <li>Fenadin</li>
-                  <li>Paracitamol</li>
-                  <li>Ace</li>
-                  <li>Fenadin</li>
-                </ol>
-              </div>
+              
               <div class="col-12 my-5">
-                <h3>Investigation</h3>
-                <textarea
-                  rows="7"
-                  class="form-control"
-                  placeholder="Investigation"
-                ></textarea>
-                <h3 class="mt-4">Advice</h3>
-                <textarea
-                  rows="7"
-                  class="form-control"
-                  placeholder="Advice"
-                ></textarea>
-                <h3 class="mt-4">Counciling</h3>
-                <textarea
-                  rows="7"
-                  class="form-control"
-                  placeholder="Counciling"
-                ></textarea>
                 <div class="text-right mt-4">
                   <button class="btn btn-info" type="submit">Save</button>
                 </div>
