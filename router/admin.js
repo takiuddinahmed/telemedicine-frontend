@@ -36,7 +36,6 @@ router.route("/login")
               });
     }
     else if (result.length){
-      console.log(result[0]);
       const match = bcrypt.compareSync(password, result[0].password);
       const options = {};
       if (!remember){
@@ -69,11 +68,7 @@ router.route("/login")
   })
 })
 
-router.get('/logout', (req,res)=>{
-  req.session.destroy();
-  res.redirect('/prescription/admin/login');
-})
-// .post((req,res,next)=>{
+//router.post('/register',(req,res,next)=>{
 //   const {email, password} = req.body;
 //   const hash = bcrypt.hashSync(password, config.saltRounds);
 //   let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
@@ -97,6 +92,12 @@ router.get('/logout', (req,res)=>{
 //   })
 
 // })
+
+
+router.get('/logout', (req,res)=>{
+  req.session.destroy();
+  res.redirect('/prescription/admin/login');
+})
 
 router.use(authAdminMiddleware)
 
