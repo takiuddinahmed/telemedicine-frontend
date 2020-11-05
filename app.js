@@ -11,7 +11,7 @@ const prescription = require("./router/prescription");
 const feed = require("./router/feed");
 const template = require("./router/templete");
 const index = require("./router/indexRouter");
-
+const adminRouter = require("./router/admin")
 const app = express();
 
 
@@ -39,6 +39,7 @@ app.use((req,res,next)=>{
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
 app.use("/", index);
+app.use("/prescription/admin",adminRouter)
 app.use("/prescription", prescription);
 app.use(prescription);
 app.use("/feed", feed);

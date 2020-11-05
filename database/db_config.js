@@ -18,9 +18,15 @@ module.exports = {
 
 
   // aws
-  host: 'database-1.csivkyfywgtd.us-west-2.rds.amazonaws.com',
-  password: '0987&*()',
-  user: 'admin',
+  // host: 'database-1.csivkyfywgtd.us-west-2.rds.amazonaws.com',
+  // password: '0987&*()',
+  // user: 'admin',
+  // database: 'prescription',
+  // port: 
+  
+  host: 'localhost',
+  password: '1234$#@!',
+  user: 'root',
   database: 'prescription',
   port: 3306
 };

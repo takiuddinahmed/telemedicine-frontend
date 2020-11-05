@@ -99,7 +99,7 @@ router.get('/logout', (req,res)=>{
   res.redirect('/prescription/admin/login');
 })
 
-router.use(authAdminMiddleware)
+// router.use(authAdminMiddleware)
 
 router.get('/', (req,res)=>{
   res.redirect('/prescription/admin/drug')
@@ -130,7 +130,5 @@ router.route("/doctor").get((req, res, next) => {
 router.route("/patient").get((req, res, next) => {
   res.render("paitentTable");
 });
-
-router.get("");
 
 module.exports = router;

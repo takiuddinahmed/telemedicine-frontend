@@ -97,9 +97,9 @@ CREATE TABLE IF NOT EXISTS duration_list (
     PRIMARY KEY (id));
     `,
   `
-  CREATE TABLE IF NOT EXISTS drug_data (
+  CREATE TABLE IF NOT EXISTS generic_drug_data (
     id INT NOT NULL AUTO_INCREMENT,
-    brand_name VARCHAR(50) NOT NULL UNIQUE,
+    generic_name VARCHAR(50) NOT NULL UNIQUE,
     company_name VARCHAR(60),
     generic_name VARCHAR(50) NOT NULL,
     retail_price VARCHAR(30),

@@ -21,7 +21,7 @@ const key = "XDXTBDOPQQRX69FD";
 
 
 
-router.use("/admin", adminRouter);
+// router.use("/admin", adminRouter);
 
 router.post("/save", cors.corsWithOptions, (req, res) => {
   let d = req.body;
