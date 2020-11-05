@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     id INT NOT NULL AUTO_INCREMENT,
     patient_id INT NOT NULL,
     doctor_id  INT,
-    disease_name VARCHAR(50) NOT NULL UNIQUE,
+    disease_name VARCHAR(50) NOT NULL,
     bp VARCHAR(45) NULL,
     pulse VARCHAR(45) NULL,
     temp VARCHAR(45) NULL,
@@ -86,14 +86,21 @@ CREATE TABLE IF NOT EXISTS duration_list (
     medicine TEXT,
     PRIMARY KEY (id));
     
-  CREATE TABLE IF NOT EXISTS drug_data (
+  CREATE TABLE IF NOT EXISTS generic_drug_data (
     id INT NOT NULL AUTO_INCREMENT,
-    brand_name VARCHAR(50) NOT NULL UNIQUE,
+    generic_name VARCHAR(50) NOT NULL UNIQUE,
     company_name VARCHAR(60),
     generic_name VARCHAR(50) NOT NULL,
     retail_price VARCHAR(30),
     use_for VARCHAR(30) DEFAULT 'Human',
     limitation TEXT,
     PRIMARY KEY (id)
+  )
+  
+  CREATE TABLE IF NOT EXISTS admin_user (
+    id INT NOT NULL AUTO_INCREMENT,
+    email varchar(100) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL,
+    PRIMARY KEY(id)
   )
   

@@ -68,7 +68,7 @@ router.route("/login")
   })
 })
 
-//router.post('/register',(req,res,next)=>{
+// router.post('/register',(req,res,next)=>{
 //   const {email, password} = req.body;
 //   const hash = bcrypt.hashSync(password, config.saltRounds);
 //   let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
@@ -99,7 +99,7 @@ router.get('/logout', (req,res)=>{
   res.redirect('/prescription/admin/login');
 })
 
-// router.use(authAdminMiddleware)
+router.use(authAdminMiddleware)
 
 router.get('/', (req,res)=>{
   res.redirect('/prescription/admin/drug')

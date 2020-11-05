@@ -30,6 +30,7 @@ const authAdminMiddleware = (req, res, next) => {
         res.redirect('/prescription/admin/login')
       } else {
         if(decoded.admin){
+          console.log({decoded})
         next();
         }
         else{
