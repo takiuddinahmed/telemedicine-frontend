@@ -99,10 +99,10 @@ router.get('/logout', (req,res)=>{
   res.redirect('/prescription/admin/login');
 })
 
-// router.use(authAdminMiddleware)
+router.use(authAdminMiddleware)
 
 router.get('/', (req,res)=>{
-  res.redirect('/prescription/admin/drug')
+  res.redirect('/prescription/admin/generic- drug')
 })
 
 router.route("/disease").get((req, res, next) => {
@@ -114,13 +114,13 @@ router.route("/disease").get((req, res, next) => {
     res.render("diseaseList");
   }
 });
-router.route("/drug").get((req, res, next) => {
+router.route("/generic-drug").get((req, res, next) => {
   const add = req.query.add;
   const edit = req.query.edit;
   if (add || edit) {
-    res.render("drug");
+    res.render("genericDrug");
   } else {
-    res.render("drugList");
+    res.render("genericDrugList");
   }
 });
 
