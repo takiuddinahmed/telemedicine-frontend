@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('partials/header.ejs')%>
+  <body>
+    <%-include('partials/nav.ejs')%>
+    <div class="container-fluid">
+      <div class="row">
+        <%-include('partials/sidebar.ejs')%>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <div class="row mt-5 mb-3">
+            <h4 class="mb-3 col-md-3">Add Drug to database</h4>
+          </div>
+          <div class="row mt-5 mb-3">
+            <h6 class="mb-3 col-md-3">Drug Trade name</h6>
+            <input class="form-control col-md-9" type="text" name="" id="">
+          </div>
+          <div class="row mt-5 mb-3">
+            <h6 class="mb-3 col-md-3">Drug Generic name</h6>
+            <select class="form-control col-md-9">
+              <option value="">Select Generic name</option>
+              <option value="para">Paracetamol</option>
+            </select>
+
+          </div>
+          <div class="row mt-5 mb-3">
+            <h6 class="mb-3 col-md-3">Drug Company name name</h6>
+            <input class="form-control col-md-9" type="text" name="" id="">
+          </div>
+          <div class="row mt-5 mb-3">
+            <h6 class="mb-3 col-md-3">Drug Price </h6>
+            <input class="form-control col-md-9" type="number" name="" id="">
+          </div>
+          <button type="submit" class="btn btn-success">Save drug</button>
+        </main>
+      </div>
+    </div>
+    <script src="/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>
