@@ -102,7 +102,7 @@ router.get('/logout', (req,res)=>{
 // router.use(authAdminMiddleware)
 
 router.get('/', (req,res)=>{
-  res.redirect('/prescription/admin/generic- drug')
+  res.redirect('/prescription/admin/generic-drug')
 })
 
 router.route("/disease").get((req, res, next) => {

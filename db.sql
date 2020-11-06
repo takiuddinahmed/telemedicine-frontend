@@ -89,14 +89,28 @@ CREATE TABLE IF NOT EXISTS duration_list (
   CREATE TABLE IF NOT EXISTS generic_drug_data (
     id INT NOT NULL AUTO_INCREMENT,
     generic_name VARCHAR(50) NOT NULL UNIQUE,
-    company_name VARCHAR(60),
-    generic_name VARCHAR(50) NOT NULL,
-    retail_price VARCHAR(30),
-    use_for VARCHAR(30) DEFAULT 'Human',
-    limitation TEXT,
+    dose_range TEXT,
+    dose_weight TEXT,
+    dose_drug_interection TEXT,
+    dose_indecation TEXT,
+    dose_contraindications TEXT,
+    dose_precautions_warnings TEXT,
     PRIMARY KEY (id)
   )
   
+CREATE TABLE IF NOT EXISTS trade_drug_data (
+  id INT NOT NULL AUTO_INCREMENT,
+  trade_name VARCHAR(50) NOT NULL UNIQUE,
+  company_name VARCHAR(50),
+  generic_name INT NOT NULL,
+  price INT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (generic_name)
+  REFERENCES generic_drug_data (id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+)
+
   CREATE TABLE IF NOT EXISTS admin_user (
     id INT NOT NULL AUTO_INCREMENT,
     email varchar(100) NOT NULL UNIQUE,
