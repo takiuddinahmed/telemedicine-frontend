@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('partials/header.ejs')%>
+  <body>
+    <%-include('partials/nav.ejs')%>
+
+    <div class="container-fluid">
+      <div class="row">
+        <%-include('partials/sidebar.ejs')%>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <div class="mb-3 input-group mt-5">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search..."
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"
+                ><i class="fas fa-search"></i
+              ></span>
+            </div>
+          </div>
+          <div class="table-responsive text-nowrap">
+            <div class="table-responsive">
+              <table class="table table-hover text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Trade Name</th>
+                    <th scope="col">Generic Name</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>This is trade name</td>
+                    <td>Generic name</td>
+                    <td>This is company name</td>
+                    <td>This is price</td>
+                    <td>
+                      <button class="btn btn-sm btn-secondary">Edit</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <nav class="border-top pt-3">
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="#"
+                  >2 <span class="sr-only">(current)</span></a
+                >
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </main>
+      </div>
+    </div>
+
+    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/scripts.js"></script>
+  </body>
+</html>

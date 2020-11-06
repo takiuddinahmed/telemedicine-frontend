@@ -124,6 +124,15 @@ router.route("/generic-drug").get((req, res, next) => {
   }
 });
 
+router.route("/drug").get((req, res, next) => {
+  const add = req.query.add;
+  const edit = req.query.edit;
+  if (add || edit) {
+    res.render("drug");
+  } else {
+    res.render("drugList");
+  }
+});
 router.route("/doctor").get((req, res, next) => {
   res.render("doctorControl");
 });
