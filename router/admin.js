@@ -99,7 +99,7 @@ router.get('/logout', (req,res)=>{
   res.redirect('/prescription/admin/login');
 })
 
-router.use(authAdminMiddleware)
+// router.use(authAdminMiddleware)
 
 router.get('/', (req,res)=>{
   res.redirect('/prescription/admin/generic- drug')
