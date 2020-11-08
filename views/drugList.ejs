@@ -16,6 +16,7 @@
               placeholder="Search..."
               aria-label="Username"
               aria-describedby="basic-addon1"
+              id="search-input"
             />
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"
@@ -35,42 +36,23 @@
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>This is trade name</td>
-                    <td>Generic name</td>
-                    <td>This is company name</td>
-                    <td>This is price</td>
-                    <td>
-                      <button class="btn btn-sm btn-secondary">Edit</button>
-                    </td>
-                  </tr>
+                <tbody id="drug-table">
+                 
                 </tbody>
               </table>
             </div>
           </div>
-          <nav class="border-top pt-3">
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active">
-                <a class="page-link" href="#"
-                  >2 <span class="sr-only">(current)</span></a
-                >
-              </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
+          <nav class="border-top pt-3" id="pagination-div">
+         
           </nav>
         </main>
       </div>
     </div>
 
-    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="/scripts.js"></script>
+    <script src="/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <script>
+      const tradeDrugListString = '<%- tradeDrugList %>'
+    </script>
+    <script src="/js/api/drugList.js"></script>
   </body>
 </html>

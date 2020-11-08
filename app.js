@@ -19,14 +19,14 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-// var sessionStore = new mysqlSessionStore(dbconfig);
+var sessionStore = new mysqlSessionStore(dbconfig);
 
 app.use(
   session({
     secret: config.sessionKey,
     resave: false,
     saveUninitialized: true,
-    // store: sessionStore,
+    store: sessionStore,
     cookie: {
       maxAge: 60 * 60 * 1000,
     },

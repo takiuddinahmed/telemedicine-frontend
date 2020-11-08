@@ -6,10 +6,12 @@
     <div class="container-fluid">
       <div class="row">
         <%-include('partials/sidebar.ejs')%>
+       
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          
           <div class="row mt-5 mb-3">
             <h4 class="mb-3 col-md-3">Generic name</h4>
-            <input class="form-control col-md-9" type="text" name="" id="">
+            <input class="form-control col-md-9" type="text" id="generic-name-input" >
           </div>
           
           <h4 class="mt-4">Dosing</h4>
@@ -20,62 +22,57 @@
                   <th scope="col" colspan="3">According to range</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dose-range-view">
+              </tbody>
                 <tr>
-                  <td style="width: 50%">1 month to 1 year</td>
-                  <td>2 TSF daily</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">1 month to 1 year</td>
-                  <td>2 TSF daily</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">1 month to 1 year</td>
-                  <td>2 TSF daily</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td colspan="2" style="width: 50%">
-                    <div class="d-flex">
-                      <input
-                        type="text"
-                        class="form-control form-control-sm mr-2"
-                        placeholder="Range"
-                      />
-                      <select
-                        style="width: 100px"
-                        class="custom-select custom-select-sm"
-                      >
-                        <option value="">Month</option>
-                        <option value="">Year</option>
-                      </select>
-                      <span class="mx-3">to</span>
-                      <input
-                        type="text"
-                        class="form-control form-control-sm mr-2"
-                        placeholder="Range"
-                      />
-                      <select
-                        style="width: 100px"
-                        class="custom-select custom-select-sm"
-                      >
-                        <option value="">Month</option>
-                        <option value="">Year</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control form-control-sm" />
-                  </td>
+                  <form id="dose-range-form">
+                    <td colspan="2" style="width: 50%">
+                      
+                      <div class="d-flex">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm mr-2"
+                          placeholder="Range"
+                          name="from_val"
+                        />
+                        <select
+                          style="width: 100px"
+                          class="custom-select custom-select-sm"
+                          name="from_unit"
+                        >
+                          <option value="Month">Month</option>
+                          <option value="Year">Year</option>
+                        </select>
+                        <span class="mx-3">to</span>
+                        <input
+                          type="text"
+                          class="form-control form-control-sm mr-2"
+                          placeholder="Range"
+                          name="to_val"
+                        />
+                        <select
+                          style="width: 100px"
+                          class="custom-select custom-select-sm"
+                          name="to_unit"
+                        >
+                          <option value="Month">Month</option>
+                          <option value="Year">Year</option>
+                        </select>
+                      </div>
+                  
+                    </td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" name="value"/>
+                    </td>
+                </form>
                 </tr>
                 <tr>
                   <td colspan="3">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-range-btn">Add new</button>
                   </td>
+
                 </tr>
-              </tbody>
+             
             </table>
           </div>
           <div class="table-responsive">
@@ -85,109 +82,92 @@
                   <th scope="col" colspan="3">According to weight</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dose-weight-view">
+          
+              </tbody>
                 <tr>
-                  <td style="width: 50%">1 KG to 1 KG</td>
-                  <td>2 TSF daily</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">1 KG to 1 KG</td>
-                  <td>2 TSF daily</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">1 KG to 1 KG</td>
-                  <td>2 TSF daily</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
+                  <form id="dose-weight-form">
                   <td colspan="2" style="width: 50%">
                     <div class="d-flex">
                       <input
                         type="text"
                         class="form-control form-control-sm mr-2"
                         placeholder="Range"
+                        name="from_val"
                       />
                       <select
                         style="width: 100px"
                         class="custom-select custom-select-sm"
+                        name="from_unit"
                       >
-                        <option value="">Gram</option>
-                        <option value="">KG</option>
+                        <option value="Gram">Gram</option>
+                        <option value="KG">KG</option>
                       </select>
                       <span class="mx-3">to</span>
                       <input
                         type="text"
                         class="form-control form-control-sm mr-2"
                         placeholder="Range"
+                        name="to_val"
                       />
                       <select
                         style="width: 100px"
                         class="custom-select custom-select-sm"
+                        name="to_unit"
                       >
-                        <option value="">Gram</option>
-                        <option value="">KG</option>
+                        <option value="Gram">Gram</option>
+                        <option value="KG">KG</option>
                       </select>
                     </div>
                   </td>
                   <td>
-                    <input type="text" class="form-control form-control-sm" />
+                    <input type="text" class="form-control form-control-sm" name="value"/>
                   </td>
+                </form>
                 </tr>
                 <tr>
                   <td colspan="3">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-weight-btn">Add new</button>
                   </td>
                 </tr>
-              </tbody>
+              
             </table>
           </div>
-          <div class="table-responsive">
+          <!-- <div class="table-responsive">
             <table class="table table-hover text-center">
               <thead class="thead-light">
                 <tr>
                   <th scope="col" colspan="3">Special Dose</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dose-special-view">
+           
+              </tbody>
                 <tr>
-                  <td style="width: 50%">Disease Name</td>
-                  <td>Dose</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">Disease Name</td>
-                  <td>Dose</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">Disease Name</td>
-                  <td>Dose</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
+                  <form id="dose-special-form">
                   <td colspan="2" style="width: 50%">
                     <div class="d-flex">
                       <input
                         type="text"
                         class="form-control form-control-sm"
                         placeholder="Disease Name"
+                        name="d_name"
                       />
                     </div>
                   </td>
                   <td>
-                    <input type="text" class="form-control form-control-sm" />
+                    <input type="text" class="form-control form-control-sm" name="dose" />
                   </td>
+                </form>
                 </tr>
                 <tr>
                   <td colspan="3">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-special-btn">Add new</button>
                   </td>
                 </tr>
-              </tbody>
+            
             </table>
-          </div>
+          </div> -->
           <div class="table-responsive">
             <table class="table table-hover text-center">
               <thead class="thead-light">
@@ -195,36 +175,32 @@
                   <th scope="col" colspan="2">Drug Drug Interection</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dose-drug-interection-view">
+              </tbody>
                 <tr>
-                  <td style="width: 50%">Paracetamol</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">Calcium</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">Iron Preparation</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
+                  <form id="dose-drug-interection-form">
                   <td colspan="2" style="width: 50%">
                     <div class="d-flex">
-                      <input
+                      <select
                         type="text"
                         class="form-control form-control-sm"
                         placeholder="Drug Name"
-                      />
+                        name="drug"
+                      >
+                      <% for (var i=0; i< drugList.length ; i++){ %>
+                        <option value="<%= drugList[i].generic_name %>" ><%= drugList[i].generic_name %> </option>
+                       <% } %>
+                    </select>
                     </div>
                   </td>
+                </form>
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-drug-interection-btn">Add new</button>
                   </td>
                 </tr>
-              </tbody>
+              
             </table>
           </div>
           <div class="table-responsive">
@@ -234,8 +210,8 @@
                   <th scope="col" colspan="2">Indications</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
+              <tbody id="dose-indication-view">
+                <!-- <tr>
                   <td style="width: 50%">Headache</td>
                   <td><i class="fas text-danger fa-trash"></i></td>
                 </tr>
@@ -246,24 +222,27 @@
                 <tr>
                   <td style="width: 50%">Vomiting</td>
                   <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
+                </tr> -->
+              </tbody>
                 <tr>
+                  <form id="dose-indication-form">
                   <td colspan="2" style="width: 50%">
                     <div class="d-flex">
                       <input
                         type="text"
                         class="form-control form-control-sm"
-                        placeholder="Drug Name"
+                        placeholder="Indication "
+                        name="indication"
                       />
                     </div>
                   </td>
+                </form>
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-indication-btn">Add new</button>
                   </td>
                 </tr>
-              </tbody>
             </table>
           </div>
           <div class="table-responsive">
@@ -273,36 +252,28 @@
                   <th scope="col" colspan="2">Contraindications</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dose-constrains-view">
+             
+              </tbody>
                 <tr>
-                  <td style="width: 50%">Pregnancy</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">CLD</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">CRF</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
+                  <form id="dose-constrains-form">
                   <td colspan="2" style="width: 50%">
                     <div class="d-flex">
                       <input
                         type="text"
                         class="form-control form-control-sm"
-                        placeholder="Drug Name"
+                        placeholder="Contrains"
+                        name="constrains"
                       />
                     </div>
                   </td>
+                </form>
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-constrains-btn">Add new</button>
                   </td>
                 </tr>
-              </tbody>
             </table>
           </div>
           <div class="table-responsive">
@@ -312,36 +283,29 @@
                   <th scope="col" colspan="2">Precautions and warnings</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 50%">Severe Headaches</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">Vomiting</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
-                <tr>
-                  <td style="width: 50%">Sudden fall</td>
-                  <td><i class="fas text-danger fa-trash"></i></td>
-                </tr>
+              <tbody id="dose-precautions-view">
+                </tbody>
+            
                 <tr>
                   <td colspan="2" style="width: 50%">
+                    <form id="dose-precautions-form">
                     <div class="d-flex">
                       <input
                         type="text"
                         class="form-control form-control-sm"
-                        placeholder="Drug Name"
+                        placeholder="Precautions and warnings"
+                        name="precautions"
                       />
                     </div>
+                    </form>
                   </td>
+
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <button class="btn btn-sm btn-info">Add new</button>
+                    <button class="btn btn-sm btn-info" id="dose-precautions-btn">Add new</button>
                   </td>
                 </tr>
-              </tbody>
             </table>
           </div>
           <div class="table-responsive">
@@ -351,29 +315,55 @@
                   <th scope="col" colspan="2">Prangnency category</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dose-pregnency-view">
+
+              </tbody>
                 <tr>
-                  <td style="width: 50%">
-                    <select class="custom-select custom-select-sm">
-                      <option value="">Category A</option>
-                      <option value="">Category B</option>
-                      <option value="">Category C</option>
-                      <option value="">Category D</option>
-                      <option value="">Category E</option>
-                      <option value="">Category X</option>
+                  <form id="dose-pregnency-form">
+                  <td colspan="2">
+                    <select class="custom-select custom-select-sm"
+                    name="category"
+                    >
+                      <opton selected>Select Category</opton>
+                      <option value="Category A">Category A</option>
+                      <option value="Category B">Category B</option>
+                      <option value="Category C">Category C</option>
+                      <option value="Category D">Category D</option>
+                      <option value="Category E">Category E</option>
+                      <option value="Category X">Category X</option>
                     </select>
                   </td>
+                </form>
                 </tr>
-              </tbody>
+                <tr>
+                  <td colspan="2">
+                    <button class="btn btn-sm btn-info"  id="dose-pregnency-btn">Add new</button>
+                  </td>
+                </tr>
             </table>
           </div>
           <div class="text-right mb-3">
-            <button class="btn btn-info">Save</button>
+            <button class="btn btn-info" id="submit-form-to-server" type="submit">Save</button>
           </div>
         </main>
+      
       </div>
     </div>
     <script src="/plugins/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="/js/scripts.js"></script>
+    <script>
+      let editState = '<%- editState  %>'
+      const drugString = '<%- drugData %>'
+      
+      if(editState === 'true'){
+        editState = true  
+        drugData = JSON.parse(drugString.toString());   
+        console.log(drugData)
+      }
+      else{
+        editState = false;
+      }
+    </script>
+
+    <script src="/js/api/generic-drug.js"></script>
   </body>
 </html>

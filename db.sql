@@ -93,8 +93,9 @@ CREATE TABLE IF NOT EXISTS duration_list (
     dose_weight TEXT,
     dose_drug_interection TEXT,
     dose_indecation TEXT,
-    dose_contraindications TEXT,
+    dose_contrains TEXT,
     dose_precautions_warnings TEXT,
+    dose_pregnency_category TEXT,
     PRIMARY KEY (id)
   )
   

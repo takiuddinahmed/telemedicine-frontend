@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/header.ejs')%>
+  <body>
+    <%-include('partials/nav.ejs')%>
+
+    <div class="container-fluid">
+      <div class="row">
+        <%-include('partials/sidebar.ejs')%>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <form method="POST">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-7 mt-5">
+                <h3><%= display %></h3>
+                <textarea rows="8" class="form-control" name="name" id="template-input-box"></textarea>
+              </div>
+            </div>
+            <input type="hidden" name="table" value="<%- table%>">
+            <input type="hidden" name="mode" value="add" id="form-mode">
+            <input type="hidden" name="id" value="" id="form-table-id">
+            <button class="btn btn-primary mt-3" id="submit-btn">Add</button>
+          </div>
+        </form>
+            <div class="mb-3 input-group mt-5">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search..."
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                id="search-input"
+              />
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="fas fa-search"></i
+                ></span>
+              </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+              <table class="table table-hover text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col"><%= display %></th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="template-table">
+                
+                </tbody>
+              </table>
+            </div>
+            <nav class="border-top pt-3" id="pagination-div">
+          
+            </nav>
+          
+        </main>
+        
+      </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="modal_view">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><%= display %></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id="modal_view_data"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+  <!-- HurtleeBEE -->
+  <script>
+    const templateDataListString = '<%- templateDataList %>'
+  </script>
+  <script src="/js/api/templateList.js"></script>
+
+  </body>
+</html>
