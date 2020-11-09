@@ -67,6 +67,21 @@ CREATE TABLE IF NOT EXISTS duration_list (
     counselling VARCHAR(50), 
     PRIMARY KEY (id));
     `,
+
+    `
+    CREATE TABLE IF NOT EXISTS disease_alternative_name (
+      id INT NOT NULL AUTO_INCREMENT,
+      name VARCHAR(50) NOT NULL UNIQUE,
+      disease_id INT NOT NULL,
+      PRIMARY KEY(id),
+      FOREIGN KEY (disease_id)
+       REFERENCES disease_data (id)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE
+
+    )
+    
+    `,
   `
     CREATE TABLE IF NOT EXISTS patient_disease_data (
     id INT NOT NULL AUTO_INCREMENT,

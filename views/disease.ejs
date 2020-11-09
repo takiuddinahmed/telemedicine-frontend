@@ -8,12 +8,12 @@
       <div class="row">
         <%-include('partials/sidebar.ejs')%>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-7 mt-5">
+          <div class="container-fluid mt-4 ">
                 <div class="border-bottom pb-3 mb-3">
                   <div class="row form-group">
-                    <label for="" class="col-sm-3 col-form-label">Disease name</label>
+                    <label for="" class="col-sm-3 col-form-label"
+                      >Disease name</label
+                    >
                     <div class="col-sm-9">
                       <input
                         type="text"
@@ -22,28 +22,40 @@
                       />
                     </div>
                   </div>
-                  <div class="row form-group">
-                    <label for="" class="col-sm-3 col-form-label"
-                      >Alt name</label
-                    >
-                    <div class="col-sm-9 d-flex">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Alternative name"
-                      />
-                      <button class="btn btn-sm btn-info ml-2">Add</button>
-                    </div>
-                  </div>
+
+                  
+                  <% for(var i=0; i<templateData.length; i++){ %>
                   <div class="border-top pt-3">
-                    <div class="altLists">
-                      <ol>
-                        <li>CLD</li>
-                        <li>Chronic Liver Diease</li>
-                      </ol>
+                    <h4 class="text-center" style="padding: 10px 0; background-color: lightgray; border-radius: 10px;">
+                      <%= templateData[i].name %>
+                    </h4>
+                    <div class="pt-3">
+                      <div class="altLists">
+                        <ol id="<%= templateData[i].id %>_form_view">
+                        </ol>
+                      </div>
                     </div>
+                    <form id="<%= templateData[i].id%>_form" class="template_form" onsubmit="templateSubmit(this)">
+                      <div class="row form-group">
+                        <div class="col-9">
+                          <select name="template" class="form-control" id="<%= templateData[i].id%>_form_select">
+                            <% for(var j =0; j<templateData[i].data.length;j++){ %>
+                            <option value=<%= templateData[i].data[j].id %>> <%= templateData[i].data[j].name %> </option>
+                            <% } %>
+                          </select>
+                        </div>
+                        <div class="col-2">
+                          <button class="mb-2 btn btn-primary" type="submit">Add</button>
+                          <button class="mb-2 btn btn-danger template_delete" id="<%= templateData[i].id%>_delete_btn"  type="button">Clear</button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
+
+                  <% } %>           
                 </div>
+                <form id="main_form">
+
                 <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <a
@@ -519,20 +531,15 @@
                     ></textarea>
                   </div>
                 </div>
-              </div>
-              
-              <div class="col-12 my-5">
-                <div class="text-right mt-4">
-                  <button class="btn btn-info" type="submit">Save</button>
-                </div>
-              </div>
+                
+                <button class="btn btn-info mt-2" type="submit">Save</button>
+                  
+              </form>
             </div>
-          </div>
         </main>
       </div>
     </div>
 
-    <script src="/plugins/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="/backend/scripts.js"></script>
+    <script src="/js/api/addDisease.js"></script>
   </body>
 </html>

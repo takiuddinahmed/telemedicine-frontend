@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS cc_template (
 
 CREATE TABLE IF NOT EXISTS dose_list (
     id INT NOT NULL AUTO_INCREMENT,
-    dose VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 )
 
@@ -58,6 +58,19 @@ CREATE TABLE IF NOT EXISTS duration_list (
     counselling VARCHAR(50), 
     PRIMARY KEY (id));
     
+    CREATE TABLE IF NOT EXISTS disease_alternative_name (
+      id INT NOT NULL AUTO_INCREMENT,
+      name VARCHAR(50) NOT NULL UNIQUE,
+      disease_id INT NOT NULL,
+      PRIMARY KEY(id),
+      FOREIGN KEY (disease_id)
+       REFERENCES disease_data (id)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE
+
+    )
+    
+    
     CREATE TABLE IF NOT EXISTS patient_disease_data (
     id INT NOT NULL AUTO_INCREMENT,
     patient_id INT NOT NULL,
@@ -92,8 +105,8 @@ CREATE TABLE IF NOT EXISTS duration_list (
     dose_range TEXT,
     dose_weight TEXT,
     dose_drug_interection TEXT,
-    dose_indecation TEXT,
-    dose_contrains TEXT,
+    dose_indication TEXT,
+    dose_constrains TEXT,
     dose_precautions_warnings TEXT,
     dose_pregnency_category TEXT,
     PRIMARY KEY (id)
@@ -103,10 +116,10 @@ CREATE TABLE IF NOT EXISTS trade_drug_data (
   id INT NOT NULL AUTO_INCREMENT,
   trade_name VARCHAR(50) NOT NULL UNIQUE,
   company_name VARCHAR(50),
-  generic_name INT NOT NULL,
+  generic_name_id INT NOT NULL,
   price INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (generic_name)
+  FOREIGN KEY (generic_name_id)
   REFERENCES generic_drug_data (id)
       ON DELETE CASCADE
       ON UPDATE CASCADE

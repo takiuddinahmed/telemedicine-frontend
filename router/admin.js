@@ -103,14 +103,63 @@ router.get('/logout', (req,res)=>{
 router.use(authAdminMiddleware)
 
 router.get('/', (req,res)=>{
-  res.redirect('/prescription/admin/generic-drug')
+  res.redirect('/prescription/admin/disease?add=true')
 })
 
 router.route("/disease").get((req, res, next) => {
   const add = req.query.add;
   const edit = req.query.edit;
   if (add || edit) {
-    res.render("disease");
+    const templateSql = `SELECT * FROM cc_template; 
+    SELECT * FROM investigation; 
+    SELECT * FROM advice; 
+    SELECT * FROM counselling;`
+    db.query(templateSql,[], (err, templateDataArr)=>{
+      if(err){
+        console.log(err)
+        res.render("error", {
+          errorCode: 500,
+          errorText: "Unexpected request. Please try again.",
+        });
+      }
+      else{
+        const templateData = [
+          {id: 'cc', data:templateDataArr[0], name:"C/C"},
+          {id: 'investigation', data:templateDataArr[1], name:"Investigation"},
+          {id: 'advice', data:templateDataArr[2], name:"Advice"},
+          {id: 'counselling', data:templateDataArr[3], name:"Counselling"}
+        ]
+       if(add){
+          console.log(templateData)
+        res.render("disease", {templateData:templateData, editDiseaseData: {}});
+        }
+        else if(edit){
+          const id = req.query.id;
+          if(id){
+          const editDiseaseSql =  `SELECT * FROM disease_data WHERE id=?`
+          db.query(editDiseaseSql,[id], (err, editDiseaseData)=>{
+              if(err){
+                res.render("error", {
+                  errorCode: 500,
+                  errorText: "Unexpected request. Please try again.",
+                });
+              }
+              else{
+
+                res.render("disease", {templateData:templateData, editDiseaseData: {}});
+              }
+          })
+          }
+          else{
+            res.render("error", {
+              errorCode: 500,
+              errorText: "Unexpected request. Please try again.",
+            });
+          }
+        }
+      }
+    })
+    
   } else {
     res.render("diseaseList");
   }
@@ -122,7 +171,6 @@ router.route("/generic-drug")
   if (add || edit) {
     db.query(`SELECT generic_name from generic_drug_data`,[], (err,drugList)=>{
       if(err){
-        
         res.render("error", {
           errorCode: 500,
           errorText: "Unexpected request. Please try again.",
