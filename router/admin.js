@@ -106,6 +106,12 @@ router.get('/', (req,res)=>{
   res.redirect('/prescription/admin/disease?add=true')
 })
 
+router.route('/disease/alternative')
+.get((req,res)=>{
+  
+  res.render('alternativeName')
+})
+
 router.route("/disease")
 .get((req, res, next) => {
   const add = req.query.add;

@@ -22,7 +22,7 @@ $(document).ready(()=>{
         const source = $("#"+e.target.id + "_select option:selected")
         const view_selector = $("#"+e.target.id + "_view")
         const data = {val: source.val(), text:source.text()}
-        if(templateValues[templateName]){
+        if(templateValues[templateName] && templateValues[templateName].length){
             if(templateValues[templateName].some(t=>t.val != data.val)){
                 templateValues[templateName].push(data);
             }
