@@ -19,6 +19,8 @@
                         type="text"
                         class="form-control"
                         placeholder="Disease name"
+                        id="disease_name_input"
+                        value='<%= editDiseaseData.name ?? '' %>'
                       />
                     </div>
                   </div>
@@ -108,6 +110,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="bp"
+                          name="bp"
+                          value='<%= editDiseaseData.bp ?? '' %>'
                           required
                         />
                         <input
@@ -122,7 +126,9 @@
                         <input
                           type="text"
                           class="form-control form-control-sm"
-                          id="pluse"
+                          id="pulse"
+                          name="pulse"
+                          value='<%= editDiseaseData.pulse ?? '' %>'
                           required
                         />
                         <input
@@ -138,6 +144,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="temp"
+                          name="temp"
+                          value='<%= editDiseaseData.temp ?? '' %>'
                           required
                         />
                         <input
@@ -153,6 +161,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="heart"
+                          name="heart"
+                          value='<%= editDiseaseData.heart ?? '' %>'
                           required
                         />
                         <input
@@ -168,6 +178,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="lungs"
+                          name="lungs"
+                          value='<%= editDiseaseData.lungs ?? '' %>'
                           required
                         />
                         <input
@@ -183,6 +195,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="abd"
+                          name="abd"
+                          value='<%= editDiseaseData.abd ?? '' %>'
                           required
                         />
                         <input
@@ -198,6 +212,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="anaemia"
+                          name="anaemia"
+                          value='<%= editDiseaseData.anaemia ?? '' %>'
                           required
                         />
                         <input
@@ -213,6 +229,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="jaundice"
+                          name="jaundice"
+                          value='<%= editDiseaseData.jaundice ?? '' %>'
                           required
                         />
                         <input
@@ -228,6 +246,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="cyanosis"
+                          name="cyanosis"
+                          value='<%= editDiseaseData.cyanosis ?? '' %>'
                           required
                         />
                         <input
@@ -243,6 +263,8 @@
                           type="text"
                           class="form-control form-control-sm"
                           id="oedema"
+                          name="oedema"
+                          value='<%= editDiseaseData.oedema ?? '' %>'
                           required
                         />
                         <input
@@ -250,7 +272,6 @@
                           class="custom-checkbox ml-3 mt-2"
                         />
                       </div>
-                    </form>
                   </div>
                   <div
                     class="tab-pane fade py-2"
@@ -267,6 +288,8 @@
                               placeholder="Inspection"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_nervous_system_inspection"
+                              value='<%= editDiseaseData.se_nervous_system_inspection ?? '' %>'
                               required
                             />
                             <input
@@ -279,6 +302,8 @@
                               placeholder="Palpation "
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_nervous_system_palpation"
+                              value='<%= editDiseaseData.se_nervous_system_palpation ?? '' %>'
                               required
                             />
                             <input
@@ -291,6 +316,8 @@
                               placeholder="Percussion"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_nervous_system_percussion"
+                              value='<%= editDiseaseData.se_nervous_system_percussion ?? '' %>'
                               required
                             />
                             <input
@@ -303,6 +330,8 @@
                               placeholder="Auscultation"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_nervous_system_auscultation"
+                              value='<%= editDiseaseData.se_nervous_system_auscultation ?? '' %>'
                               required
                             />
                             <input
@@ -318,6 +347,8 @@
                               placeholder="Inspection"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_respiratory_system_inspection"
+                              value='<%= editDiseaseData.se_respiratory_system_inspection ?? '' %>'
                               required
                             />
                             <input
@@ -330,6 +361,8 @@
                               placeholder="Palpation "
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_respiratory_system_palpation"
+                              value='<%= editDiseaseData.se_respiratory_system_palpation ?? '' %>'
                               required
                             />
                             <input
@@ -342,6 +375,9 @@
                               placeholder="Percussion"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_respiratory_system_percussion"
+                
+                              value='<%= editDiseaseData.se_respiratory_system_percussion ?? '' %>'
                               required
                             />
                             <input
@@ -354,6 +390,10 @@
                               placeholder="Auscultation"
                               type="text"
                               class="form-control form-control-sm"
+                              
+                              name="se_respiratory_system_auscultation"
+                              
+                              value='<%= editDiseaseData.se_respiratory_system_auscultation ?? '' %>'
                               required
                             />
                             <input
@@ -369,6 +409,8 @@
                               placeholder="Inspection"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_cvs_inspection"
+                              value='<%= editDiseaseData.se_cvs_inspection ?? '' %>'
                               required
                             />
                             <input
@@ -381,6 +423,9 @@
                               placeholder="Palpation "
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_cvs_palpation"
+                              
+                              value='<%= editDiseaseData.se_cvs_palpation ?? '' %>'
                               required
                             />
                             <input
@@ -393,6 +438,9 @@
                               placeholder="Percussion"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_cvs_percussion"
+                              
+                              value='<%= editDiseaseData.se_cvs_percussion ?? '' %>'
                               required
                             />
                             <input
@@ -405,6 +453,9 @@
                               placeholder="Auscultation"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_cvs_auscultation"
+                              
+                              value='<%= editDiseaseData.se_cvs_auscultation ?? '' %>'
                               required
                             />
                             <input
@@ -420,6 +471,8 @@
                               placeholder="Inspection"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_alimentary_system_inspection"
+                              value='<%= editDiseaseData.se_alimentary_system_inspection ?? '' %>'
                               required
                             />
                             <input
@@ -432,6 +485,8 @@
                               placeholder="Palpation "
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_alimentary_system_palpation"
+                              value='<%= editDiseaseData.se_alimentary_system_palpation ?? '' %>'
                               required
                             />
                             <input
@@ -444,6 +499,8 @@
                               placeholder="Percussion"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_alimentary_system_percussion"
+                              value='<%= editDiseaseData.se_alimentary_system_percussion ?? '' %>'
                               required
                             />
                             <input
@@ -456,6 +513,9 @@
                               placeholder="Auscultation"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_alimentary_system_auscultation"
+                        
+                              value='<%= editDiseaseData.se_alimentary_system_auscultation ?? '' %>'
                               required
                             />
                             <input
@@ -471,6 +531,9 @@
                               placeholder="Inspection"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_musculoskeletal_system_inspection"
+                              
+                              value='<%= editDiseaseData.se_musculoskeletal_system_inspection ?? '' %>'
                               required
                             />
                             <input
@@ -483,6 +546,8 @@
                               placeholder="Palpation "
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_musculoskeletal_system_palpation"
+                              value='<%= editDiseaseData.se_musculoskeletal_system_palpation ?? '' %>'
                               required
                             />
                             <input
@@ -495,6 +560,9 @@
                               placeholder="Percussion"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_musculoskeletal_system_percussion"
+                              
+                              value='<%= editDiseaseData.se_musculoskeletal_system_percussion ?? '' %>'
                               required
                             />
                             <input
@@ -507,6 +575,8 @@
                               placeholder="Auscultation"
                               type="text"
                               class="form-control form-control-sm"
+                              name="se_musculoskeletal_system_auscultation"
+                              value='<%= editDiseaseData.se_musculoskeletal_system_auscultation ?? '' %>'
                               required
                             />
                             <input
@@ -528,18 +598,44 @@
                       rows="6"
                       class="form-control"
                       placeholder="Special Note"
-                    ></textarea>
+                      name="special_note"
+                    ><%= editDiseaseData.special_note ?? '' %></textarea>
                   </div>
                 </div>
                 
-                <button class="btn btn-info mt-2" type="submit">Save</button>
+                <button class="btn btn-info mt-2" id="final-submit-btn" type="submit"> Save </button>
                   
               </form>
             </div>
+            <input type="hidden" name="mode" id="operation_mode" value="<%= mode %>"/>
+            <% if(mode=='edit') {%>
+              <input type="hidden" name="id" id="operation_edit_id" value="<%= editDiseaseData.id %>" />
+            <%}%>
         </main>
       </div>
     </div>
-
+    
     <script src="/js/api/addDisease.js"></script>
+    
+    <% if(mode == 'edit') { %>
+      <script>
+        const cc = '<%- editDiseaseData.cc %>'
+        const advice = '<%- editDiseaseData.advice %>'
+        const investigation = '<%- editDiseaseData.investigation %>'
+        const counselling = '<%- editDiseaseData.counselling %>'
+
+        templateValues.cc = JSON.parse(cc);
+        templateValues.advice = JSON.parse(advice);
+        templateValues.investigation = JSON.parse(investigation);
+        templateValues.counselling = JSON.parse(counselling);
+
+        renderTemplateAddedText($("#cc_form_view"),templateValues.cc);
+        renderTemplateAddedText($("#advice_form_view"),templateValues.advice);
+        renderTemplateAddedText($("#investigation_form_view"),templateValues.investigation);
+        renderTemplateAddedText($("#counselling_form_view"),templateValues.counselling);
+
+      </script>
+      <% } %>
   </body>
 </html>
+

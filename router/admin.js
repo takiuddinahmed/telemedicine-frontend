@@ -106,9 +106,12 @@ router.get('/', (req,res)=>{
   res.redirect('/prescription/admin/disease?add=true')
 })
 
-router.route("/disease").get((req, res, next) => {
+router.route("/disease")
+.get((req, res, next) => {
   const add = req.query.add;
   const edit = req.query.edit;
+  const del = req.query.delete;
+
   if (add || edit) {
     const templateSql = `SELECT * FROM cc_template; 
     SELECT * FROM investigation; 
@@ -130,8 +133,7 @@ router.route("/disease").get((req, res, next) => {
           {id: 'counselling', data:templateDataArr[3], name:"Counselling"}
         ]
        if(add){
-          console.log(templateData)
-        res.render("disease", {templateData:templateData, editDiseaseData: {}});
+        res.render("disease", {templateData:templateData, editDiseaseData: {}, mode:'add'});
         }
         else if(edit){
           const id = req.query.id;
@@ -146,7 +148,7 @@ router.route("/disease").get((req, res, next) => {
               }
               else{
 
-                res.render("disease", {templateData:templateData, editDiseaseData: {}});
+                res.render("disease", {templateData:templateData, editDiseaseData: editDiseaseData[0], mode: 'edit'});
               }
           })
           }
@@ -160,14 +162,132 @@ router.route("/disease").get((req, res, next) => {
       }
     })
     
-  } else {
-    res.render("diseaseList");
   }
-});
+
+  else if(del){
+    const id = req.query.id;
+    if(id){
+      db.query(`DELETE FROM disease_data WHERE id=?`,[id],(err, deleteRes)=>{
+        if(err){
+          res.render("error", {
+           errorCode: 400,
+            errorText: "Unexpected request. Please try again.",
+          })
+        }
+        else(
+          res.redirect('/prescription/admin/disease')
+        )
+      })
+    }
+    else{
+       res.render("error", {
+        errorCode: 400,
+        errorText: "Unexpected request. Please try again.",
+      })
+    }
+  }
+   else {
+    const sql = ` SELECT * FROM disease_data`;
+    db.query(sql,[],(err, diseaseList)=>{
+      if(err){
+        console.log(err);
+         res.render("error", {
+        errorCode: 400,
+        errorText: "Unexpected request. Please try again.",
+      });
+      }
+      else{
+        const list = diseaseList.map((d)=>{
+          d.cc = JSON.parse(d.cc);
+          d.advice = JSON.parse(d.advice);
+          d.investigation = JSON.parse(d.investigation);
+          d.counselling = JSON.parse(d.counselling);
+          return d;
+        })
+        res.render("diseaseList", {diseaseList: JSON.stringify(list)} );
+      }
+    })
+  }
+})
+.post((req, res,next)=>{
+  const {
+    name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
+    se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
+    se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
+    se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
+    se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
+    special_note,cc,investigation,advice,counselling} = req.body
+
+    let sql = `INSERT INTO disease_data ( name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
+    se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
+    se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
+    se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
+    se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
+    special_note,cc,investigation,advice,counselling) VALUES(?)`
+
+    db.query(sql,[[ name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
+    se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
+    se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
+    se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
+    se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
+    special_note,cc,investigation,advice,counselling]], (err,result)=>{
+      if(err){
+        console.log(err)
+        if(err.code == 'ER_DUP_ENTRY'){
+          res.json({ok:false, err: 'Disease already exists.'})
+        }
+        else
+        res.json({ok:false, err: 'Insert error. Try again'})
+      }
+      else{
+        res.json({ok:true})
+      }
+    })
+})
+.put((req, res,next)=>{
+  const {
+    name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
+    se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
+    se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
+    se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
+    se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
+    special_note,cc,investigation,advice,counselling,id} = req.body
+
+    let sql = `UPDATE disease_data SET name=?,bp=?,pulse=?,temp=?,heart=?,lungs=?,abd=?,anaemia=?,jaundice=?,cyanosis=?,oedema=?,
+   se_nervous_system_palpation=?,se_nervous_system_inspection=?,se_nervous_system_percussion=?,se_nervous_system_auscultation=?,
+   se_cvs_palpation=?,se_cvs_inspection=?,se_cvs_percussion=?,se_cvs_auscultation=?,
+   se_alimentary_system_palpation=?,se_alimentary_system_inspection=?,se_alimentary_system_percussion=?,se_alimentary_system_auscultation=?,
+   se_musculoskeletal_system_palpation=?,se_musculoskeletal_system_inspection=?,se_musculoskeletal_system_percussion=?,se_musculoskeletal_system_auscultation=?,
+   se_respiratory_system_palpation=?,se_respiratory_system_inspection=?,se_respiratory_system_percussion=?,se_respiratory_system_auscultation=?,
+   special_note=?,cc=?,investigation=?,advice=?,counselling=? WHERE id=?`
+
+    db.query(sql,[name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
+    se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
+    se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
+    se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
+    se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
+    special_note,cc,investigation,advice,counselling,id], (err,result)=>{
+      if(err){
+        console.log(err)
+        res.json({ok:false, err: 'Insert error. Try again'})
+      }
+      else{
+        res.json({ok:true})
+      }
+    })
+})
+
+
 router.route("/generic-drug")
 .get((req, res, next) => {
   const add = req.query.add;
   const edit = req.query.edit;
+  const del = req.query.delete;
   if (add || edit) {
     db.query(`SELECT generic_name from generic_drug_data`,[], (err,drugList)=>{
       if(err){
@@ -212,7 +332,30 @@ router.route("/generic-drug")
     })
   
     
-  } else {
+  }
+  else if(del){
+    const id = req.query.id;
+    if(id){
+      db.query(`DELETE FROM generic_drug_data WHERE id=?`,[id],(err, deleteRes)=>{
+        if(err){
+          res.render("error", {
+           errorCode: 400,
+            errorText: "Unexpected request. Please try again.",
+          })
+        }
+        else(
+          res.redirect('/prescription/admin/generic-drug')
+        )
+      })
+    }
+    else{
+       res.render("error", {
+        errorCode: 400,
+        errorText: "Unexpected request. Please try again.",
+      })
+    }
+  }
+  else {
     const sql = `SELECT id, generic_name FROM generic_drug_data`;
     db.query(sql,[], (err,result)=>{
       if(err){
@@ -229,11 +372,11 @@ router.route("/generic-drug")
   }
 })
 .post((req,res,next)=>{
-  const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indecation,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category} = req.body;
+  const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category} = req.body;
   const sql = `
-  INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indecation,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category) VALUES(?)
+  INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category) VALUES(?)
   `
-  db.query(sql,[[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indecation,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category]], (err, result)=>{
+  db.query(sql,[[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category]], (err, result)=>{
     if(err){
       res.json({ok: false, err: err})
     }
@@ -261,6 +404,7 @@ router.route("/generic-drug")
 router.route("/drug").get((req, res, next) => {
   const add = req.query.add;
   const edit = req.query.edit;
+  const del = req.query.delete;
   if (add || edit) {
     db.query(`SELECT id,generic_name from generic_drug_data`,[], (err,genericDrugList)=>{
       if(err){
@@ -291,7 +435,31 @@ router.route("/drug").get((req, res, next) => {
         }
       }})
     
-  } else {
+  } 
+    else if(del){
+    const id = req.query.id;
+    if(id){
+      db.query(`DELETE FROM trade_drug_data WHERE id=?`,[id],(err, deleteRes)=>{
+        if(err){
+          res.render("error", {
+           errorCode: 400,
+            errorText: "Unexpected request. Please try again.",
+          })
+        }
+        else(
+          res.redirect('/prescription/admin/drug')
+        )
+      })
+    }
+    else{
+       res.render("error", {
+        errorCode: 400,
+        errorText: "Unexpected request. Please try again.",
+      })
+    }
+  }
+
+  else {
     db.query(`SELECT trade_drug_data.*, generic_drug_data.generic_name FROM trade_drug_data LEFT JOIN generic_drug_data ON trade_drug_data.generic_name_id=generic_drug_data.id`, [], (err,allTradeDrugList)=>{
       if(err){
         res.render("error", {
@@ -338,6 +506,28 @@ router.route("/templates/:template")
 .get((req,res)=>{
   const template = req.params.template;
   const success = req.query.success;
+  const del = req.query.delete;
+
+  console.log(template)
+
+  if(del){
+    const id = req.query.id;
+    const table = req.query.table;
+    db.query(`DELETE FROM ${table} WHERE id=?`, [id], (err, deleteResult)=>{
+      if(err){
+        console.log(err)
+         res.render("error", {
+        errorCode: 500,
+        errorText: "Unexpected request. Please try again.",
+      });
+      }
+      else{
+        res.redirect("/prescription/admin/templates/"+template)
+      }
+    })
+  }
+  else{
+
   let successStatus = ''
   if(success){
     if(success == 'true'){
@@ -359,7 +549,6 @@ router.route("/templates/:template")
   if(requestedTemplate.length){
     db.query(`SELECT * FROM ${requestedTemplate[0].table}`,[], (err, templateDataList)=>{
     if(err){
-      console.log(err)
       res.render("error", {
         errorCode: 500,
         errorText: "Unexpected request. Please try again.",
@@ -383,6 +572,7 @@ router.route("/templates/:template")
       errorText: "Unexpected request. Please try again.",
     });
   }
+}
 })
 .post((req,res)=>{
   const {name, table, mode, id} = req.body;
