@@ -13,8 +13,8 @@ const drug = JSON.parse(drugString)
                 <tr>
                   <td>${d.generic_name}</td>
                   <td>
-                  <a href="/prescription/admin/generic-drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a>
-                  <a href="/prescription/admin/generic-drug?delete=true&id=${d.id}" class="btn btn-sm btn-danger">Delete</a>
+                  <a href="/admin/generic-drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a>
+                  <a href="/admin/generic-drug?delete=true&id=${d.id}" class="btn btn-sm btn-danger">Delete</a>
                   </td>
                 </tr>
         `

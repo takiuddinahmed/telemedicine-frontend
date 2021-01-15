@@ -13,7 +13,11 @@ const { Template } = require("ejs");
 const authAdmin = require("./auth").authAdminMiddleware
 
 router.use(express.json());
-router.use(bodyParser.urlencoded({extended: true}))
+router.use(
+  bodyParser.urlencoded(
+    {extended: true}
+    )
+  )
 
 router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
@@ -49,7 +53,7 @@ router.route("/login")
           options
       );
       req.session.token = token;
-      res.redirect("/prescription/admin");
+      res.redirect("/admin");
       }
       else{
         res.render("error", {
@@ -97,13 +101,15 @@ router.route("/login")
 
 router.get('/logout', (req,res)=>{
   req.session.destroy();
-  res.redirect('/prescription/admin/login');
+  res.redirect('/admin/login');
 })
 
+router.use(cors.corsWithOptions);
 router.use(authAdminMiddleware)
 
+
 router.get('/', (req,res)=>{
-  res.redirect('/prescription/admin/disease?add=true')
+  res.redirect('/admin/disease')
 })
 
 router.route('/disease/alternative')
@@ -181,7 +187,7 @@ router.route("/disease")
           })
         }
         else(
-          res.redirect('/prescription/admin/disease')
+          res.redirect('/admin/disease')
         )
       })
     }
@@ -215,15 +221,53 @@ router.route("/disease")
     })
   }
 })
-.post((req, res,next)=>{
-  const {
+.post(cors.corsWithOptions, (req, res,next)=>{
+  let {
     name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling} = req.body
+    special_note,cc,investigation,advice,counselling} = req.body;
+
+    bp = bp.length ? bp : 'Absent';
+    pulse = pulse.length ? pulse : 'Absent';
+    temp = temp.length ? temp : 'Absent';
+    heart = heart.length ? heart : 'Absent';
+    lungs = lungs.length ? lungs : 'Absent';
+    abd = abd.length ? abd : 'Absent';
+    anaemia = anaemia.length ? anaemia : 'Absent';
+    jaundice = jaundice.length ? jaundice : 'Absent';
+    cyanosis = cyanosis.length ? cyanosis : 'Absent';
+    oedema = oedema.length ? oedema : 'Absent';
+
+    se_nervous_system_palpation = se_nervous_system_palpation.length ? se_nervous_system_palpation : 'Absent';
+    se_nervous_system_inspection = se_nervous_system_inspection.length ? se_nervous_system_inspection : 'Absent';
+    se_nervous_system_percussion = se_nervous_system_percussion.length ? se_nervous_system_percussion : 'Absent';
+    se_nervous_system_auscultation = se_nervous_system_auscultation.length ? se_nervous_system_auscultation : 'Absent';
+
+    se_cvs_palpation = se_cvs_palpation.length ? se_cvs_palpation : 'Absent';
+    se_cvs_inspection = se_cvs_inspection.length ? se_cvs_inspection : 'Absent';
+    se_cvs_percussion = se_cvs_percussion.length ? se_cvs_percussion : 'Absent';
+    se_cvs_auscultation = se_cvs_auscultation.length ? se_cvs_auscultation : 'Absent';
+
+    se_alimentary_system_palpation = se_alimentary_system_palpation.length ? se_alimentary_system_palpation : 'Absent';
+    se_alimentary_system_inspection = se_alimentary_system_inspection.length ? se_alimentary_system_inspection : 'Absent';
+    se_alimentary_system_percussion = se_alimentary_system_percussion.length ? se_alimentary_system_percussion : 'Absent';
+    se_alimentary_system_auscultation = se_alimentary_system_auscultation.length ? se_alimentary_system_auscultation : 'Absent';
+
+    se_musculoskeletal_system_palpation = se_musculoskeletal_system_palpation.length ? se_musculoskeletal_system_palpation : 'Absent';
+    se_musculoskeletal_system_inspection = se_musculoskeletal_system_inspection.length ? se_musculoskeletal_system_inspection : 'Absent';
+    se_musculoskeletal_system_percussion = se_musculoskeletal_system_percussion.length ? se_musculoskeletal_system_percussion : 'Absent';
+    se_musculoskeletal_system_auscultation = se_musculoskeletal_system_auscultation.length ? se_musculoskeletal_system_auscultation : 'Absent';
+
+    se_respiratory_system_palpation = se_respiratory_system_palpation.length ? se_respiratory_system_palpation : 'Absent';
+    se_respiratory_system_inspection = se_respiratory_system_inspection.length ? se_respiratory_system_inspection : 'Absent';
+    se_respiratory_system_percussion = se_respiratory_system_percussion.length ? se_respiratory_system_percussion : 'Absent';
+    se_respiratory_system_auscultation = se_respiratory_system_auscultation.length ? se_respiratory_system_auscultation : 'Absent';
+
+    special_note = special_note ? special_note.length : 'Absent';
 
     let sql = `INSERT INTO disease_data ( name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -253,7 +297,7 @@ router.route("/disease")
       }
     })
 })
-.put((req, res,next)=>{
+.put(cors.corsWithOptions,(req, res,next)=>{
   const {
     name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -350,7 +394,7 @@ router.route("/generic-drug")
           })
         }
         else(
-          res.redirect('/prescription/admin/generic-drug')
+          res.redirect('admin/generic-drug')
         )
       })
     }
@@ -377,7 +421,7 @@ router.route("/generic-drug")
     })
   }
 })
-.post((req,res,next)=>{
+.post(cors.corsWithOptions,(req,res,next)=>{
   const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category} = req.body;
   const sql = `
   INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category) VALUES(?)
@@ -391,7 +435,7 @@ router.route("/generic-drug")
     }
   })
 })
-.put((req,res,next)=>{
+.put(cors.corsWithOptions,(req,res,next)=>{
   const {id,generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category} = req.body;
   console.log(req.body)
   const sql = `
@@ -453,7 +497,7 @@ router.route("/drug").get((req, res, next) => {
           })
         }
         else(
-          res.redirect('/prescription/admin/drug')
+          res.redirect('/admin/drug')
         )
       })
     }
@@ -480,7 +524,7 @@ router.route("/drug").get((req, res, next) => {
   })
   }
 })
-.post((req,res)=>{
+.post(cors.corsWithOptions,(req,res)=>{
   const {trade_name, company_name, generic_name_id, price,id,_method} = req.body;
   let sql = `
     INSERT INTO trade_drug_data (trade_name, company_name, generic_name_id, price) VALUES(?)
@@ -501,7 +545,7 @@ router.route("/drug").get((req, res, next) => {
     }
     else{
       console.log(result)
-      res.redirect('/prescription/admin/drug')
+      res.redirect('/admin/drug')
     }
   })
   
@@ -528,7 +572,7 @@ router.route("/templates/:template")
       });
       }
       else{
-        res.redirect("/prescription/admin/templates/"+template)
+        res.redirect("/admin/templates/"+template)
       }
     })
   }

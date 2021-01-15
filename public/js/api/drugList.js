@@ -17,7 +17,7 @@ const tradeDrugList = JSON.parse(tradeDrugListString)
                 <td>${d.price}</td>
                 
               
-                  <td><a href="/prescription/admin/drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a></td>
+                  <td><a href="/admin/drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a></td>
                 </tr>
         `
               }

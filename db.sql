@@ -108,29 +108,37 @@ CREATE TABLE IF NOT EXISTS duration_list (
     jaundice VARCHAR(45) NULL,
     cyanosis VARCHAR(45) NULL,
     oedema VARCHAR(45) NULL,
-    se_nervousSystem VARCHAR(45) NULL,
-    se_respiratorySystem VARCHAR(45) NULL,
-    se_cvs VARCHAR(45) NULL,
-    se_alimentarySystem VARCHAR(45) NULL,
-    se_musculoskeletalSystem VARCHAR(45) NULL,
-    specialNote TEXT NULL,
-    cc TEXT,
-    investigation TEXT,
-    advice TEXT,
-    counselling TEXT, 
-    medicine TEXT,
-    PRIMARY KEY (id));
+
+    se_nervous_system_palpation VARCHAR(45),
+    se_nervous_system_inspection VARCHAR(45),
+    se_nervous_system_percussion VARCHAR(45),
+    se_nervous_system_auscultation VARCHAR(45),
+
+    se_cvs_palpation VARCHAR(45),
+    se_cvs_inspection VARCHAR(45),
+    se_cvs_percussion VARCHAR(45),
+    se_cvs_auscultation VARCHAR(45),
+
+    se_alimentary_system_palpation VARCHAR(45),
+    se_alimentary_system_inspection VARCHAR(45),
+    se_alimentary_system_percussion VARCHAR(45),
+    se_alimentary_system_auscultation VARCHAR(45),
+
+    se_musculoskeletal_system_palpation VARCHAR(45),
+    se_musculoskeletal_system_inspection VARCHAR(45),
+    se_musculoskeletal_system_percussion VARCHAR(45),
+    se_musculoskeletal_system_auscultation VARCHAR(45),
+
+    se_respiratory_system_palpation VARCHAR(45),
+    se_respiratory_system_inspection VARCHAR(45),
+    se_respiratory_system_percussion VARCHAR(45),
+    se_respiratory_system_auscultation VARCHAR(45),
     
-  CREATE TABLE IF NOT EXISTS generic_drug_data (
-    id INT NOT NULL AUTO_INCREMENT,
-    generic_name VARCHAR(50) NOT NULL UNIQUE,
-    dose_range TEXT,
-    dose_weight TEXT,
-    dose_drug_interection TEXT,
-    dose_indication TEXT,
-    dose_constrains TEXT,
-    dose_precautions_warnings TEXT,
-    dose_pregnency_category TEXT,
+    special_note VARCHAR(45) NULL,
+    cc VARCHAR(50),
+    investigation VARCHAR(50),
+    advice VARCHAR(50),
+    counselling VARCHAR(50), 
     PRIMARY KEY (id)
   )
   

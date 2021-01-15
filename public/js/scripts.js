@@ -153,24 +153,24 @@ $(".add-patient").click(function () {
 });
 
 /*---------------Suggest box------------------------*/
-let options = {
-  data: ["blue", "green", "pink", "red", "yellow"],
+// let options = {
+//   data: ["blue", "green", "pink", "red", "yellow"],
 
-  list: {
-    showAnimation: {
-      type: "slide", //normal|slide|fade
-      time: 200,
-      callback: function () {},
-    },
+//   list: {
+//     showAnimation: {
+//       type: "slide", //normal|slide|fade
+//       time: 200,
+//       callback: function () {},
+//     },
 
-    hideAnimation: {
-      type: "slide", //normal|slide|fade
-      time: 300,
-      callback: function () {},
-    },
-  },
-};
-$(".suggest-box").easyAutocomplete(options);
+//     hideAnimation: {
+//       type: "slide", //normal|slide|fade
+//       time: 300,
+//       callback: function () {},
+//     },
+//   },
+// };
+// $(".suggest-box").easyAutocomplete(options);
 
 //Profile
 $(".profile-btn").click(function () {

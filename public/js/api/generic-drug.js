@@ -1,6 +1,7 @@
 // data
 
-const server = "http://localhost:3000/prescription/admin/generic-drug";
+const server = "https://prescription.outdoorbd.com/admin/generic-drug";
+// const server = "http://localhost:3000/prescription/admin/generic-drug";
 
 
 let dose_range = [];

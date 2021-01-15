@@ -33,7 +33,7 @@ const tradeDrugList = JSON.parse(templateDataListString)
                   <td>
                   <a onclick="setEditMode(${d.id}, this)" data-name='${d.name}' class="btn btn-sm btn-primary mb-1">Edit</a>
                   <a onclick="viewData(this)" data-name='${d.name}' class="btn btn-sm btn-primary mb-1">View</a>
-                  <a href='/prescription/admin/templates/${templateName}?delete=true&id=${d.id}&table=${templateTable}' class="btn btn-sm btn-danger mb-1">Delete</a>
+                  <a href='/admin/templates/${templateName}?delete=true&id=${d.id}&table=${templateTable}' class="btn btn-sm btn-danger mb-1">Delete</a>
                   
                   </td>
                 </tr>

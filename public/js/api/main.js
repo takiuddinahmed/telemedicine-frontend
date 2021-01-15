@@ -1,8 +1,5 @@
-// const server = "https://prescriptionapi.outdoorbd.com/"
-// const server = "http://localhost:3000/";
-const server = "https://outdoorbd.com/prescription/";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N0b3JfaWQiOjEsImlhdCI6MTYwMTAxMzMxMX0.a0julIsHyIEnAZQD_mSZlmb-RhYZNzMfMI8z3JPwcwk";
+// const server = "http://localhost:3000/prescription/";
+const server = "https://prescription.outdoorbd.com/";
 
 const template_source = [
   { form: "#cc_form", source: "#ixTemplate", target: "#cc" },
@@ -40,25 +37,18 @@ $(document).ready(() => {
   $("#new-prescription-btn").click(() => {
     let diseaseInput = $("#disease").val();
     diseaseInput.trim();
-    console.log(diseaseInput);
     if (diseaseInput.length) {
       let d = diseaseList.filter((d) => d.name == diseaseInput)[0];
       updateDiseaseComponentSection(d);
-      console.log(d);
     } else {
       alert("Add a disease");
     }
   });
 });
 $(document).ready(() => {
-  fetch(server + "template/", {
-    headers: {
-      authorization: "Bearer " + token,
-    },
-  })
+  fetch(server + "template/")
     .then((response) => response.json())
     .then((res) => {
-      console.log(res);
       if (res.ok) {
         ccList = res.message[0];
         doseList = res.message[1];
@@ -89,7 +79,7 @@ $(document).ready(() => {
         update_template_auto_complete(res.message[6], "name", "#disease");
         update_template_auto_complete(
           res.message[7],
-          "brand_name",
+          "trade_name",
           "#drug_brand_name"
         );
       }
@@ -151,38 +141,55 @@ const updateDiseaseComponentSection = (d) => {
   $("#jaundice").val(d.jaundice);
   $("#cyanosis").val(d.cyanosis);
   $("#oedema").val(d.oedema);
-  $("#special-note-input").val(d.specialNote);
+  $("#special-note-input").val(d.special_note);
+
+  const se_keyList = Object.keys(d)
+                       .map(dd=>[...dd.matchAll(/^(se_[\w_]*)_(\w*)$/g)])
+                       .filter(ddd=> ddd && ddd.length)
+  se_keyList.forEach((se_key)=>{
+    se_key = se_key[0]
+    const selector = `#${se_key[1]} .${se_key[2]}`;
+    const value = d[se_key[0]]
+    $(selector).val(value)
+  })
 
   const updateTemplateData = async (
     sourceArray,
-    entry,
     targetSelector,
     summernote = false
   ) => {
-    let selectedIndexList = JSON.parse(d[entry]);
-    let selectedList = sourceArray.filter(
-      (c) => selectedIndexList.indexOf(c.id) > -1
-    );
+    let selectedList = JSON.parse(sourceArray);
     let text = "";
-    selectedList.forEach((c) => {
-      text += c.name + (summernote ? "<br/>" : "\n");
-    });
-    if (!summernote) {
-      $(targetSelector).val($(targetSelector).val() + text);
-    } else {
-      $(targetSelector).summernote(
-        "code",
-        $(targetSelector).summernote("code") + text + "<br/>"
-      );
+    if(selectedList){
+      selectedList.forEach((c) => {
+        text += c.text  + (summernote ? "<br/>" : "\n");
+      });
+      if (!summernote) {
+        $(targetSelector).val(text);
+      } else {
+        $(targetSelector).summernote(
+          "code",
+          text 
+        );
+      }
     }
+    else{
+        if (!summernote) {
+                $(targetSelector).val('');
+              } else {
+                $(targetSelector).summernote(
+                  "code",
+                  '' + "<br/>"
+                );
+              }
+            }
   };
   //cc
-  updateTemplateData(ccList, "cc", "#cc");
-  updateTemplateData(investigationList, "investigation", "#ix");
-  updateTemplateData(adviceList, "advice", "#advice-summernote", true);
+  updateTemplateData(d.cc,  "#cc");
+  updateTemplateData(d.investigation ,"#ix");
+  updateTemplateData(d.advice, "#advice-summernote", true);
   updateTemplateData(
-    counsellingList,
-    "counselling",
+    d.counselling,
     "#counselling_summernote",
     true
   );
@@ -192,14 +199,14 @@ const updateDiseaseComponentSection = (d) => {
 $(document).ready(() => {
   $("#add-drug-btn").click(() => {
     const medicine = {};
-    medicine.brandName = $("#drug_brand_name").val();
+    medicine.trade_name = $("#drug_brand_name").val();
     medicine.genericName = drugList.filter(
-      (d) => d.brand_name == medicine.brandName
+      (d) => d.trade_name == medicine.trade_name
     )[0]?.generic_name;
     medicine.duration = $("#dose_duration-").val();
     medicine.dose = $("#dose_type").val();
     medicine.dose_time = $("#dose_time_khabar").val();
-    if (medicine.brandName) {
+    if (medicine.trade_name) {
       addMedicineToPrescription(medicine);
       $("#drug_brand_name").val("");
       $("#dose_duration-").val("");
@@ -219,12 +226,11 @@ const medicinePrescriptionHtmlFormat = (medicine) => {
   return `
    <div class="tab-name">
                 <strong>
-                  ${medicine.brandName}
+                  ${medicine.trade_name}
                 </strong>
-                <span style="">
-                  ------- ${medicine.duration}
-
-             <span>${medicine.genericName}</span>
+                <span style=""> ${medicine.genericName ? `( ${medicine.genericName})`: ''}</span>
+                <span >
+                   ${medicine.duration ? `------- ${medicine.duration}` : ''}
                 </span>
                <br />
                 ${medicine.dose}    ${medicine.dose_time}
@@ -240,6 +246,7 @@ const getPreviewInfo = () => {
   prescription.lungs = $("#lungs").val();
   prescription.abd = $("#abd").val();
   prescription.advice = $("#advice-summernote").summernote("code");
+
   prescription.medicine = $("#medicine_prescription")
     .summernote("code")
     .replace(/tab-name/g, "")
@@ -252,7 +259,6 @@ const getPreviewInfo = () => {
 const preview_handle = () => {
   getPreviewInfo();
   $("#previewPrescriptionModal").html(prescriptionPreview());
-  console.log(prescription);
 };
 
 let patient_disease_id = null;
@@ -293,7 +299,7 @@ const save_patient_disease = () => {
 
 const generatePDF = () => {
   getPreviewInfo();
-  console.log(prescription);
+  
   const pdfDiv = document.getElementById("prescription-pdf");
   pdfDiv.innerHTML = prescriptionPDF();
   html2canvas(pdfDiv).then(function (canvasObj) {
@@ -306,8 +312,20 @@ const generatePDF = () => {
     document.body.appendChild(canvasObj);
     pdf.addHTML(canvasObj, 0, 0, pdfConf, () => {
       // document.body.removeChild(canvasObj);
-
-      pdf.save("test11" + ".pdf");
+      pdf.save(patientInfo.name + ".pdf");
+      
+      const pdfOutput = pdf.output('blob');
+      const formData = new FormData();
+      formData.append('pdf', pdfOutput);
+      $.ajax('/pdf',
+            {
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data){console.log(data)},
+                error: function(data){console.log(data)}
+            });
     });
   });
 };

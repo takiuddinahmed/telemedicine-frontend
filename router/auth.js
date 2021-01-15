@@ -27,20 +27,20 @@ const authAdminMiddleware = (req, res, next) => {
     jwt.verify(token, config.jwtKey, (err, decoded) => {
       if (err) {
         console.log(err);
-        res.redirect('/prescription/admin/login')
+        res.redirect('/admin/login')
       } else {
         if(decoded.admin){
           console.log({decoded})
         next();
         }
         else{
-          res.redirect('/prescription/admin/login')
+          res.redirect('/admin/login')
         }
       }
     });
   } else {
 
-    res.redirect('/prescription/admin/login')
+    res.redirect('/admin/login')
   }
 };
 
@@ -53,7 +53,7 @@ const authAdminMiddlewareForLogin = (req, res, next) => {
         next()
       } else {
         if(decoded.admin){
-        res.redirect('/prescription/admin/')
+        res.redirect('/admin/')
         }
         else{
           next()

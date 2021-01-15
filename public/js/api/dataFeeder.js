@@ -1,19 +1,4 @@
-let doctorInfo = {
-  key: "XDXTBDOPQQRX69FD",
-  id: 1,
-  avatar:
-    "https://outdoorbd.com/storage/uploads/avatars/defaults/doctor_male.png",
-  address: "chember Address",
-  bmdc: "012311122399",
-  gender: "m",
-  id: 1,
-  name: "Ismail Hossien",
-  offline_from: "ending time",
-  online_from: "opening time",
-  phone: "phone",
-  speciality: "Dentist",
-  working_days: "working days of doctor",
-};
+let doctorInfo = {};
 
 let patientInfo = {};
 
@@ -24,36 +9,16 @@ $("#updateDoctorInfo").on("click", () => {
   updateDoctorInfo(doctorInfo);
 });
 
-// async function updateDoctorInfo(data) {
-//   $.ajax({
-//     type: "POST",
-//     url: "https://outdoorbd.com/rest-api/doctor/",
-//     contentType: "application/json; charset=utf-8",
-//     crossDomain: true,
-//     data: JSON.stringify(doctorInfo),
-//     success: function (data) {
-//       console.log("updated", data);
-//     },
-//     error: (err, text, errThwon) => {
-//       console.log(err);
-//       console.log(text);
-//       console.log(errThwon);
-//     },
-//   });
-// }
-
 $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/prescription/info/doctor/",
+    url: "/info/doctor/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
     jsonpCallback: "processJSONresponse",
     error: (err, text, errThwon) => {
-      console.log(err);
-      console.log(text);
-      console.log(errThwon);
+      alert("Doctor data fetch error.")
     },
     success: function (data) {
       setDoctor(data);
@@ -67,14 +32,12 @@ $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/prescription/info/patient/",
+    url: "/info/patient/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
     jsonpCallback: "processJSONresponse",
     error: (err, text, errThwon) => {
-      console.log(err);
-      console.log(text);
-      console.log(errThwon);
+      alert("patient data fetch error.")
     },
     success: function (data) {
       patientInfo = data;
@@ -98,5 +61,5 @@ async function setPatient(data) {
   $("#patientAge").val("Age: " + data.age);
   $("#patientPregnancyStatus").val("No");
   patientInfo = data;
-  console.log(patientInfo);
+  
 }

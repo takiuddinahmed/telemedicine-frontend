@@ -15,8 +15,8 @@ const tradeDrugList = JSON.parse(diseaseListString)
                 
               
                   <td>
-                    <a href="/prescription/admin/disease?edit=true&id=${d.id}" class="btn btn-sm btn-primary mb-2">Edit</a>
-                    <a href="/prescription/admin/disease?delete=true&id=${d.id}" class="btn btn-sm btn-danger mb-2">Delete</a>
+                    <a href="/admin/disease?edit=true&id=${d.id}" class="btn btn-sm btn-primary mb-2">Edit</a>
+                    <a href="/admin/disease?delete=true&id=${d.id}" class="btn btn-sm btn-danger mb-2">Delete</a>
                   
                   </td>
                 </tr>

@@ -10,20 +10,20 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
     <!--jQuery-->
-    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="/plugins/jQuery/jquery.min.js"></script>
     <!--Bootstrap css and js-->
-    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-    <script src="plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" />
+    <script src="/prescription/plugins/bootstrap/bootstrap.bundle.min.js"></script>
     <!--Barcode Script-->
-    <script src="plugins/barcode/jquery-barcode.min.js"></script>
+    <script src="/plugins/barcode/jquery-barcode.min.js"></script>
     <!-- Auto Complete css and js -->
-    <link rel="stylesheet" href="plugins/autocomplete/autocomplete.min.css" />
-    <script src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
+    <link rel="stylesheet" href="/plugins/autocomplete/autocomplete.min.css" />
+    <script src="/prescription/plugins/autocomplete/jquery.autocomplete.min.js"></script>
     <!--Summernote css and js-->
-    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css" />
-    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css" />
+    <script src="/plugins/summernote/summernote-bs4.min.js"></script>
     <!--Custom Styles-->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
 
   <body>
@@ -31,7 +31,7 @@
     <header>
       <div class="container-fluid">
         <div class="top-user-info">
-          <a href="/prescription/logout">
+          <a href="/logout">
           <button type="button" class="btn btn-dark">
             Logout</button></a>
           <div class="barcode-input">
@@ -181,7 +181,7 @@
                     />
                   </div>
                   <label for="pluse" class="col-sm-3 col-form-label"
-                    >Pluse</label
+                    >Pulse</label
                   >
                   <div class="col-sm-9">
                     <input
@@ -276,119 +276,32 @@
               >
                 <ul>
                   <li>Nervous System</li>
-                  <div class="input-section">
-                    <input
-                      placeholder="Inspection"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Palpation "
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Percussion"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Auscultation"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
+                  <div class="input-section" id="se_nervous_system">
+                    <input placeholder="Inspection" type="text" class="form-control form-control-sm inspection" />
+                    <input placeholder="Palpation " type="text" class="form-control form-control-sm palpation" />
+                    <input placeholder="Percussion" type="text" class="form-control form-control-sm percussion" />
+                    <input placeholder="Auscultation" type="text" class="form-control form-control-sm auscultation" />
                   </div>
                   <li>Respiratory System</li>
-                  <div class="input-section">
-                    <input
-                      placeholder="Inspection"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Palpation "
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Percussion"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Auscultation"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                  </div>
-                  <li>CVS</li>
-                  <div class="input-section">
-                    <input
-                      placeholder="Inspection"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Palpation "
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Percussion"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Auscultation"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
+                  <div class="input-section"  id="se_respiratory_system">
+                    <input placeholder="Inspection" type="text" class="form-control form-control-sm inspection" />
+                    <input placeholder="Palpation " type="text" class="form-control form-control-sm palpation" />
+                    <input placeholder="Percussion" type="text" class="form-control form-control-sm percussion" />
+                    <input placeholder="Auscultation" type="text" class="form-control form-control-sm auscultation" />
                   </div>
                   <li>Alimentary System</li>
-                  <div class="input-section">
-                    <input
-                      placeholder="Inspection"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Palpation "
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Percussion"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Auscultation"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
+                  <div class="input-section"  id="se_alimentary_system">
+                    <input placeholder="Inspection" type="text" class="form-control form-control-sm inspection" />
+                    <input placeholder="Palpation " type="text" class="form-control form-control-sm palpation" />
+                    <input placeholder="Percussion" type="text" class="form-control form-control-sm percussion" />
+                    <input placeholder="Auscultation" type="text" class="form-control form-control-sm auscultation" />
                   </div>
                   <li>Musculoskeletal System</li>
-                  <div class="input-section">
-                    <input
-                      placeholder="Inspection"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Palpation "
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Percussion"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
-                    <input
-                      placeholder="Auscultation"
-                      type="text"
-                      class="form-control form-control-sm"
-                    />
+                  <div class="input-section" id="se_musculoskeletal_system"> 
+                    <input placeholder="Inspection" type="text" class="form-control form-control-sm inspection" />
+                    <input placeholder="Palpation " type="text" class="form-control form-control-sm palpation" />
+                    <input placeholder="Percussion" type="text" class="form-control form-control-sm percussion" />
+                    <input placeholder="Auscultation" type="text" class="form-control form-control-sm auscultation" />
                   </div>
                 </ul>
               </div>
@@ -404,7 +317,7 @@
               </div>
             </div>
 
-            <div class="pbox-oe-section p-3 border-top">
+            <!-- <div class="pbox-oe-section p-3 border-top">
               <div class="form-group row">
                 <label for="dHistory">Drug History</label>
                 <div class="input-group mb-1">
@@ -419,9 +332,9 @@
                 </div>
                 <div class="custom-textarea mb-3" contenteditable="true"></div>
               </div>
-            </div>
+            </div> -->
             <!--Health calculateing section-->
-            <nav>
+            <!-- <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a
                   class="nav-item nav-link active"
@@ -464,8 +377,8 @@
                   >EDD</a
                 >
               </div>
-            </nav>
-            <div class="tab-content pt-3" id="nav-tabContent">
+            </nav> -->
+            <!-- <div class="tab-content pt-3" id="nav-tabContent">
               <div
                 class="tab-pane fade show active"
                 id="nav-bmi"
@@ -745,7 +658,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="printOpt">
               <div class="form-group">
                 <span
@@ -857,58 +770,6 @@
           </div>
 
           <div class="col-lg-6 py-4">
-            <!-- <form class="border-bottom mb-3 patient-form" style="display: none">
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <input placeholder="Patient name" type="text" class="form-control form-control-sm" id="name" required />
-              </div>
-              <div class="col-md-6 mb-3">
-                <input placeholder="Patient address" type="text" class="form-control form-control-sm" id="address"
-                  required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <input placeholder="Patient mobile" type="tel" class="form-control form-control-sm" id="mobile"
-                  required />
-              </div>
-              <div class="col-md-6 mb-3">
-                <input disabled type="text" placeholder="Generate ID" class="form-control form-control-sm" id="weight"
-                  required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-sm-6 col-lg-3 mb-3">
-                <select class="custom-select custom-select-sm" id="sex" required>
-                  <option selected disabled value="">Sex</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div class="col-sm-6 col-lg-3 mb-3">
-                <input placeholder="Patient age" type="number" class="form-control form-control-sm" id="age" required />
-              </div>
-              <div class="col-lg-6 mb-3">
-                <input type="date" class="form-control form-control-sm" id="date" required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-sm-6 col-lg-3 mb-3">
-                <select class="custom-select custom-select-sm" id="pregnancy" required>
-                  <option selected disabled value="">Pregnancy</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
-              </div>
-              <div class="col-sm-6 col-lg-3 mb-3">
-                <input type="number" placeholder="Weight" class="form-control form-control-sm" id="weight" required />
-              </div>
-            </div>
-          </form> -->
-            <!-- <button class="btn btn-sm add-patient btn-info mb-3">
-            Add Patient
-          </button> -->
 
             <form class="mb-3">
               <div class="form-row">
@@ -1002,7 +863,7 @@
                   class="suggest-box form-control form-control-sm"
                   placeholder="Duration"
                   id="dose_duration-"
-                  value="7 days"
+                  value="৭ দিন"
                 />
               </div>
               <div class="form-group col-sm-5">
@@ -1017,7 +878,8 @@
                 <select class="custom-select custom-select-sm"
                 id="dose_time_khabar"
                 >
-                  <option selected value="খাবার আগে">খাবার আগে</option>
+                  <option selected value=""></option>
+                  <option value="খাবার আগে">খাবার আগে</option>
                   <option value="খাবার আগে">খাবার পরে</option>
                 </select>
               </div>
@@ -1076,9 +938,9 @@
             </div>
             <h4 class="mt-4">
               Counselling
-              <button class="ml-5 btn-sm btn btn-info">Print</button>
+              <!-- <button class="ml-5 btn-sm btn btn-info">Print</button>
               <button class="btn-sm btn btn-info">Edit</button>
-              <button class="btn-sm btn btn-info">Preview</button>
+              <button class="btn-sm btn btn-info">Preview</button> -->
             </h4>
             <div class="input-group mb-3">
               <form id="counselling_form">
@@ -1250,7 +1112,7 @@
                 <a href="#">Contact Us</a>
               </div>
             </div>
-            <div class="border-bottom drugDatabase mt-3 pb-3">
+            <!-- <div class="border-bottom drugDatabase mt-3 pb-3">
               <h5>Drug Database</h5>
               <select class="custom-select type-selection custom-select-sm">
                 <option selected disabled>Choose</option>
@@ -1533,7 +1395,7 @@
                   </ul>
                 </ul>
               </div>
-            </div>
+            </div> -->
           </aside>
         </div>
         <div class="msg-alert" style="display: none">
@@ -1606,10 +1468,10 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js" integrity="sha512-jzL0FvPiDtXef2o2XZJWgaEpVAihqquZT/tT89qCVaxVuHwJ/1DFcJ+8TBMXplSJXE8gLbVAUv+Lj20qHpGx+A==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-   <script src="js/scripts.js"></script>
-    <script src="js/api/dataFeeder.js"></script>
-    <script src="js/api/main.js"></script>
-    <script src="js/api/prescriptionPreview.js"></script>
+   <script src="/js/scripts.js"></script>
+    <script src="/js/api/dataFeeder.js"></script>
+    <script src="/js/api/main.js"></script>
+    <script src="/js/api/prescriptionPreview.js"></script>
     
   </body>
 </html>

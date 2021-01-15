@@ -14,8 +14,6 @@ const index = require("./router/indexRouter");
 const adminRouter = require("./router/admin")
 const app = express();
 
-
-
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -38,16 +36,16 @@ app.use((req,res,next)=>{
 })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
-app.use("/", index);
-app.use("/prescription/admin",adminRouter)
-app.use("/prescription", prescription);
+// app.use("/", index);
+// app.use("/prescription", prescription);
+// app.use("/prescription/admin",adminRouter)
+app.use('/admin', adminRouter);
+app.use("/", prescription);
 app.use(prescription);
-app.use("/feed", feed);
-// app.use("/prescription", template);
 
 app.use((req, res, next) => {
-  // res.status(404).send("<h2>" + req.path + " NOT FOUND</h2>");
   res.status(404).render("error.ejs",{errorCode:404,errorText:"Data Not Found"})
 });
 
-app.listen(3000,'0.0.0.0');
+// app.listen(3000,'0.0.0.0');
+app.listen(3000);

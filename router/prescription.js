@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const rootDir = require("../util/path");
 const cors = require("../cors");
@@ -8,20 +9,37 @@ const config = require("../config");
 const db = require("../database/db");
 const utilDB = require("./basicDBOperation");
 const getReq = require("./requests").sendGetReq;
+const postReq = require("./requests").sendPostReq;
 const authDoctor = require("./auth").authDoctorMiddleware;
 const adminRouter = require("./admin");
+const multer = require('multer');
+const crypto = require('crypto');
 router.use(express.json());
+
+const pdfStorage = multer.diskStorage({
+  destination: function(req,file,callback){
+    callback(null,  './pdfUpload');
+  },
+  filename: function( req,file,cb){
+    return crypto.pseudoRandomBytes(16, function (err, raw) {
+        if (err) {
+          return cb(err);
+        }
+        return cb(null, "" + (raw.toString('hex')) + '.pdf');
+    });
+  }
+})
+
+const uploadPdf = multer({storage: pdfStorage});
+
 router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
 });
 
-const patientID = 521;
-const doctorId = 125;
-const key = "XDXTBDOPQQRX69FD";
+router.all("/prescription", (req,res)=>{
+  res.redirect('/');
+})
 
-
-
-// router.use("/admin", adminRouter);
 
 router.post("/save", cors.corsWithOptions, (req, res) => {
   let d = req.body;
@@ -83,6 +101,7 @@ router.post("/save", cors.corsWithOptions, (req, res) => {
   }
 });
 router.get("/template", cors.corsWithOptions, (req, res) => {
+  console.log("------- template -------------");
   let sql = `
   SELECT * FROM cc_template; 
   SELECT * FROM dose_list; 
@@ -91,10 +110,11 @@ router.get("/template", cors.corsWithOptions, (req, res) => {
   SELECT * FROM advice; 
   SELECT * FROM counselling;
   SELECT * FROM disease_data;
-  SELECT * FROM drug_data;
+  SELECT td.*, gd.generic_name FROM trade_drug_data td LEFT JOIN generic_drug_data gd ON td.generic_name_id = gd.id;
   `;
   utilDB.responseGetReq(sql, [], res);
 });
+
 
 router.get("/", cors.corsWithOptions, (req, res, next) => {
   const patientId = req.query.patientid;
@@ -111,7 +131,7 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
       req.session.token = token;
       req.session.patientId = patientId;
       req.session.doctorId = doctorId;
-      res.redirect("/prescription");
+      res.redirect("/");
     } else {
       req.session.destroy();
       res.render("error", {
@@ -141,9 +161,52 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
   }
 });
 
+router.get("/pdf/:filename", cors.corsWithOptions, (req, res)=>{
+  let filename = req.params.filename;
+  // res.send(filename);
+        if (filename) {
+            let file_path = path.join(__dirname, '/../pdfUpload', filename);
+            fs.exists(file_path, (exist) => {
+                if (exist) {
+                    res.sendFile(file_path);
+                } else {
+                    res.status(404).end();
+                }
+            });
+        }
+        else {
+            res.status(400).end();
+        }
+})
+
+
+router.post("/pdf",cors.corsWithOptions, uploadPdf.single('pdf'), async (req,res)=>{
+  const fileInfo = req.file.filename;
+  const p_id = req.session.patientId;
+  if(fileInfo && p_id){
+    const result = await postReq(
+      `https://outdoorbd.com/rest-api/prescription`,
+      {
+        key: config.restKey,
+        message: 'https://prescription.outdoorbd.com/pdf/'+fileInfo,
+        patient_id: p_id
+      }
+    )
+    if(result.ok){
+      res.json(res.res);
+    }
+    else{
+      res.status(404).json({ err: "error happened on api", message: result.err });
+    }
+  }
+  else{
+    res.status(400).json({ err: "error happened", message: {fileInfo, p_id} });
+  }
+})
+
 router.get("/logout", cors.corsWithOptions, authDoctor, (req, res) => {
   req.session.destroy();
-  res.redirect("/prescription");
+  res.redirect("/");
 });
 
 //doctor patient info update
