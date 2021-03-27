@@ -2,24 +2,31 @@
 <html lang="en">
     <%-include('partials/header.ejs')%>
   <body>
+    <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css" />
+    <script src="/plugins/summernote/summernote-bs4.min.js"></script>
     <%-include('partials/nav.ejs')%>
 
     <div class="container-fluid">
       <div class="row">
         <%-include('partials/sidebar.ejs')%>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-          <form method="POST">
-          <div class="container-fluid">
+          <form name="myForm" id="form" method="POST" onsubmit="doSubmit();">
+          <div class="container">
             <div class="row">
-              <div class="col-md-7 mt-5">
+              <div class="col-12">
                 <h3><%= display %></h3>
-                <textarea rows="8" class="form-control" name="name" id="template-input-box"></textarea>
+                <input type="text" name="title" id="input_title" class="form-control mb-3" placeholder="Title" />
+                <input type="hidden" name="details" id="input_text" />
+                <!-- <textarea rows="8" class="form-control" name="name" id="template-input-box"></textarea> -->
+                <div id="summernot_box"></div>
               </div>
             </div>
             <input type="hidden" name="table" value="<%- table%>">
             <input type="hidden" name="mode" value="add" id="form-mode">
             <input type="hidden" name="id" value="" id="form-table-id">
-            <button class="btn btn-primary mt-3" id="submit-btn">Add</button>
+            <div class="col text-center">
+              <button class="btn btn-primary mt-3" id="submit-btn">Add</button>
+            </div>
           </div>
         </form>
             <div class="mb-3 input-group mt-5">

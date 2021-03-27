@@ -110,20 +110,30 @@
             <div class="form-row mb-3">
               <label for="cc">C/C</label>
               <div class="input-group mb-3">
+                <div class="row">
+                  <div class="col-8">
 
-                <input
+                  <input
                   type="text"
                   class="form-control suggest-box"
                   id="ixTemplate"
                   placeholder="Get C/C Template"
                 />
+                  </div>
+                  <div class="col-2">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  
+                </div>
+                
               </div>
-              <textarea
+              <!-- <textarea
                 type="text"
                 rows="8"
                 class="form-control form-control-sm"
                 id="cc"
-              ></textarea>
+              ></textarea> -->
+              <div class="customTextbox" id="cc" ></div>
             </div>
             </form>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -317,348 +327,7 @@
               </div>
             </div>
 
-            <!-- <div class="pbox-oe-section p-3 border-top">
-              <div class="form-group row">
-                <label for="dHistory">Drug History</label>
-                <div class="input-group mb-1">
-                  <input
-                    id="dHistory"
-                    type="text"
-                    class="suggest-box form-control"
-                    placeholder="Search"
-                    aria-label="Search"
-                    aria-describedby="basic-addon1"
-                  />
-                </div>
-                <div class="custom-textarea mb-3" contenteditable="true"></div>
-              </div>
-            </div> -->
-            <!--Health calculateing section-->
-            <!-- <nav>
-              <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a
-                  class="nav-item nav-link active"
-                  id="nav-bmi-tab"
-                  data-toggle="tab"
-                  href="#nav-bmi"
-                  role="tab"
-                  aria-controls="nav-bmi"
-                  aria-selected="true"
-                  >BMI</a
-                >
-                <a
-                  class="nav-item nav-link"
-                  id="nav-bmr-tab"
-                  data-toggle="tab"
-                  href="#nav-bmr"
-                  role="tab"
-                  aria-controls="nav-bmr"
-                  aria-selected="false"
-                  >BMR</a
-                >
-                <a
-                  class="nav-item nav-link"
-                  id="nav-z-score-tab"
-                  data-toggle="tab"
-                  href="#nav-z-score"
-                  role="tab"
-                  aria-controls="nav-z-score"
-                  aria-selected="false"
-                  >Z-Score</a
-                >
-                <a
-                  class="nav-item nav-link"
-                  id="nav-edd-tab"
-                  data-toggle="tab"
-                  href="#nav-edd"
-                  role="tab"
-                  aria-controls="nav-edd"
-                  aria-selected="false"
-                  >EDD</a
-                >
-              </div>
-            </nav> -->
-            <!-- <div class="tab-content pt-3" id="nav-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="nav-bmi"
-                role="tabpanel"
-                aria-labelledby="nav-bmi-tab"
-              >
-                <div class="form-row">
-                  <div class="form-group col-4">
-                    <label for="bmiWeight">Weight (KG)</label>
-                    <input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmiWeight"
-                      aria-describedby="Weight"
-                      placeholder="Weight"
-                    />
-                  </div>
-                  <div class="form-group col-4">
-                    <label for="bmiHeight">Height (Feet)</label>
-                    <input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmiHeight"
-                      aria-describedby="Height"
-                      placeholder="Height"
-                    />
-                  </div>
-                  <div class="form-group col-4">
-                    <label for="bmi">BMI</label>
-                    <input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmi"
-                      aria-describedby="bmi"
-                      placeholder="BMI"
-                      disabled
-                    />
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="bmiClass"
-                      >Class : <span id="bmiClass"></span
-                    ></label>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="nav-bmr"
-                role="tabpanel"
-                aria-labelledby="nav-bmr-tab"
-              >
-                <div class="form-row">
-                  <div class="form-group col-4">
-                    <label for="bmrWeight">Weight (KG)</label>
-                    <input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmrWeight"
-                      aria-describedby="Weight"
-                      placeholder="Weight"
-                    />
-                  </div>
-                  <div class="form-group col-4">
-                    <label for="bmrHeight">Height (Feet)</label>
-                    <input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmrHeight"
-                      aria-describedby="Height"
-                      placeholder="Height"
-                    />
-                  </div>
-                  <div class="form-group col-4">
-                    <label for="bmrAge">Age</label
-                    ><input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmrAge"
-                      aria-describedby="bmr age"
-                      placeholder="Age"
-                    />
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="d-block">Gender</label>
-                    <div
-                      class="custom-control custom-radio custom-control-inline"
-                    >
-                      <input
-                        type="radio"
-                        id="bmrGenderMale"
-                        name="bmrGender"
-                        class="custom-control-input"
-                      />
-                      <label class="custom-control-label" for="bmrGenderMale"
-                        >Male</label
-                      >
-                    </div>
-                    <div
-                      class="custom-control custom-radio custom-control-inline"
-                    >
-                      <input
-                        type="radio"
-                        id="bmrGenderFemale"
-                        name="bmrGender"
-                        class="custom-control-input"
-                      />
-                      <label class="custom-control-label" for="bmrGenderFemale"
-                        >Female</label
-                      >
-                    </div>
-                  </div>
-                  <div class="form-group col-6">
-                    <label for="bmrExcercise">Activity</label
-                    ><select
-                      id="bmrExcercise"
-                      class="custom-select custom-select-sm"
-                    >
-                      <option selected disabled>Choose</option>
-                      <option value="1">No excercise</option>
-                      <option value="2">Light excercise</option>
-                      <option value="3">Moderate</option>
-                      <option value="4">Very active</option>
-                      <option value="5">Heavy active</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-5">
-                    <label for="bmr">BMR</label
-                    ><input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="bmr"
-                      aria-describedby="bmr"
-                      placeholder="BMR"
-                      disabled
-                    />
-                  </div>
-                  <div class="form-group col-7">
-                    <label for="calorie">Calorie Need</label
-                    ><input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="calorie"
-                      aria-describedby="calorie"
-                      placeholder="Calorie"
-                      disabled
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="nav-z-score"
-                role="tabpanel"
-                aria-labelledby="nav-z-score-tab"
-              >
-                <div class="form-row">
-                  <div class="form-group col-8">
-                    <label for="zScore-ddmmyy">Date of Birth</label>
-                    <input
-                      type="date"
-                      class="form-control form-control-sm"
-                      id="zScore-ddmmyy"
-                      aria-describedby="Date of Birth"
-                    />
-                  </div>
-                  <div class="form-group col-4">
-                    <label for="zScoreWeight">Weight (KG)</label>
-                    <input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="zScoreWeight"
-                      aria-describedby="Weight"
-                      placeholder="Weight"
-                    />
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="d-block">Gender</label>
-                    <div
-                      class="custom-control custom-radio custom-control-inline"
-                    >
-                      <input
-                        type="radio"
-                        id="zScoreGenderMale"
-                        name="zScoreGender"
-                        class="custom-control-input"
-                      />
-                      <label class="custom-control-label" for="zScoreGenderMale"
-                        >Male</label
-                      >
-                    </div>
-                    <div
-                      class="custom-control custom-radio custom-control-inline"
-                    >
-                      <input
-                        type="radio"
-                        id="zScoreGenderFemale"
-                        name="zScoreGender"
-                        class="custom-control-input"
-                      />
-                      <label
-                        class="custom-control-label"
-                        for="zScoreGenderFemale"
-                        >Female</label
-                      >
-                    </div>
-                  </div>
-                  <div class="form-group col-8">
-                    <label for="zScoreResult">Result</label
-                    ><input
-                      type="text"
-                      class="form-control form-control-sm"
-                      id="zScoreResult"
-                      aria-describedby="Result"
-                      placeholder="Result"
-                      disabled
-                    />
-                  </div>
-                  <div class="form-group col-4">
-                    <label for="zScoreDays">Days</label
-                    ><input
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="zScoreDays"
-                      aria-describedby="Days"
-                      placeholder="Days"
-                      disabled
-                    />
-                  </div>
-
-                  <div class="form-group col-12">
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      aria-describedby="Ideal Weight"
-                      placeholder="Ideal Weight"
-                      disabled
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="nav-edd"
-                role="tabpanel"
-                aria-labelledby="nav-edd-tab"
-              >
-                <div class="form-row">
-                  <div class="form-group col-12">
-                    <label for="edd-lmp">LMP</label>
-                    <input
-                      type="date"
-                      class="form-control form-control-sm"
-                      id="edd-lmp"
-                      aria-describedby="LMP"
-                      required
-                    />
-                  </div>
-                  <div class="form-group col-7">
-                    <label>Gestational Age (LMP)</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      aria-describedby="Gestational Age (LMP)"
-                      placeholder="Gestational Age (LMP)"
-                      disabled
-                    />
-                  </div>
-                  <div class="form-group col-5">
-                    <label>EDD (LMP)</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      aria-describedby="EDD (LMP)"
-                      placeholder="EDD (LMP)"
-                      disabled
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> -->
+            
             <div class="printOpt">
               <div class="form-group">
                 <span
@@ -690,36 +359,7 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="drive-sec border-top pt-3">
-            <h5>Quick Upload</h5>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input img-upload" id="customFile" />
-              <label class="custom-file-label" for="customFile">Choose file</label>
-            </div>
-            <img style="display: none" class="preview-img border-bottom pb-2 img-thumbnail img-fluid mt-3" src=""
-              alt="" />
-            <button class="btn btn-info btn-sm btn-upload mt-2" style="display: none">
-              Upload
-            </button>
-            <div class="drive-imgs row px-3">
-              <div class="col-md-3 p-0">
-                <img class="img-fluid single-img" data-toggle="modal" data-target="#imageModal"
-                  src="./images/doctor.jpg" alt="" />
-              </div>
-              <div class="col-md-3 p-0">
-                <img class="img-fluid single-img" data-toggle="modal" data-target="#imageModal"
-                  src="./images/doctor.png" alt="" />
-              </div>
-              <div class="col-md-3 p-0">
-                <img class="img-fluid single-img" data-toggle="modal" data-target="#imageModal"
-                  src="./images/doctor.webp" alt="" />
-              </div>
-              <div class="col-md-3 p-0">
-                <img class="img-fluid single-img" data-toggle="modal" data-target="#imageModal"
-                  src="./images/doctor.png" alt="" />
-              </div>
-            </div>
-          </div> -->
+         
           </aside>
           <!-- Image show modal -->
           <!-- Button trigger modal -->
@@ -895,35 +535,55 @@
               <h4 class="m-0">Investigation</h4>
             </label>
             <div class="input-group mb-3">
-              <form id="investigation_form">
-              <input
+              <form id="investigation_form" style="width: 100%;">
+                <div class="row">
+                <div class="col-10">
+                  <input
                 type="text"
                 class="suggest-box form-control"
                 placeholder="Get I/X Template"
                 id="investigation_input"
               />
+                  </div>
+                  <div class="col-2">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  </div>
+              
               </form>
             </div>
-            <textarea id="ix" class="form-control" style="height: 10rem;"></textarea>
+            <!-- <textarea id="ix" class="form-control" style="height: 10rem;"></textarea> -->
+            <div class="customTextbox" id="ix" ></div>
             <h4 class="mt-4">Advice</h4>
             <div class="input-group mb-3">
-              <form id="advice_form">
+              <form id="advice_form" style="width:100%">
+                <div class="row">
+                <div class="col-10">
               <input
                 type="text"
                 class="suggest-box form-control"
                 placeholder="Get Advice Template"
                 id="advice_input"
               />
+
+                  </div>
+                  <div class="col-2">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  </div>
               </form>
             </div>
             <div class="customTextbox"  id="advice-summernote"></div>
             <div class="form-row mt-3">
               <div class="form-group pr-0" style="width: 70px">
+            
                 <input
                   type="number"
                   class="form-control form-control-sm"
                   style="border-radius: 0; border-right: 0"
                 />
+
+                
               </div>
               <div class="form-group p-0">
                 <select
@@ -943,13 +603,21 @@
               <button class="btn-sm btn btn-info">Preview</button> -->
             </h4>
             <div class="input-group mb-3">
-              <form id="counselling_form">
-              <input
+              <form id="counselling_form" style="width:100%">
+                  <div class="row">
+                <div class="col-10">
+                  <input
                 type="text"
                 class="suggest-box form-control"
                 placeholder="Get Counselling Template"
                 id="counselling_input"
               />
+                  </div>
+                  <div class="col-2">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  </div>
+              
               </form>
             </div>
             <div class="customTextbox" id="counselling_summernote">
@@ -1430,14 +1098,14 @@
       $(".customTextbox").summernote({
         tabsize: 2,
         height: 150,
-        toolbar: [
+         toolbar: [
           ["style", ["style"]],
           ["font", ["bold", "underline", "clear"]],
           ["fontname", ["fontname"]],
-          ["fontStyle", ["fontsize"]],
-          ["height", ["height"]],
           ["color", ["color"]],
           ["para", ["ul", "ol", "paragraph"]],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
           ["view", ["fullscreen", "help"]],
         ],
       });
@@ -1455,10 +1123,10 @@
           ["style", ["style"]],
           ["font", ["bold", "underline", "clear"]],
           ["fontname", ["fontname"]],
-          ["fontStyle", ["fontsize"]],
-          ["height", ["height"]],
           ["color", ["color"]],
           ["para", ["ul", "ol", "paragraph"]],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
           ["view", ["fullscreen", "help"]],
         ],
       });

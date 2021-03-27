@@ -1,4 +1,4 @@
-      const drug = JSON.parse(drugString)
+const drug = JSON.parse(drugString)
       let filteredDrug = drug;
       const drugTableOptions = {max_item:5}
       let activePage = 1;

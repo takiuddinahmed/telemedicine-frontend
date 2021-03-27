@@ -3,7 +3,8 @@ const db = require("./db");
 const initScripts = [
   `CREATE TABLE IF NOT EXISTS cc_template (
     id INT NOT NULL AUTO_INCREMENT,
-    name TEXT NOT NULL,
+    title TEXT NOT NULL,
+    details MEDIUMTEXT NOT NULL,
     PRIMARY KEY (id)
 )
 `,
@@ -24,20 +25,23 @@ CREATE TABLE IF NOT EXISTS duration_list (
   `
     CREATE TABLE IF NOT EXISTS investigation (
       id INT NOT NULL AUTO_INCREMENT,
-      name TEXT NOT NULL,
+      title TEXT NOT NULL,
+      details MEDIUMTEXT NOT NULL,
       PRIMARY KEY (id)
     )
     `,
   `
     CREATE TABLE IF NOT EXISTS advice (
       id INT NOT NULL AUTO_INCREMENT,
-      name TEXT NOT NULL,
+      title TEXT NOT NULL,
+      details MEDIUMTEXT NOT NULL,
       PRIMARY KEY (id)
     )
     `,
   `CREATE TABLE IF NOT EXISTS counselling (
       id INT NOT NULL AUTO_INCREMENT,
-      name TEXT NOT NULL,
+      title TEXT NOT NULL,
+      details MEDIUMTEXT NOT NULL,
       PRIMARY KEY (id)
     )
     `,
@@ -83,9 +87,9 @@ CREATE TABLE IF NOT EXISTS duration_list (
     
     special_note TEXT DEFAULT Absent,
     cc TEXT,
-    investigation TEXT,
-    advice TEXT,
-    counselling TEXT, 
+    investigation MEDIUMTEXT,
+    advice MEDIUMTEXT,
+    counselling MEDIUMTEXT, 
 
     PRIMARY KEY (id));
     `,
@@ -126,11 +130,11 @@ CREATE TABLE IF NOT EXISTS duration_list (
     se_alimentarySystem VARCHAR(45) NULL,
     se_musculoskeletalSystem VARCHAR(45) NULL,
     specialNote TEXT NULL,
-    cc TEXT,
-    investigation TEXT,
-    advice TEXT,
-    counselling TEXT, 
-    medicine TEXT,
+    cc MEDIUMTEXT,
+    investigation MEDIUMTEXT,
+    advice MEDIUMTEXT,
+    counselling MEDIUMTEXT, 
+    medicine MEDIUMTEXT,
     PRIMARY KEY (id));
     `,
   `
@@ -175,10 +179,11 @@ CREATE TABLE IF NOT EXISTS trade_drug_data (
 ];
 
 initScripts.forEach((sql) => {
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log("Table created");
-  });
+  console.log(sql);
+  // db.query(sql, (err, result) => {
+  //   if (err) throw err;
+  //   console.log("Table created");
+  // });
 });
 
 const fs = require("fs");

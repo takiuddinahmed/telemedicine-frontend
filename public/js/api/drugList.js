@@ -1,4 +1,4 @@
-const tradeDrugList = JSON.parse(tradeDrugListString)
+      const tradeDrugList = JSON.parse(tradeDrugListString)
       let filteredDrug = tradeDrugList;
       const drugTableOptions = {max_item:5}
       let activePage = 1;

@@ -36,9 +36,9 @@ app.use((req,res,next)=>{
 })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
-// app.use("/", index);
-// app.use("/prescription", prescription);
-// app.use("/prescription/admin",adminRouter)
+app.use("/", index);
+app.use("/prescription", prescription);
+app.use("/prescription/admin",adminRouter)
 app.use('/admin', adminRouter);
 app.use("/", prescription);
 app.use(prescription);

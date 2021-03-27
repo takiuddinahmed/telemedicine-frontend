@@ -1,7 +1,25 @@
-      const drug = JSON.parse(drugString)
-      let filteredDrug = drug;
+
+const setEditMode =(id, e)=> {
+    $("#form-mode").val('edit');
+    $("#form-table-id").val(id);
+    $("#template-input-box").val(e.dataset.name)
+    $("#template-input-box").focus();
+    $("#submit-btn").html("Update")
+}
+
+const viewData = (e)=>{
+    console.log(e.dataset.name)
+    $("#modal_view").modal('show');
+    $("#modal_view_data").html(e.dataset.name);
+}
+
+
+const tradeDrugList = JSON.parse(templateDataListString)
+      let filteredDrug = tradeDrugList;
       const drugTableOptions = {max_item:5}
       let activePage = 1;
+
+
 
       // view drug
       const drugTableViewUpdate =()=>{
@@ -11,10 +29,12 @@
         if(index>= start && index<=end){
         return `
                 <tr>
-                  <td>${d.generic_name}</td>
+                <td>${d.name}</td>
                   <td>
-                  <a href="/admin/generic-drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a>
-                  <a href="/admin/generic-drug?delete=true&id=${d.id}" class="btn btn-sm btn-danger">Delete</a>
+                  <a onclick="setEditMode(${d.id}, this)" data-name='${d.name}' class="btn btn-sm btn-primary mb-1">Edit</a>
+                  <a onclick="viewData(this)" data-name='${d.name}' class="btn btn-sm btn-primary mb-1">View</a>
+                  <a href='/admin/templates/${templateName}?delete=true&id=${d.id}&table=${templateTable}' class="btn btn-sm btn-danger mb-1">Delete</a>
+                  
                   </td>
                 </tr>
         `
@@ -23,16 +43,16 @@
                 return ``
               }
       })
-      $("#drug-table").html(drugTableHtml)
+      $("#template-table").html(drugTableHtml)
     }
 
     const searchInputChange = (e)=>{
       const searchVal = e.target.value;
       if(searchVal.length){
-      filteredDrug = drug.filter(d=> d.generic_name.toLowerCase().indexOf(searchVal.toLowerCase()) >-1)
+      filteredDrug = tradeDrugList.filter(d=> d.name.toLowerCase().indexOf(searchVal.toLowerCase()) >-1)
        }
        else{
-          filteredDrug = drug;
+          filteredDrug = tradeDrugList      ;
        } 
        drugTableViewUpdate()
       

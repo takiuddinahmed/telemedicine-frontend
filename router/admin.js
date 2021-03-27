@@ -466,7 +466,7 @@ router.route("/drug").get((req, res, next) => {
       }
       else{
         if(add){
-          res.render("drug", {genericDrugList:genericDrugList, mode:"POST", tradeDrug:{}, edit:false});
+          res.render("drug", {genericDrugList:JSON.stringify(genericDrugList), mode:"POST", tradeDrug:{}, edit:false});
         }
         else{
           id=req.query.id;
@@ -597,7 +597,7 @@ router.route("/templates/:template")
   ]
   const requestedTemplate = templateList.filter(t=> t.name === template)
   if(requestedTemplate.length){
-    db.query(`SELECT * FROM ${requestedTemplate[0].table}`,[], (err, templateDataList)=>{
+    db.query(`SELECT id,title FROM ${requestedTemplate[0].table}`,[], (err, templateDataList)=>{
     if(err){
       res.render("error", {
         errorCode: 500,
@@ -625,16 +625,16 @@ router.route("/templates/:template")
 }
 })
 .post((req,res)=>{
-  const {name, table, mode, id} = req.body;
+  const {title, details, table, mode, id} = req.body;
   let sql = `
-  INSERT INTO ${table} (name) VALUES(?)
+  INSERT INTO ${table} (title, details) VALUES(?)
   `
-  let arr = [name]
+  let arr = [[title,details]]
   if(mode != 'add'){
     sql = `
-      UPDATE ${table} SET name=? WHERE id=?
+      UPDATE ${table} SET title=?, details=? WHERE id=?
     `
-    arr = [name,id]
+    arr = [title,details,id]
   }
   db.query(sql, arr, (err, result)=>{
     if(err){
@@ -655,5 +655,30 @@ router.route("/doctor").get((req, res, next) => {
 router.route("/patient").get((req, res, next) => {
   res.render("paitentTable");
 });
+
+
+// extra routes for api call
+router.get("/api/template/:name", (req,res)=>{
+  let templateName = req.params.name;
+  let id = req.query.id;
+  console.log(templateName)
+  id = parseInt(id);
+  if(!id){
+    res.status(400).json({error:true, data:"Invalid request"})
+  }
+  else{
+  let sql = `SELECT details FROM ${templateName} WHERE id=?`;
+  db.query(sql,[id],(err,result)=>{
+    if(err){
+      console.log({err});
+      res.status(500).json({error:true, data:"Internal Server Error"})
+    }
+    else{
+      res.status(200).json(result)
+    }
+  })
+}
+
+})
 
 module.exports = router;

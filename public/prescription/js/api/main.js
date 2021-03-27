@@ -1,28 +1,24 @@
-const server = "http://localhost:3000/prescription/";
-// const server = "https://prescription.outdoorbd.com/";
+// const server = "http://localhost:3000/prescription/";
+const server = "https://prescription.outdoorbd.com/";
 
 const template_source = [
-  { form: "#cc_form", source: "#ixTemplate", target: "#cc" ,summernote: true, name: "cc"},
+  { form: "#cc_form", source: "#ixTemplate", target: "#cc" },
   {
     form: "#investigation_form",
     source: "#investigation_input",
     target: "#ix",
-    summernote: true,
-    name: "investigation"
   },
   {
     form: "#advice_form",
     source: "#advice_input",
     target: "#advice-summernote",
     summernote: true,
-    name: "advice"
   },
   {
     form: "#counselling_form",
     source: "#counselling_input",
     target: "#counselling_summernote",
     summernote: true,
-    name: "counselling"
   },
 ];
 
@@ -34,8 +30,6 @@ let adviceList = [];
 let counsellingList = [];
 let diseaseList = [];
 let drugList = [];
-
-let templateDataAll = {};
 
 // disease selection
 
@@ -64,8 +58,7 @@ $(document).ready(() => {
         counsellingList = res.message[5];
         diseaseList = res.message[6];
         drugList = res.message[7];
-        templateDataAll = {cc:ccList,investigation:investigationList,advice:adviceList,counselling:counsellingList}
-        update_template_auto_complete(res.message[0], "title", "#ixTemplate");
+        update_template_auto_complete(res.message[0], "name", "#ixTemplate");
         update_template_auto_complete(res.message[1], "name", "#dose_type");
         update_template_auto_complete(
           res.message[2],
@@ -74,13 +67,13 @@ $(document).ready(() => {
         );
         update_template_auto_complete(
           res.message[3],
-          "title",
+          "name",
           "#investigation_input"
         );
-        update_template_auto_complete(res.message[4], "title", "#advice_input");
+        update_template_auto_complete(res.message[4], "name", "#advice_input");
         update_template_auto_complete(
           res.message[5],
-          "title",
+          "name",
           "#counselling_input"
         );
         update_template_auto_complete(res.message[6], "name", "#disease");
@@ -115,24 +108,12 @@ $(document).ready(() => {
       $(temp.source).val("");
       txt.trim();
       if (txt.length) {
-        // check if available in data list
-        const d = templateDataAll[temp.name]?.filter(each=>each.title == txt)
-        if(d.length) {
-          console.log(d);
-          txt = d[0]?.details;
-        }
-        else{
-          txt = '<p>' + txt + '</p>'
-        }
         if (!temp.summernote) {
           $(temp.target).val($(temp.target).val() + txt + "\n");
         } else {
-          let  finalText = $(temp.target).summernote("code") + txt;
-          finalText = finalText.replace("<p><br></p>","")
-          console.log(finalText)
           $(temp.target).summernote(
             "code",
-            finalText
+            $(temp.target).summernote("code") + txt + "<br/>"
           );
         }
       }

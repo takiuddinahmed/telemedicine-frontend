@@ -1,5 +1,5 @@
-      const drug = JSON.parse(drugString)
-      let filteredDrug = drug;
+const tradeDrugList = JSON.parse(tradeDrugListString)
+      let filteredDrug = tradeDrugList;
       const drugTableOptions = {max_item:5}
       let activePage = 1;
 
@@ -11,11 +11,13 @@
         if(index>= start && index<=end){
         return `
                 <tr>
-                  <td>${d.generic_name}</td>
-                  <td>
-                  <a href="/admin/generic-drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a>
-                  <a href="/admin/generic-drug?delete=true&id=${d.id}" class="btn btn-sm btn-danger">Delete</a>
-                  </td>
+                <td>${d.trade_name}</td>
+                <td>${d.generic_name}</td>
+                <td>${d.company_name}</td>
+                <td>${d.price}</td>
+                
+              
+                  <td><a href="/admin/drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a></td>
                 </tr>
         `
               }
@@ -29,10 +31,10 @@
     const searchInputChange = (e)=>{
       const searchVal = e.target.value;
       if(searchVal.length){
-      filteredDrug = drug.filter(d=> d.generic_name.toLowerCase().indexOf(searchVal.toLowerCase()) >-1)
+      filteredDrug = tradeDrugList.filter(d=> d.trade_name.toLowerCase().indexOf(searchVal.toLowerCase()) >-1)
        }
        else{
-          filteredDrug = drug;
+          filteredDrug = tradeDrugList      ;
        } 
        drugTableViewUpdate()
       
