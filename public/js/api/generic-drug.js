@@ -1,9 +1,5 @@
 // data
 
-const server = "https://prescription.outdoorbd.com/admin/generic-drug";
-// const server = "http://localhost:3000/prescription/admin/generic-drug";
-
-
 let dose_range = [];
 let dose_weight = [];
 let dose_special = [];
@@ -12,6 +8,7 @@ let dose_indication = []
 let dose_constrains = [];
 let dose_precautions = [];
 let dose_pregnency = [];
+let dose_warning_condition = [];
 
 
 
@@ -24,6 +21,7 @@ function Model (data, selectors, updateView, required=[]){
         const info = arrayToObject($(this.selectors.form).serializeArray());
         this.data.push(info);
         this.updateView()
+        console.log($(this.selectors.form).serializeArray())
     }
     this.remove = (id)=>{
         const arr = [...this.data];
@@ -155,6 +153,21 @@ const dosePregnency= new Model(dose_pregnency,{form:'#dose-pregnency-form'}, ()=
     })
     $("#dose-pregnency-view").html(html)
 })
+ 
+const doseWarningCondition= new Model(dose_pregnency,{form:'#dose-warning-condition-form'}, ()=>{
+    const html = doseWarningCondition.data.map((d,index)=>{
+        return 
+        (
+            `
+            <tr>
+              <td style="width: 50%">${d.warning_condition}</td>
+              <td onclick="doseWarningCondition.remove(${index})"><i class="fas text-danger fa-trash" d-id=${d.id} class="dose-range-remove-btn" ></i></td>
+            </tr>
+            `
+        )
+    })
+    $("#dose-warning-condition-view").html(html)
+})
 
 
 // edit mode
@@ -167,6 +180,7 @@ if(editState){
     doseConstrains.set(drugData.dose_constrains ?? []);
     dosePrecautions.set(drugData.dose_precautions_warnings ?? []);
     dosePregnency.set(drugData.dose_pregnency_category ?? []);
+    doseWarningCondition.set(drugData.dose_warning_condition ?? []);
     $("#generic-name-input").val(drugData.generic_name ?? '');
 }
  
@@ -176,7 +190,7 @@ if(editState){
 $(document).ready(()=>{
     $("#dose-range-btn").click((e)=>{
         e.preventDefault()
-    doseRange.add()
+        doseRange.add()
     })
     $("#dose-weight-btn").click((e)=>{
         e.preventDefault()
@@ -184,7 +198,7 @@ $(document).ready(()=>{
     })
     $("#dose-special-btn").click((e)=>{
         e.preventDefault()
-    doseSpecial.add()
+        doseSpecial.add()
     })
     $("#dose-drug-interection-btn").click((e)=>{
         e.preventDefault()
@@ -205,6 +219,10 @@ $(document).ready(()=>{
     $("#dose-pregnency-btn").click((e)=>{
         e.preventDefault()
         dosePregnency.add()
+    })
+    $("#dose-warning-condition-btn").click((e)=>{
+        e.preventDefault()
+        doseWarningCondition.add()
     })
 
 
@@ -229,6 +247,7 @@ const postDataToServer = ()=>{
         formData.dose_constrains = doseConstrains.stringify();
         formData.dose_precautions_warnings = dosePrecautions.stringify();
         formData.dose_pregnency_category = dosePregnency.stringify()
+        formData.dose_warning_condition = doseWarningCondition.stringify();
  
         console.log(formData)
         if (!editState){
@@ -260,12 +279,10 @@ const postDataToServer = ()=>{
             }).fail(function (e) {
                 alert(e)
             })
-
-           
         }
     }
     else{
-        alert("Please provide generic name.")
+        alert("Please provide generic name.");
     }
 }
 
@@ -276,5 +293,5 @@ const arrayToObject = (arr)=>{
     arr.forEach((a)=>{
         obj[a.name] = a.value
     })
-    return obj
+    return obj;
 }

@@ -1,18 +1,19 @@
-const server = "https://prescription.outdoorbd.com/admin/disease";
+
+server += '/disease';
 
 const templateValues = {}
 
 const renderTemplateAddedText = (selector, arr)=>{
     let html = ``
     arr.forEach(a=>{
-        html += `<li>${a.text}</li>`
+        html += `<li>${a.title}</li>`
     })
     selector.html(html)
 }
 
 const templateSubmit = (e)=>{
     // e.preventDefault();
-    console.log(e.id)
+    // console.log(e.id)
 }
 
 $(document).ready(()=>{
@@ -21,9 +22,9 @@ $(document).ready(()=>{
         const templateName = e.target.id.split('_')[0]
         const source = $("#"+e.target.id + "_select option:selected")
         const view_selector = $("#"+e.target.id + "_view")
-        const data = {val: source.val(), text:source.text()}
+        const data = {id: source.val(), title:source.text()}
         if(templateValues[templateName] && templateValues[templateName].length){
-            if(templateValues[templateName].some(t=>t.val != data.val)){
+            if(templateValues[templateName].some(t=>t.id != data.id)){
                 templateValues[templateName].push(data);
             }
         }
@@ -34,13 +35,13 @@ $(document).ready(()=>{
         renderTemplateAddedText(view_selector, templateValues[templateName])
     }))
 
-    $(".template_delete").click((e)=>{
+    $(".template_delete").on('click',(e)=>{
         const templateName = e.target.id.split('_')[0]
         templateValues[templateName] = []
         renderTemplateAddedText($("#"+templateName+"_form_view"), templateValues[templateName])
     })
     
-    $("#final-submit-btn").click((e)=>{
+    $("#final-submit-btn").on('click',(e)=>{
         const formSelector = $("#main_form");
         const formArray = formSelector.serializeArray();
         const formData = arrayToObject(formArray)

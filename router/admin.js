@@ -126,9 +126,9 @@ router.route("/disease")
 
   if (add || edit) {
     const templateSql = `SELECT * FROM cc_template; 
-    SELECT * FROM investigation; 
-    SELECT * FROM advice; 
-    SELECT * FROM counselling;`
+    SELECT id,title FROM investigation; 
+    SELECT id,title FROM advice; 
+    SELECT id,title FROM counselling;`
     db.query(templateSql,[], (err, templateDataArr)=>{
       if(err){
         console.log(err)
@@ -367,6 +367,7 @@ router.route("/generic-drug")
                 drugData.dose_constrains = JSON.parse(drugData.dose_constrains);
                 drugData.dose_precautions_warnings = JSON.parse(drugData.dose_precautions_warnings);
                 drugData.dose_pregnency_category = JSON.parse(drugData.dose_pregnency_category);
+                drugData.dose_warning_condition = JSON.parse(drugData.dose_warning_condition);
 
                 console.log(drugList)
                 res.render("genericDrug", {editState: true, drugData: JSON.stringify(drugData), drugList:drugList});
@@ -422,11 +423,11 @@ router.route("/generic-drug")
   }
 })
 .post(cors.corsWithOptions,(req,res,next)=>{
-  const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category} = req.body;
+  const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition} = req.body;
   const sql = `
-  INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category) VALUES(?)
+  INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition) VALUES(?)
   `
-  db.query(sql,[[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category]], (err, result)=>{
+  db.query(sql,[[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition]], (err, result)=>{
     if(err){
       res.json({ok: false, err: err})
     }
@@ -436,12 +437,12 @@ router.route("/generic-drug")
   })
 })
 .put(cors.corsWithOptions,(req,res,next)=>{
-  const {id,generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category} = req.body;
+  const {id,generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition} = req.body;
   console.log(req.body)
   const sql = `
-    UPDATE generic_drug_data SET generic_name=?, dose_range=?, dose_weight=?, dose_drug_interection=?, dose_indication=?,  dose_constrains=?, dose_precautions_warnings=?,  dose_pregnency_category=? WHERE id=?
+    UPDATE generic_drug_data SET generic_name=?, dose_range=?, dose_weight=?, dose_drug_interection=?, dose_indication=?,  dose_constrains=?, dose_precautions_warnings=?,  dose_pregnency_category=?, dose_warning_condition=? WHERE id=?
   `
-  db.query(sql,[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category,id], (err, result)=>{
+  db.query(sql,[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category,dose_warning_condition, id], (err, result)=>{
     if(err){
       res.json({ok: false, err: 'Update error. Please try again.'})
     }
@@ -466,7 +467,7 @@ router.route("/drug").get((req, res, next) => {
       }
       else{
         if(add){
-          res.render("drug", {genericDrugList:JSON.stringify(genericDrugList), mode:"POST", tradeDrug:{}, edit:false});
+          res.render("drug", {genericDrugList:genericDrugList, mode:"POST", tradeDrug:{}, edit:false});
         }
         else{
           id=req.query.id;

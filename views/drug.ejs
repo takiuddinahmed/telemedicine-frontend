@@ -2,6 +2,10 @@
 <html lang="en">
   <%-include('partials/header.ejs')%>
   <body>
+    <link href="/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+
+
+
     <%-include('partials/nav.ejs')%>
     <div class="container-fluid">
       <div class="row">
@@ -18,13 +22,11 @@
               <div class="row mt-5 mb-3">
                 <h6 class="mb-3 col-md-3">Drug Generic name</h6>
 
-                <!-- <select class="form-control col-md-9" name="generic_name_id" value="<%= tradeDrug.generic_name_id %>">
+                <select class="selectpicker form-control col-md-9 " id="generic-drug-select" name="generic_name_id" value="<%= tradeDrug.generic_name_id %>" data-live-search="true">
                   <% for (var i=0; i<genericDrugList.length; i++) { %>
                     <option value=<%= genericDrugList[i].id %>> <%= genericDrugList[i].generic_name %></option>
                     <% } %>
-                </select> -->
-
-                <input readonly id="generic_name_input" class="form-control col-md-9" type="text" name="generic_name_id" >
+                </select>
 
               </div>
               <div class="row mt-5 mb-3">
@@ -47,8 +49,33 @@
     </script>
 
     <script src="/prescription/plugins/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="/prescription/js/api/addDrugList.js"></script>
+    
+    <script src="/plugins/bootstrap-select/js/bootstrap-select.min.js" ></script>
+    <script src="/plugins/bootstrap-select/js/i18n/defaults-en_US.min.js" ></script>
+  
     <script src="/prescription/js/scripts.js"></script>
-   
+      <script src="/prescription/js/api/addDrugList.js"></script>
+   <script>
+     $(document).ready(()=>{
+        $("select").selectpicker({
+            noneSelectedText:'Nothing selected',
+            showIcon:true,
+            title: "Select a generic drug",
+            showSubtext: true,
+            // live filter options
+            liveSearch: true,
+            liveSearchPlaceholder: "Search",
+            liveSearchNormalize: false,
+            liveSearchStyle: 'contains',
+        })
+
+    })
+   </script>
+
+        <% if (mode=="PUT") { %>
+            <script>
+              $("select").selectpicker('val', "<%= tradeDrug.generic_name_id %>")
+            </script>
+        <% } %>
   </body>
 </html>

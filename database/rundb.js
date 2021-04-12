@@ -148,6 +148,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     dose_constrains TEXT,
     dose_precautions_warnings TEXT,
     dose_pregnency_category TEXT,
+    dose_warning_condition TEXT,
     PRIMARY KEY (id)
   )
   `,

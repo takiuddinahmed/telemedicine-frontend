@@ -174,14 +174,17 @@ const updateDiseaseComponentSection = (d) => {
 
   const updateTemplateData = async (
     sourceArray,
+    sourceName,
     targetSelector,
-    summernote = false
+    summernote = true
   ) => {
     let selectedList = JSON.parse(sourceArray);
+    console.log(selectedList);
     let text = "";
     if(selectedList){
       selectedList.forEach((c) => {
-        text += c.text  + (summernote ? "<br/>" : "\n");
+        const iData = templateDataAll[sourceName].filter(t=>t.id == c.id)[0]
+        text += iData.details  + (summernote ? "<br/>" : "\n");
       });
       if (!summernote) {
         $(targetSelector).val(text);
@@ -204,11 +207,12 @@ const updateDiseaseComponentSection = (d) => {
             }
   };
   //cc
-  updateTemplateData(d.cc,  "#cc");
-  updateTemplateData(d.investigation ,"#ix");
-  updateTemplateData(d.advice, "#advice-summernote", true);
+  updateTemplateData(d.cc,'cc',  "#cc");
+  updateTemplateData(d.investigation, 'investigation',"#ix");
+  updateTemplateData(d.advice,'advice', "#advice-summernote", true);
   updateTemplateData(
     d.counselling,
+    'counselling',
     "#counselling_summernote",
     true
   );

@@ -2,6 +2,9 @@
 <html lang="en">
   <%-include('partials/header.ejs')%>
   <body>
+        <link href="/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+
+
     <%-include('partials/nav.ejs')%>
 
     <div class="container-fluid">
@@ -26,6 +29,8 @@
                   </div>
 
                   
+
+                  
                   <% for(var i=0; i<templateData.length; i++){ %>
                   <div class="border-top pt-3">
                     <h4 class="text-center" style="padding: 10px 0; background-color: lightgray; border-radius: 10px;">
@@ -40,9 +45,9 @@
                     <form id="<%= templateData[i].id%>_form" class="template_form" onsubmit="templateSubmit(this)">
                       <div class="row form-group">
                         <div class="col-9">
-                          <select name="template" class="form-control" id="<%= templateData[i].id%>_form_select">
+                          <select name="template" class="selectpicker form-control" id="<%= templateData[i].id%>_form_select">
                             <% for(var j =0; j<templateData[i].data.length;j++){ %>
-                            <option value=<%= templateData[i].data[j].id %>> <%= templateData[i].data[j].name %> </option>
+                            <option value=<%= templateData[i].data[j].id %>> <%= templateData[i].data[j].title %> </option>
                             <% } %>
                           </select>
                         </div>
@@ -636,6 +641,27 @@
 
       </script>
       <% } %>
+
+        <script src="/plugins/bootstrap-select/js/bootstrap-select.min.js" ></script>
+        <script src="/plugins/bootstrap-select/js/i18n/defaults-en_US.min.js" ></script>
+  
+
+       <script>
+        $(document).ready(()=>{
+            $("select").selectpicker({
+                noneSelectedText:'Nothing selected',
+                showIcon:true,
+                title: "Select a generic drug",
+                showSubtext: true,
+                // live filter options
+                liveSearch: true,
+                liveSearchPlaceholder: "Search",
+                liveSearchNormalize: false,
+                liveSearchStyle: 'contains',
+            })
+
+        })
+   </script>
   </body>
 </html>
 

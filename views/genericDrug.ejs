@@ -342,6 +342,39 @@
                 </tr>
             </table>
           </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" colspan="2">Warning Conditions</th>
+                </tr>
+              </thead>
+              <tbody id="dose-warning-condition-view">
+                </tbody>
+            
+                <tr>
+                  <td colspan="2" style="width: 50%">
+                    <form id="dose-warning-condition-form">
+                    <div class="d-flex">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="warning conditions"
+                        name="warning_condition"
+                      />
+                    </div>
+                    </form>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button class="btn btn-sm btn-info" id="dose-warning-condition-btn">Add new</button>
+                  </td>
+                </tr>
+            </table>
+          </div>
+
           <div class="text-right mb-3">
             <button class="btn btn-info" id="submit-form-to-server" type="submit">Save</button>
           </div>
@@ -357,7 +390,6 @@
       if(editState === 'true'){
         editState = true  
         drugData = JSON.parse(drugString.toString());   
-        console.log(drugData)
       }
       else{
         editState = false;

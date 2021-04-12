@@ -17,8 +17,10 @@
                 <td>${d.price}</td>
                 
               
-                  <td><a href="/admin/drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a></td>
-                </tr>
+                  <td><a href="/admin/drug?edit=true&id=${d.id}" class="btn btn-sm btn-primary">Edit</a>
+                  <a href="/admin/drug?delete=true&id=${d.id}" class="btn btn-sm btn-danger">Delete</a></td>
+                
+                  </tr>
         `
               }
               else{
