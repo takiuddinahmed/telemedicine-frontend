@@ -2,7 +2,7 @@
 <html lang="en">
   <%-include('partials/header.ejs')%>
   <body>
-        <link href="/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
 
 
     <%-include('partials/nav.ejs')%>
@@ -47,7 +47,7 @@
                         <div class="col-9">
                           <select name="template" class="selectpicker form-control" id="<%= templateData[i].id%>_form_select">
                             <% for(var j =0; j<templateData[i].data.length;j++){ %>
-                            <option value=<%= templateData[i].data[j].id %>> <%= templateData[i].data[j].title %> </option>
+                              <option value=<%= templateData[i].data[j].id %>> <%= templateData[i].data[j].title %> </option>
                             <% } %>
                           </select>
                         </div>
@@ -613,9 +613,11 @@
               </form>
             </div>
             <input type="hidden" name="mode" id="operation_mode" value="<%= mode %>"/>
+           
             <% if(mode=='edit') {%>
               <input type="hidden" name="id" id="operation_edit_id" value="<%= editDiseaseData.id %>" />
             <%}%>
+
         </main>
       </div>
     </div>
@@ -651,9 +653,8 @@
             $("select").selectpicker({
                 noneSelectedText:'Nothing selected',
                 showIcon:true,
-                title: "Select a generic drug",
+                title: "Select an item",
                 showSubtext: true,
-                // live filter options
                 liveSearch: true,
                 liveSearchPlaceholder: "Search",
                 liveSearchNormalize: false,

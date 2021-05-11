@@ -1,6 +1,7 @@
 
 server += '/disease';
 
+
 const templateValues = {}
 
 const renderTemplateAddedText = (selector, arr)=>{
@@ -12,7 +13,7 @@ const renderTemplateAddedText = (selector, arr)=>{
 }
 
 const templateSubmit = (e)=>{
-    // e.preventDefault();
+    e.preventDefault();
     // console.log(e.id)
 }
 
@@ -49,7 +50,6 @@ $(document).ready(()=>{
         Object.keys(templateValues).forEach((t)=>{
             formData[t] = JSON.stringify(templateValues[t])
         })
-        console.log(formData)
         if($("#operation_mode").val() != 'edit'){
             $.post(server, formData, (data,status)=>{
             console.log({data,status})
