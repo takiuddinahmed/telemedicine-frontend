@@ -497,6 +497,13 @@
                   id="drug_brand_name"
                 />
               </div>
+
+              <div class="form-group col-md-3">
+                <button id="set-drug" class="btn btn-sm btn-dark">
+                  Add
+                </button>
+                
+              </div>
               <div class="form-group col-3">
                 <input
                   type="text"
@@ -626,95 +633,7 @@
           </div>
           <i class="fas fa-bars right-bar bar"></i>
           <aside class="col-lg-3 py-4 border-left right-sidebar">
-            <!-- <h5>Patient Serial</h5>
-            <div class="table-responsive patient-serial">
-              <table class="table table-sm text-center table-hover border">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Sl no</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Schedule</th>
-                    <th scope="col">Finished</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Jhon Doe</td>
-                    <td>12:00 AM</td>
-                    <td><i class="far text-success fa-check-circle"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>12:00 AM</td>
-                    <td><i class="far text-success fa-check-circle"></i></td>
-                  </tr>
-                  <tr class="table-warning">
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-play text-danger"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Jhon Doe</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Jacob</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>Larry</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>Jhon Doe</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">8</th>
-                    <td>Jacob</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>Larry</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">10</th>
-                    <td>Larry</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">11</th>
-                    <td>Larry</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">12</th>
-                    <td>Larry</td>
-                    <td>12:00 AM</td>
-                    <td><i class="fas fa-ellipsis-h text-info"></i></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> -->
-            <!-- <span class="btn btn-info my-3 btn-sm profile-btn">See Profile</span> -->
-            <!-- <div class="user-info border-bottom" style="display: none"> -->
+            
             <div class="user-info border-bottom">
               <div class="user-img">
                 <img src="images/doctor.jpg" alt="" />
@@ -774,296 +693,13 @@
               </div>
               <div class="border-bottom pageSetup mt-3 pb-3">
                 <h5>Page Setup</h5>
-                <a href="header_edit.html">Header Edit</a>
+                <a href="header_edit">Header Edit</a>
                 <a href="page_setup.html">Page Size Edit</a>
                 <a href="#">Payment</a>
                 <a href="#">Contact Us</a>
               </div>
             </div>
-            <!-- <div class="border-bottom drugDatabase mt-3 pb-3">
-              <h5>Drug Database</h5>
-              <select class="custom-select type-selection custom-select-sm">
-                <option selected disabled>Choose</option>
-                <option value="brand">Brand</option>
-                <option value="generic">Generic</option>
-                <option value="indication">Indication</option>
-              </select>
-              <div class="input-group mt-1">
-                <input
-                  id="drugSearch"
-                  type="text"
-                  class="suggest-box form-control"
-                  placeholder="Search"
-                  aria-label="Search"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
-              <div class="brandGeneric">
-                <p class="mt-3"><strong>Generic Name: </strong>Paracetamol</p>
-                <ul>
-                  <li>
-                    <p>Indication</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Dose</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Renal Dose</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Administration Dose</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Contraindication</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Pregnancy Category</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Mode of Action</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                  <li>
-                    <p>Price</p>
-                    <span
-                      ><i class="indication-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <p class="indication-desc border">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Fugit quidem hic nobis perferendis id veritatis.
-                  </p>
-                </ul>
-              </div>
-              <div class="indication-section mt-3">
-                <ul>
-                  <li>
-                    <p>Almoripntgjhj</p>
-                    <span
-                      ><i class="indication-list-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <ul>
-                    <li>
-                      <p>Indication</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Dose</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Renal Dose</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Administration Dose</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Contraindication</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Pregnancy Category</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Mode of Action</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Price</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                  </ul>
-                  <li>
-                    <p>Almoripnt</p>
-                    <span
-                      ><i class="indication-list-down fas fa-sort-down"></i
-                    ></span>
-                  </li>
-                  <ul>
-                    <li>
-                      <p>Indication</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Dose</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Renal Dose</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Administration Dose</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Contraindication</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Pregnancy Category</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Mode of Action</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                    <li>
-                      <p>Price</p>
-                      <span
-                        ><i class="indication-down fas fa-sort-down"></i
-                      ></span>
-                    </li>
-                    <p class="indication-desc border">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Fugit quidem hic nobis perferendis id veritatis.
-                    </p>
-                  </ul>
-                </ul>
-              </div>
-            </div> -->
+            
           </aside>
         </div>
         <div class="msg-alert" style="display: none">
@@ -1071,12 +707,11 @@
                 class="alert alert-success alert-dismissible fade show"
                 role="alert"
         >
-<!--          <i class="fas fa-check-circle"></i>-->
           <span id="msg-text">Helllo</span>
           <button
                   type="button"
                   class="close"
-          }}
+          
           >
           <span aria-hidden="true">&times;</span>
           </button>

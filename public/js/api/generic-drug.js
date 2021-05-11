@@ -20,14 +20,13 @@ function Model (data, selectors, updateView, required=[]){
     this.add = ()=>{
         const info = arrayToObject($(this.selectors.form).serializeArray());
         this.data.push(info);
-        this.updateView()
-        console.log($(this.selectors.form).serializeArray())
+        this.updateView();
     }
     this.remove = (id)=>{
         const arr = [...this.data];
         const new_arr = arr.filter((a,index)=>index !== id);
         this.data = new_arr;
-        this.updateView()
+        this.updateView();
     }
     this.updateView = updateView;
     this.stringify = ()=>{
@@ -46,8 +45,11 @@ const doseRange = new Model(dose_range,{form:'#dose-range-form'}, ()=>{
         return(
             `
             <tr>
-              <td style="width: 50%">${d.from_val} ${d.from_unit} to ${d.to_val} ${d.to_unit}</td>
-              <td>${d.value}</td>
+              <td >${d.from_val} ${d.from_unit} to ${d.to_val} ${d.to_unit}</td>
+              <td>${d?.value}</td>
+              <td>${d?.duration}</td>
+              <td>${d?.time}</td>
+
               <td onclick="doseRange.remove(${index})"><i class="fas text-danger fa-trash" d-id=${d.id} class="dose-range-remove-btn" ></i></td>
             </tr>
             `
@@ -156,15 +158,14 @@ const dosePregnency= new Model(dose_pregnency,{form:'#dose-pregnency-form'}, ()=
  
 const doseWarningCondition= new Model(dose_pregnency,{form:'#dose-warning-condition-form'}, ()=>{
     const html = doseWarningCondition.data.map((d,index)=>{
-        return 
-        (
-            `
+        console.log(d)
+        let h = `
             <tr>
               <td style="width: 50%">${d.warning_condition}</td>
               <td onclick="doseWarningCondition.remove(${index})"><i class="fas text-danger fa-trash" d-id=${d.id} class="dose-range-remove-btn" ></i></td>
             </tr>
             `
-        )
+        return h;
     })
     $("#dose-warning-condition-view").html(html)
 })
@@ -225,7 +226,6 @@ $(document).ready(()=>{
         doseWarningCondition.add()
     })
 
-
     // handle final submit
     $("#submit-form-to-server").click((e)=>{
         e.preventDefault();
@@ -249,13 +249,12 @@ const postDataToServer = ()=>{
         formData.dose_pregnency_category = dosePregnency.stringify()
         formData.dose_warning_condition = doseWarningCondition.stringify();
  
-        console.log(formData)
         if (!editState){
-        $.post(server, formData, (data,status)=>{
+        $.post(server+"/generic-drug", formData, (data,status)=>{
             console.log({data,status})
             if(data.ok){
                 console.log('Ok')
-                window.location = server
+                window.location = server+"/generic-drug"
             }
             else{
                 alert("Unexprected Error happened.")
@@ -266,12 +265,12 @@ const postDataToServer = ()=>{
             formData.id = drugData.id;
             $.ajax({
                 type: 'PUT',
-                url: server,
+                url: server+"/generic-drug",
                 contentType: 'application/json',
                 data: JSON.stringify(formData), // access in body
             }).done(function (data) {
                 if(data.ok){
-                    window.location = server
+                    window.location = server+"/generic-drug"
                 }
                 else{
                     alert(data.msg)

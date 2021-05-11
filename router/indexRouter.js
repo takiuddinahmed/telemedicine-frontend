@@ -33,10 +33,76 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
         doctorID: req.session.doctorId,
       });
     } else {
-      res.send("Not valid");
+      res.render("error", {
+          errorCode: 401,
+          errorText: "Unauthorized User",
+        });
     }
   }
 });
+
+
+router.get("/header_edit", cors.corsWithOptions, (req,res,next)=>{
+  const doctorId = req.session.doctorId;
+  
+  let sql= `SELECT * FROM prescription_header WHERE doctor_id=?`;
+  db.query(sql,[doctorId],(err,data)=>{
+    console.log({err,data});
+    if(err){
+      res.render("error", {
+          errorCode: 401,
+          errorText: "Unauthorized User",
+        });
+    }
+    console.log()
+    res.render("header_edit.ejs", {doctor:data[0]});
+  })
+
+})
+
+router.get("/header_info",cors.corsWithOptions,(req,res,next)=>{
+  const doctorId = req.session.doctorId;
+  if(!doctorId){
+    res.render("error", {
+          errorCode: 401,
+          errorText: "Unauthorized User",
+        });
+  }
+  let sql= `SELECT * FROM prescription_header WHERE doctor_id=?`;
+  db.query(sql,[doctorId],(err,data)=>{
+    if(err){
+      res.status(500).json({msg:"internal server error"});
+    }
+    else{
+      res.status(200).json({ok:true,data:data})
+    }
+  })
+})
+
+router.post("/header_info",cors.corsWithOptions,(req,res,next)=>{
+  const data= req.body;
+  let sql = `
+    REPLACE INTO prescription_header 
+    (doctor_id,name,degree,speciality,department,institute,reg_details,
+      chember_place_name, chember_place_address, chember_contact, chember_visit_time, 
+      chember_special_note,background_color, font_color)
+    VALUES (?)
+  `
+  const data_arr = [parseInt(data.doctor_id),data.name,data.degree, data.speciality,
+    data.department, data.institute, data.reg_details, data.chember_place_name,
+    data.chember_place_address, data.chember_contact, data.chember_visit_time,
+    data.chember_special_note, data.background_color, data.font_color
+  ]
+  db.query(sql, [data_arr],(err,resData)=>{
+    if(err){
+      res.status(500).json({msg:"internal server error",err:err});
+    }
+    else{
+      res.status(200).json({ok:true,data:data})
+    }
+  })
+})
+
 
 const getPatientDoctorInfo = async (patientID, doctorId) => {
   let patientInfo = {};

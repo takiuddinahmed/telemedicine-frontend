@@ -19,14 +19,14 @@
             <table class="table table-hover text-center">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col" colspan="3">According to range</th>
+                  <th scope="col" colspan="4">According to range</th>
                 </tr>
               </thead>
               <tbody id="dose-range-view">
               </tbody>
                 <tr>
                   <form id="dose-range-form">
-                    <td colspan="2" style="width: 50%">
+                    <td colspan="3" style="width: 50%">
                       
                       <div class="d-flex">
                         <input
@@ -40,8 +40,8 @@
                           class="custom-select custom-select-sm"
                           name="from_unit"
                         >
-                          <option value="Month">Month</option>
                           <option value="Year">Year</option>
+                          <option value="Month">Month</option>
                         </select>
                         <span class="mx-3">to</span>
                         <input
@@ -55,19 +55,40 @@
                           class="custom-select custom-select-sm"
                           name="to_unit"
                         >
-                          <option value="Month">Month</option>
                           <option value="Year">Year</option>
+                          <option value="Month">Month</option>
                         </select>
                       </div>
                   
                     </td>
                     <td>
-                      <input type="text" class="form-control form-control-sm" name="value"/>
+                      <div class="row">
+                        <div class="col-4">
+                          <input type="text" class="form-control form-control-sm" 
+                          placeholder="dose"
+                          name="value"/>
+                        </div>
+                        <div class="col-4">
+                          <input type="text" class="form-control form-control-sm" 
+                          placeholder="duration"
+                          name="duration"/>
+                        </div>
+                        <div class="col-4">
+                          <select class="custom-select custom-select-sm"
+                              id="dose_time_khabar"
+                              name="time"
+                              >
+                                <option selected value=""></option>
+                                <option value="খাবার আগে">খাবার আগে</option>
+                                <option value="খাবার আগে">খাবার পরে</option>
+                          </select>
+                        </div>
+                      </div>
                     </td>
                 </form>
                 </tr>
                 <tr>
-                  <td colspan="3">
+                  <td colspan="4">
                     <button class="btn btn-sm btn-info" id="dose-range-btn">Add new</button>
                   </td>
 
@@ -100,8 +121,8 @@
                         class="custom-select custom-select-sm"
                         name="from_unit"
                       >
-                        <option value="Gram">Gram</option>
                         <option value="KG">KG</option>
+                        <option value="Gram">Gram</option>
                       </select>
                       <span class="mx-3">to</span>
                       <input
@@ -115,8 +136,8 @@
                         class="custom-select custom-select-sm"
                         name="to_unit"
                       >
-                        <option value="Gram">Gram</option>
                         <option value="KG">KG</option>
+                        <option value="Gram">Gram</option>
                       </select>
                     </div>
                   </td>

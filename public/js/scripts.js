@@ -206,6 +206,7 @@ $(".warn-btn").click(function () {
   $(this).next().fadeToggle(300);
 });
 
+
 //Payment popup
 $(".payment").click(function () {
   $(".payment-sec").fadeToggle(300);

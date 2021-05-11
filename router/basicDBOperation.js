@@ -14,3 +14,6 @@ module.exports.responseGetReq = function (sql, arr, res) {
         }
     })
 }
+
+
+module.exports.defaultPrescriptionHeader

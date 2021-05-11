@@ -1,27 +1,27 @@
 function prescriptionPreview() {
-  console.log(doctorInfo);
   return ` <div class="modal-dialog modal-lg">
      <div class="modal-content" >
        <main class="container-md" id="prescriptionPreview">
          <div class="preview-paper border">
-           <div class="row m-0">
+           <div class="row m-0" 
+           style="background-color:${prescriptionHeaderData.background_color};color:${prescriptionHeaderData.font_color}">
              <div class="col-6 text-left">
-               <div class="preview-header">
-                 <h4>${doctorInfo.name}</h4>
-                 <h4>MBBS</h4>
-                 <p>${doctorInfo.speciality}</p>
+               <div class="preview-header" >
+                 <h4>${prescriptionHeaderData.name}</h4>
+                 <h4>${prescriptionHeaderData.degree}</h4>
+                 <p>${prescriptionHeaderData.speciality}</p>
                  <p>Chittagong Medical College</p>
-                 <p>BMDC Reg. No- ${doctorInfo.bmdc}</p>
+                 <p>${prescriptionHeaderData.reg_details}</p>
                </div>
              </div>
              <div class="col-6 text-right">
                <div class="preview-header">
                  <h4>Chember</h4>
-                 <p>${doctorInfo?.address}</p>
-                 <p>Chember location details</p>
-                 <p>Mobile: ${doctorInfo.phone}</p>
-                 <p>4:00-8:00</p>
-                 <p class="font-weight-bold">Friday</p>
+                 <p>${prescriptionHeaderData?.chember_place_name}</p>
+                 <p>${prescriptionHeaderData?.chember_place_address}</p>
+                 <p>${prescriptionHeaderData.chember_contact}</p>
+                 <p>${prescriptionHeaderData.chember_visit_time}</p>
+                 <p class="font-weight-bold">${prescriptionHeaderData.chember_special_note}</p>
                </div>
              </div>
            </div>
@@ -77,19 +77,19 @@ const prescriptionPDF = () => {
            <div class="row m-0">
              <div class="col-6 text-left">
                <div class="preview-header">
-                 <h4>${doctorInfo.name}</h4>
+                 <h4>${prescriptionHeaderData.name}</h4>
                  <h4>MBBS</h4>
-                 <p>${doctorInfo.speciality}</p>
+                 <p>${prescriptionHeaderData.speciality}</p>
                  <p>Chittagong Medical College</p>
-                 <p>BMDC Reg. No- ${doctorInfo.bmdc}</p>
+                 <p>BMDC Reg. No- ${prescriptionHeaderData.bmdc}</p>
                </div>
              </div>
              <div class="col-6 text-right">
                <div class="preview-header">
                  <h4>Chember</h4>
-                 <p>${doctorInfo?.address}</p>
+                 <p>${prescriptionHeaderData?.address}</p>
                  <p>Chember location details</p>
-                 <p>Mobile: ${doctorInfo.phone}</p>
+                 <p>Mobile: ${prescriptionHeaderData.phone}</p>
                  <p>4:00-8:00</p>
                  <p class="font-weight-bold">Friday</p>
                </div>

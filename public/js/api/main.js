@@ -1,5 +1,5 @@
-const server = "http://localhost:3000/prescription/";
-// const server = "https://prescription.outdoorbd.com/";
+// const server = "http://localhost:3000/prescription/";
+const server = "https://prescription.outdoorbd.com/";
 
 const template_source = [
   { form: "#cc_form", source: "#ixTemplate", target: "#cc" ,summernote: true, name: "cc"},
@@ -55,6 +55,7 @@ $(document).ready(() => {
   fetch(server + "template/")
     .then((response) => response.json())
     .then((res) => {
+      console.log(res)
       if (res.ok) {
         ccList = res.message[0];
         doseList = res.message[1];
@@ -179,7 +180,6 @@ const updateDiseaseComponentSection = (d) => {
     summernote = true
   ) => {
     let selectedList = JSON.parse(sourceArray);
-    console.log(selectedList);
     let text = "";
     if(selectedList){
       selectedList.forEach((c) => {
@@ -218,14 +218,27 @@ const updateDiseaseComponentSection = (d) => {
   );
 };
 
+
 // drug add event
 $(document).ready(() => {
+  $("#set-drug").click(()=>{
+
+    const medicine = {};
+    medicine.trade_name = $("#drug_brand_name").val();
+    medicine.generic_id = drugList.filter(
+      (d) => d.trade_name == medicine.trade_name
+    )[0]?.generic_name_id;
+
+    addDrugInfo(medicine)
+
+  })
+
   $("#add-drug-btn").click(() => {
     const medicine = {};
     medicine.trade_name = $("#drug_brand_name").val();
-    medicine.genericName = drugList.filter(
+    medicine.generic_id = drugList.filter(
       (d) => d.trade_name == medicine.trade_name
-    )[0]?.generic_name;
+    )[0]?.generic_name_id;
     medicine.duration = $("#dose_duration-").val();
     medicine.dose = $("#dose_type").val();
     medicine.dose_time = $("#dose_time_khabar").val();
@@ -233,19 +246,115 @@ $(document).ready(() => {
       addMedicineToPrescription(medicine);
       $("#drug_brand_name").val("");
       $("#dose_duration-").val("");
+      $("#dose-type").val("");
     }
   });
 });
 
+
+const addDrugInfo = (medicine)=>{
+  try{
+  const drugInfo = drugList.filter(d=>d.generic_name_id == medicine.generic_id)[0]
+
+  // check weight
+  // const dose_weight = JSON.parse(drugInfo?.dose_weight)
+
+  // check age dose
+  const age_dose = JSON.parse(drugInfo?.dose_range);
+  const patient_age = patientInfo?.age ?? 0;
+  if(patient_age>0){
+    let given_dost = age_dose.filter(d=>{
+      if(d.from_unit == 'Year' && patient_age >= d.from_val && patient_age <= d.to_val){
+        return true
+      }
+    })
+    if(given_dost.length){
+      $("#dose_type").val(given_dost[0]?.value ?? "");
+      $("#dose_duration-").val(given_dost[0]?.duration ?? "");
+      $("#dose_time_khabar").val(given_dost[0]?.time ?? "");
+    }  }
+
+  // check pregnency condition
+  // const dose_pregnency_category = JSON.parse(drugInfo?.dose_pregnency_category);
+
+
+  // console.log({dose_weight,dose_pregnency_category, age_dose,medicine,drugInfo})
+
+  }
+  finally{
+
+  }
+  
+}
+
+const checkAddedDrug = (medicine)=>{
+  const drugInfo = drugList.filter(d=>d.generic_name_id == medicine.generic_id)
+  let html = ``;
+  if(drugInfo.length){
+    // get other drug names
+    const simillerDrugs = drugInfo.map(d=>`<tr> <td>${d.company_name} </td> <td> ${d.trade_name} </td> </tr>`)
+
+    html += `
+    <i class="reload fas fa-sync-alt"></i>
+    <div class="medicin-name">
+                  <table class="table table-sm">
+                  <tr>
+                    <th>Company Name </th>
+                    <th>Trade Name </th>
+                  </tr>
+                    ${simillerDrugs}
+                  </table>
+                </div>
+    `
+
+    const cc = $("#cc").val();
+    let warning_result = false;
+    const warnings_str = drugInfo[0]?.dose_warning_condition;
+    const warnings = JSON.parse(warnings_str ?? '[]');
+    if(warnings.length){
+      warning_result = warnings.some(w=>{
+        const reg = new RegExp(`${w.warning_condition}`,'g')
+        const r = cc.match(reg) 
+        return r?.length
+      })
+    }
+    html += `<span>${drugInfo[0]?.generic_name}</span>`
+    if(warning_result) html+= `
+                <i class="fas fa-exclamation-triangle text-warning warn-btn"></i>
+                <div class="warn-text" style="display: none">
+                  <p>
+                  </p>
+                </div>
+                `
+
+  }
+  return html;
+}   
+
+
+
 const addMedicineToPrescription = (medicine) => {
+  allSummerNoteUpdate()
+  const extra = checkAddedDrug(medicine)
+
   $("#medicine_prescription").summernote(
     "code",
     $("#medicine_prescription").summernote("code") +
-      medicinePrescriptionHtmlFormat(medicine)
+      medicinePrescriptionHtmlFormat(medicine,extra)
   );
+
+  $(".warn-btn").click(function () {
+    $(this).next().fadeToggle(300);
+  });
+
+  $("i.reload").click(function () {
+  $(this).next().fadeToggle(300);
+});
+
+
 };
 
-const medicinePrescriptionHtmlFormat = (medicine) => {
+const medicinePrescriptionHtmlFormat = (medicine,extra) => {
   return `
    <div class="tab-name">
                 <strong>
@@ -254,16 +363,23 @@ const medicinePrescriptionHtmlFormat = (medicine) => {
                 <span style=""> ${medicine.genericName ? `( ${medicine.genericName})`: ''}</span>
                 <span >
                    ${medicine.duration ? `------- ${medicine.duration}` : ''}
-                </span>
+                </span> 
+                <extra>
+                  ${extra}
+                </extra>
                <br />
                 ${medicine.dose}    ${medicine.dose_time}
               </div>
   
   `;
+
+
+  
 };
 const prescription = {};
 
 const getPreviewInfo = () => {
+  allSummerNoteUpdate();
   prescription.cc = $("#cc").val();
   prescription.heart = $("#heart").val();
   prescription.lungs = $("#lungs").val();
@@ -273,7 +389,13 @@ const getPreviewInfo = () => {
   prescription.medicine = $("#medicine_prescription")
     .summernote("code")
     .replace(/tab-name/g, "")
-    .replace(/style=""/g, 'style="display:none;"');
+    .replace(/style=""/g, 'style="display:none;"')
+    .replace(/<extra([.<>\s\w="-\/,:;]+)extra>/g,'')
+
+  // console.log(prescription.medicine)
+
+  // console.log(prescription.medicine.match(/<extra([.<>\s\w="-\/,:;]+)extra>/g))
+    
   prescription.patient = patientInfo;
   prescription.doctorInfo = doctorInfo;
   return prescription;
@@ -334,7 +456,6 @@ const generatePDF = () => {
     pdfDiv.innerHTML = "";
     document.body.appendChild(canvasObj);
     pdf.addHTML(canvasObj, 0, 0, pdfConf, () => {
-      // document.body.removeChild(canvasObj);
       pdf.save(patientInfo.name + ".pdf");
       
       const pdfOutput = pdf.output('blob');
@@ -352,3 +473,38 @@ const generatePDF = () => {
     });
   });
 };
+
+
+const allSummerNoteUpdate = ()=>{
+
+  template_source.forEach(e=>{
+    if(e.summernote){
+      // setInterval(()=>{
+          $(e.target).summernote(
+          "code",
+          $(e.target).summernote("code") 
+        );    
+      // },30000)
+    }
+
+  })
+  $("#medicine_prescription").summernote(
+      "code",
+      $("#medicine_prescription").summernote("code") 
+    );
+
+    $(".warn-btn").click(function () {
+    $(this).next().fadeToggle(300);
+  });
+
+  $("i.reload").click(function () {
+  $(this).next().fadeToggle(300);
+});
+
+}
+
+
+
+
+
+

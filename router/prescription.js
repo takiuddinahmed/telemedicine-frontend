@@ -110,10 +110,15 @@ router.get("/template", cors.corsWithOptions, (req, res) => {
   SELECT * FROM advice; 
   SELECT * FROM counselling;
   SELECT * FROM disease_data;
-  SELECT td.*, gd.generic_name FROM trade_drug_data td LEFT JOIN generic_drug_data gd ON td.generic_name_id = gd.id;
+  SELECT gd.*,td.* FROM trade_drug_data td LEFT JOIN generic_drug_data gd ON td.generic_name_id = gd.id;
   `;
   utilDB.responseGetReq(sql, [], res);
 });
+
+// router.get("/template/generic/:generic_id",cors.corsWithOptions,(req,res)=>{
+//   let generic_id = req.params.generic_id;
+//   let sql = `SELECT * FROM `
+// })
 
 
 router.get("/", cors.corsWithOptions, (req, res, next) => {
@@ -216,16 +221,21 @@ router.get(
   authDoctor,
   async (req, res) => {
     const type = req.params.type;
-    const id = req.params.id;
-    const result = await getReq(
-      `https://outdoorbd.com/rest-api/${type}/${req[type]}/${config.restKey}`
-    );
-    if (result.ok) {
-      res.json(result.res);
-    } else {
-      res.status(404).json({ err: "error happened" });
+    if (req[type]){
+      const result = await getReq(
+        `https://outdoorbd.com/rest-api/${type}/${req[type]}/${config.restKey}`
+      );
+      if (result.ok) {
+        res.json(result.res);
+      } else {
+        res.status(404).json({ err: "Data Fetch Error" });
+      }
+    }
+    else{
+      res.status(404).json({err:"Session ended"})
     }
   }
+  
 );
 
 module.exports = router;
