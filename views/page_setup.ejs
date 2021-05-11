@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('common/header.ejs')%>
+
+  <body>
+    <!--Header Section Start-->
+    <header><%-include('common/nav.ejs')%></header>
+    <!--Header Section End-->
+    <main class="container mt-3">
+      <div class="row">
+        <div class="col-md-4 border-right">
+          <form class="page-setup-form bg-light p-3">
+            <% for(var i=0; i< page.length;i++) {%>
+            <h6><%=page[i].title</h6>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label"
+                ><%=page[i].height.label%>
+              </label>
+              <div class="col-sm-4">
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  value="<%=page[i].height.value%>"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label"
+                ><%=page[i].width.label%>
+              </label>
+              <div class="col-sm-4">
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  value="<%=page[i].width.value%>"
+                />
+              </div>
+            </div>
+            <%}%>
+            <div class="text-center pt-3 border-top mt-3">
+              <button class="btn btn-sm btn-primary">Reset</button>
+              <button class="btn btn-sm btn-info">Save</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div class="preview-paper border mb-5">
+            <div class="m-0 bg-light" style="min-height: 200px">
+              <h4 class="text-center pt-5">Header</h4>
+            </div>
+            <div class="patient-info" style="min-height: 70px">
+              <h4 class="text-center mb-0">Patient Information</h4>
+            </div>
+            <div class="row middle">
+              <div class="col-5 border-right py-2" style="min-height: 250px">
+                <h3 class="text-center pt-5">Others Info</h3>
+              </div>
+              <div class="col-7 py-2" style="min-height: 250px">
+                <h3 class="text-center pt-5">Rx Area</h3>
+              </div>
+            </div>
+            <div class="preview-footer border-top">
+              <h4 class="text-center mb-0">Footer</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- 
+        --All Right Reserved by HurtleBee LTD
+      -->
+    <script>
+      let page = [
+        {
+          title: "Header Size",
+          height: {
+            label: "Height (cm)",
+            value: "20.7",
+          },
+          width: {
+            label: "Width (cm)",
+            value: "21.1",
+          },
+        },
+        {
+          title: "Patient Information",
+          height: {
+            label: "Height (cm)",
+            value: "1.6",
+          },
+          width: {
+            label: "Width (cm)",
+            value: "21.1",
+          },
+        },
+        {
+          title: "Others Info",
+          height: {
+            label: "Height (cm)",
+            value: "19",
+          },
+          width: {
+            label: "Width (cm)",
+            value: "7.6",
+          },
+        },
+        {
+          title: "Rx Area",
+          height: {
+            label: "Height (cm)",
+            value: "19",
+          },
+          width: {
+            label: "Width (cm)",
+            value: "13.3",
+          },
+        },
+        {
+          title: "Footer",
+          height: {
+            label: "Height (cm)",
+            value: "1",
+          },
+          width: {
+            label: "Width (cm)",
+            value: "21.7",
+          },
+        },
+      ];
+    </script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
