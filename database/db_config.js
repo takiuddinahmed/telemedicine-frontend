@@ -25,7 +25,7 @@ module.exports = {
   // port: 
   
   host: 'localhost',
-  password: '1234$#@!',
+  password: '1420',
   user: 'root',
   database: 'prescription',
   port: 3306

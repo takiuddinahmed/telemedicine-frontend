@@ -24,6 +24,13 @@
     <script src="/plugins/summernote/summernote-bs4.min.js"></script>
     <!--Custom Styles-->
     <link rel="stylesheet" href="/css/style.css" />
+
+    <style>
+      .line-height .note-editable{
+         line-height: 0.8
+      }
+      
+    </style>
   </head>
 
   <body>
@@ -473,13 +480,8 @@
                 />
               </div>
               <div class="col-sm-4 my-1 my-sm-0">
-                <select class="custom-select custom-select-sm">
+                <select class="custom-select custom-select-sm" id="previous-prescription">
                   <option selected disabled>Previous Prescription</option>
-                  <option value="1">12-01-2020 | Dr Sultana</option>
-                  <option value="1">12-01-2020 | Dr Sultana</option>
-                  <option value="1">12-01-2020 | Dr Sultana</option>
-                  <option value="1">12-01-2020 | Dr Sultana</option>
-                  <option value="1">12-01-2020 | Dr Sultana</option>
                 </select>
               </div>
               <div class="col-sm-3 my-3 my-sm-0">
@@ -730,7 +732,7 @@
     <!--Custom scripts-->
     <script>
       $(".customTextbox").summernote({
-        tabsize: 2,
+        tabsize: 1,
         height: 150,
          toolbar: [
           ["style", ["style"]],
@@ -764,6 +766,8 @@
           ["view", ["fullscreen", "help"]],
         ],
       });
+
+      $('.customTextbox').next('div').addClass('line-height')
 
 
       

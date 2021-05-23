@@ -55,7 +55,7 @@ $(document).ready(() => {
   fetch(server + "template/")
     .then((response) => response.json())
     .then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.ok) {
         ccList = res.message[0];
         doseList = res.message[1];
@@ -239,6 +239,9 @@ $(document).ready(() => {
     medicine.generic_id = drugList.filter(
       (d) => d.trade_name == medicine.trade_name
     )[0]?.generic_name_id;
+    addDrugInfo(medicine,true)
+    .then(()=>{
+
     medicine.duration = $("#dose_duration-").val();
     medicine.dose = $("#dose_type").val();
     medicine.dose_time = $("#dose_time_khabar").val();
@@ -248,11 +251,12 @@ $(document).ready(() => {
       $("#dose_duration-").val("");
       $("#dose-type").val("");
     }
+    })
   });
 });
 
 
-const addDrugInfo = (medicine)=>{
+const addDrugInfo = async (medicine, check=false)=>{
   try{
   const drugInfo = drugList.filter(d=>d.generic_name_id == medicine.generic_id)[0]
 
@@ -269,22 +273,24 @@ const addDrugInfo = (medicine)=>{
       }
     })
     if(given_dost.length){
-      $("#dose_type").val(given_dost[0]?.value ?? "");
-      $("#dose_duration-").val(given_dost[0]?.duration ?? "");
-      $("#dose_time_khabar").val(given_dost[0]?.time ?? "");
+      if(check){
+        if(!$("#dose_type").val()?.length) $("#dose_type").val(given_dost[0]?.value ?? "")
+        if(!$("#dose_duration-").val()?.length) $("#dose_duration-").val(given_dost[0]?.duration ?? "")
+        if(!$("#dose_time_khabar").val()?.length) $("#dose_time_khabar").val(given_dost[0]?.time ?? "")
+      }
+      else{
+        $("#dose_type").val(given_dost[0]?.value ?? "");
+        $("#dose_duration-").val(given_dost[0]?.duration ?? "");
+        $("#dose_time_khabar").val(given_dost[0]?.time ?? "");
+      }
     }  }
 
-  // check pregnency condition
-  // const dose_pregnency_category = JSON.parse(drugInfo?.dose_pregnency_category);
-
-
-  // console.log({dose_weight,dose_pregnency_category, age_dose,medicine,drugInfo})
 
   }
   finally{
 
   }
-  
+  return ""
 }
 
 const checkAddedDrug = (medicine)=>{
@@ -392,10 +398,6 @@ const getPreviewInfo = () => {
     .replace(/style=""/g, 'style="display:none;"')
     .replace(/<extra([.<>\s\w="-\/,:;]+)extra>/g,'')
 
-  // console.log(prescription.medicine)
-
-  // console.log(prescription.medicine.match(/<extra([.<>\s\w="-\/,:;]+)extra>/g))
-    
   prescription.patient = patientInfo;
   prescription.doctorInfo = doctorInfo;
   return prescription;
@@ -446,7 +448,8 @@ const generatePDF = () => {
   getPreviewInfo();
   
   const pdfDiv = document.getElementById("prescription-pdf");
-  pdfDiv.innerHTML = prescriptionPDF();
+  const prescriptionHTML = prescriptionPDF();
+  pdfDiv.innerHTML = prescriptionHTML;
   html2canvas(pdfDiv).then(function (canvasObj) {
     const pdf = new jsPDF("p", "pt", "a4");
     pdfConf = {
@@ -470,6 +473,19 @@ const generatePDF = () => {
                 success: function(data){console.log(data)},
                 error: function(data){console.log(data)}
             });
+
+      let prescription_details = prescriptionHTML.replace(/<footer([.<>\s\w="-\/,:;\\\u0000-\uffff]+)footer>/g, '')
+      let today = new Date();
+      $.post("/save-prescription",{
+        prescription_details: prescription_details,
+        date : today.toLocaleDateString("en-US"),
+        doctor_name : doctorInfo?.name
+      },
+      (data,status)=>{
+        console.log({data,status})
+      }
+      )
+
     });
   });
 };

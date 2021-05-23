@@ -131,9 +131,11 @@ const prescriptionPDF = () => {
    
              </div>
            </div>
-           <div class="preview-footer border-top">
-             নিয়ম মাফিক ঔষধ খাবেন। ডাক্তারের পরামর্শ ব্যতীত ঔষধ পরিবর্তন নিষেধ।
-           </div>
+           <footer>
+            <div class="preview-footer border-top">
+              নিয়ম মাফিক ঔষধ খাবেন। ডাক্তারের পরামর্শ ব্যতীত ঔষধ পরিবর্তন নিষেধ।
+            </div>
+           </footer>
          </div>
        </main>
     `;

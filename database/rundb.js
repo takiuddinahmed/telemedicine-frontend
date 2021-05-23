@@ -203,15 +203,28 @@ CREATE TABLE IF NOT EXISTS trade_drug_data (
 
   );
   
+  `,
+
+  `
+  CREATE TABLE IF NOT EXISTS previous_presciptions(
+    id INT NOT NULL AUTO_INCREMENT,
+    patient_id INT NOT NULL, 
+    doctor_id INT NOT NULL,
+    doctor_name VARCHAR(40),
+    prescription_details MEDIUMTEXT,
+    date varchar(20),
+    PRIMARY KEY(id)
+  );
+
   `
 ];
 
 initScripts.forEach((sql) => {
   console.log(sql);
-  // db.query(sql, (err, result) => {
-  //   if (err) throw err;
-  //   console.log("Table created");
-  // });
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log("Table created");
+  });
 });
 
 const fs = require("fs");

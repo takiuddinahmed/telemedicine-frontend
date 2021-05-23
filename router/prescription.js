@@ -125,7 +125,7 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
   const patientId = req.query.patientid;
   const doctorId = req.query.doctorid;
   const key = req.query.key;
-  console.log({ patientId, doctorId, key });
+  // console.log({ patientId, doctorId, key });
   if (patientId && doctorId) {
     if (key == config.validateKey) {
       const token = jwt.sign(
@@ -166,6 +166,28 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
   }
 });
 
+
+router.get("/previous-prescription",cors.corsWithOptions,(req,res)=>{
+  let patient_id = req.session.patientId;
+
+  if(patient_id){
+    let sql =`
+      SELECT * from previous_presciptions WHERE patient_id=?
+    `
+    db.query(sql,[patient_id],(err,result)=>{
+      if(err){
+        res.status(500).json({msg:"Internal Server Error", err: err})
+      }
+      else{
+        res.status(200).json({msg:result})
+      }
+    })
+  }
+  else{
+    res.json(400).json({msg:"Unauthorized patient"})
+  }
+})
+
 router.get("/pdf/:filename", cors.corsWithOptions, (req, res)=>{
   let filename = req.params.filename;
   // res.send(filename);
@@ -188,6 +210,7 @@ router.get("/pdf/:filename", cors.corsWithOptions, (req, res)=>{
 router.post("/pdf",cors.corsWithOptions, uploadPdf.single('pdf'), async (req,res)=>{
   const fileInfo = req.file.filename;
   const p_id = req.session.patientId;
+  console.log(req.session)
   if(fileInfo && p_id){
     const result = await postReq(
       `https://outdoorbd.com/rest-api/prescription`,
@@ -205,9 +228,41 @@ router.post("/pdf",cors.corsWithOptions, uploadPdf.single('pdf'), async (req,res
     }
   }
   else{
+    console.log(p_id)
     res.status(400).json({ err: "error happened", message: {fileInfo, p_id} });
   }
 })
+
+
+router.post("/save-prescription",cors.corsWithOptions,async(req,res)=>{
+  if(req.body){
+    const prescription_details = req.body.prescription_details;
+    const date = req.body.date;
+    const patient_id = req.session.patientId;
+    const doctor_id = req.session.doctorId;
+    const doctor_name = req.body.doctor_name;
+
+    if(patient_id){
+      let sql = `
+        INSERT INTO previous_presciptions(patient_id, doctor_id, doctor_name, prescription_details,date) VALUES(?)
+      `
+
+      db.query(sql,[[patient_id,doctor_id,doctor_name, prescription_details,date]],(err,result)=>{
+        if(err){
+          res.status(500).json({msg:"Internal server error",err: err});
+          console.log(err)
+        }
+        else{
+          res.status(200).json({msg:"success"})
+        }
+      })
+    }
+  }
+  else {
+    res.status(400).json({msg:"Invalid req"})
+  }
+})
+
 
 router.get("/logout", cors.corsWithOptions, authDoctor, (req, res) => {
   req.session.destroy();

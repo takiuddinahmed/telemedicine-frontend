@@ -8,7 +8,6 @@ const config = require("./config");
 const dbconfig = require("./database/db_config");
 const rootDir = require("./util/path");
 const prescription = require("./router/prescription");
-const feed = require("./router/feed");
 const template = require("./router/templete");
 const index = require("./router/indexRouter");
 const adminRouter = require("./router/admin")
@@ -36,11 +35,12 @@ app.use((req,res,next)=>{
 })
 app.use(bodyParser.urlencoded({limit:'100mb'}));
 app.use(express.static(path.join(rootDir, "public")));
+
+app.use("/", prescription);
 app.use("/", index);
 app.use("/prescription", prescription);
 app.use("/prescription/admin",adminRouter)
 app.use('/admin', adminRouter);
-app.use("/", prescription);
 app.use(prescription);
 
 app.use((req, res, next) => {

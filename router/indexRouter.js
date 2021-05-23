@@ -14,32 +14,6 @@ router.options("*", cors.corsWithOptions, (req, res) => {
   res.sendStatus(200);
 });
 
-router.get("/", cors.corsWithOptions, (req, res, next) => {
-  const patientId = req.query.patientid;
-  const doctorId = req.query.doctorid;
-  if (patientId && doctorId) {
-    const token = jwt.sign(
-      { patientId: patientId, doctorId: patientId },
-      config.jwtKey
-    );
-    req.session.token = token;
-    req.session.patientID = patientId;
-    req.session.doctorId = doctorId;
-    res.redirect("/");
-  } else {
-    if (req.session.token) {
-      res.render("index.ejs", {
-        patientID: req.session.patientInfo,
-        doctorID: req.session.doctorId,
-      });
-    } else {
-      res.render("error", {
-          errorCode: 401,
-          errorText: "Unauthorized User",
-        });
-    }
-  }
-});
 
 
 router.get("/header_edit", cors.corsWithOptions, (req,res,next)=>{

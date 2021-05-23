@@ -1,6 +1,8 @@
+
 let doctorInfo = {};
 let prescriptionHeaderData = {};
 let patientInfo = {};
+let previousPrescriptions = []
 
 $("#updateDoctorInfo").on("click", () => {
   doctorInfo.key = "XDXTBDOPQQRX69FD";
@@ -32,6 +34,28 @@ $(async function () {
   $.ajax({
     type: "GET",
     dataType: "json",
+    url: "/previous-prescription",
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    jsonpCallback: "processJSONresponse",
+    error: (err, text, errThwon) => {
+      console.log(err.responseJSON)
+      alert(err?.responseJSON?.err ?? "Previous prescription fetch error.")
+    },
+    success: function (data) {
+      if(data?.msg?.length){
+        previousPrescriptions=data.msg;
+        updatePreviousPrescription();
+      }
+    },
+  });
+});
+
+
+$(async function () {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
     url: "/info/patient/",
     contentType: "application/json; charset=utf-8",
     crossDomain: true,
@@ -46,6 +70,8 @@ $(async function () {
     },
   });
 });
+
+
 
 async function setDoctor(data) {
   $("#doctorName").text(data.name);
@@ -113,3 +139,43 @@ async function updatePrescriptionHeader(){
     },
   });
 }
+
+const updatePreviousPrescription = async ()=>{
+  let html = '<option selected value=-1>Previous Prescription</option>'
+  previousPrescriptions.forEach((each,index)=>{
+    html += `<option value='${index}'>${each?.date} | ${each?.doctor_name}</option>`
+  })
+  $("#previous-prescription").html(html)
+  $("#previous-prescription").on('change',(e)=>{
+    if (previousPrescriptions[e.target.value]){
+    let modalHtml = `
+      <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      ${previousPrescriptions[e.target.value]?.prescription_details}
+      </div>
+      </div>
+    `
+
+    $("#previewPrescriptionModal").html(modalHtml);
+    $('#previewPrescriptionModal').modal()
+    var listener = window.addEventListener('click',listenerFun)
+    
+    var listenerFun = (e)=>{
+        
+      console.log(e.target.id)
+      if (e.target.id == "previewPrescriptionModal") {
+        
+        $('#previewPrescriptionModal').html("")
+        $('#previewPrescriptionModal').modal('hide')
+        listener.removeEventListener();
+      }
+    }
+    }
+  })
+  
+}
+
+
+
+
+
