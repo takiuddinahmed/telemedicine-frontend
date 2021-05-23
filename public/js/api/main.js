@@ -2,27 +2,37 @@
 const server = "https://prescription.outdoorbd.com/";
 
 const template_source = [
-  { form: "#cc_form", source: "#ixTemplate", target: "#cc" ,summernote: true, name: "cc"},
+  { 
+    form: "#cc_form", 
+    source: "#ixTemplate", 
+    target: "#cc" ,
+    summernote: true, 
+    name: "cc",
+    index:0
+  },
   {
     form: "#investigation_form",
     source: "#investigation_input",
     target: "#ix",
     summernote: true,
-    name: "investigation"
+    name: "investigation",
+    index:0
   },
   {
     form: "#advice_form",
     source: "#advice_input",
     target: "#advice-summernote",
     summernote: true,
-    name: "advice"
+    name: "advice",
+    index:0
   },
   {
     form: "#counselling_form",
     source: "#counselling_input",
     target: "#counselling_summernote",
     summernote: true,
-    name: "counselling"
+    name: "counselling",
+    index:0
   },
 ];
 
@@ -36,6 +46,8 @@ let diseaseList = [];
 let drugList = [];
 
 let templateDataAll = {};
+
+let prescription_index = 0;
 
 // disease selection
 
@@ -112,6 +124,7 @@ $(document).ready(() => {
   template_source.forEach((temp) => {
     $(temp.form).submit((e) => {
       e.preventDefault();
+      temp.index += 1;
       let txt = $(temp.source).val();
       $(temp.source).val("");
       txt.trim();
@@ -119,18 +132,23 @@ $(document).ready(() => {
         // check if available in data list
         const d = templateDataAll[temp.name]?.filter(each=>each.title == txt)
         if(d.length) {
-          console.log(d);
-          txt = d[0]?.details;
+          // console.log(d);
+          let details = d[0]?.details;
+          let position = details.indexOf('<p>')
+          position = position > -1 ? position += 3 : 1;
+          txt = details.substring(0,position) + temp.index + ". " + details.substring(position)
+          
+          if(!d[0]?.details?.length) txt += '\n'
         }
         else{
-          txt = '<p>' + txt + '</p>'
+          txt = '<p>'+ temp.index +'. ' + txt + '</p>'
         }
         if (!temp.summernote) {
-          $(temp.target).val($(temp.target).val() + txt + "\n");
+          $(temp.target).val(temp.index + '. ' +$(temp.target).val() + txt + "\n");
         } else {
           let  finalText = $(temp.target).summernote("code") + txt;
           finalText = finalText.replace("<p><br></p>","")
-          console.log(finalText)
+          // console.log(finalText)
           $(temp.target).summernote(
             "code",
             finalText
@@ -298,7 +316,7 @@ const checkAddedDrug = (medicine)=>{
   let html = ``;
   if(drugInfo.length){
     // get other drug names
-    const simillerDrugs = drugInfo.map(d=>`<tr> <td>${d.company_name} </td> <td> ${d.trade_name} </td> </tr>`)
+    const simillerDrugs = drugInfo.map(d=>`<tr class="pres-tradename-list" data-index=${prescription_index} data-tradename='${d.trade_name}'> <td>${d.company_name} </td> <td> ${d.trade_name} </td> </tr>`)
 
     html += `
     <i class="reload fas fa-sync-alt"></i>
@@ -341,6 +359,7 @@ const checkAddedDrug = (medicine)=>{
 
 const addMedicineToPrescription = (medicine) => {
   allSummerNoteUpdate()
+  prescription_index += 1;
   const extra = checkAddedDrug(medicine)
 
   $("#medicine_prescription").summernote(
@@ -354,17 +373,40 @@ const addMedicineToPrescription = (medicine) => {
   });
 
   $("i.reload").click(function () {
-  $(this).next().fadeToggle(300);
-});
+    $(this).next().fadeToggle(300);
+  });
+
+  $(".pres-tradename-list").click(function(){
+    console.log(this.dataset.index)
+    let data_index = this.dataset.index;
+    let trade_name = this.dataset.tradename;
+    // let fullprescription = $("#medicine_prescription").summernote("code");
+    // let re = new RegExp(`${prescription_index}\.[\n ]+<tradename>[\n ]+(.+)[ \n]+<\/tradename>`)
+    // fullprescription.replace(re,"new");
+    // $("#medicine_prescription").summernote(
+    //   "code",
+    //   fullprescription
+    // );
+    // console.log(fullprescription)
+    let selector = `#tradename-${data_index}`;
+
+    console.log(selector  + " " + trade_name)
+    console.log($(selector).html(trade_name))
+  })
 
 
 };
 
 const medicinePrescriptionHtmlFormat = (medicine,extra) => {
+  
   return `
    <div class="tab-name">
+
                 <strong>
-                  ${medicine.trade_name}
+                  ${prescription_index}.  
+                  <tradename id='tradename-${prescription_index}'>
+                    ${medicine.trade_name}
+                  </tradename>
                 </strong>
                 <span style=""> ${medicine.genericName ? `( ${medicine.genericName})`: ''}</span>
                 <span >
