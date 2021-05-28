@@ -128,8 +128,11 @@ router.route("/disease")
     const templateSql = `SELECT * FROM cc_template; 
     SELECT id,title FROM investigation; 
     SELECT id,title FROM advice; 
-    SELECT id,title FROM counselling;`
+    SELECT id,title FROM counselling;
+    SELECT id, generic_name as title FROM generic_drug_data;
+    `
     db.query(templateSql,[], (err, templateDataArr)=>{
+      // console.log(templateDataArr)
       if(err){
         console.log(err)
         res.render("error", {
@@ -142,9 +145,12 @@ router.route("/disease")
           {id: 'cc', data:templateDataArr[0], name:"C/C"},
           {id: 'investigation', data:templateDataArr[1], name:"Investigation"},
           {id: 'advice', data:templateDataArr[2], name:"Advice"},
-          {id: 'counselling', data:templateDataArr[3], name:"Counselling"}
+          {id: 'counselling', data:templateDataArr[3], name:"Counselling"},
+          {id: 'medicine', data:templateDataArr[4], name:"Medicine"}
+          
         ]
        if(add){
+        //  console.log(templateData[4].data)
         res.render("disease", {templateData:templateData, editDiseaseData: {}, mode:'add'});
         }
         else if(edit){
@@ -199,7 +205,7 @@ router.route("/disease")
     }
   }
    else {
-    const sql = ` SELECT * FROM disease_data`;
+    const sql = ` SELECT id,name FROM disease_data`;
     db.query(sql,[],(err, diseaseList)=>{
       if(err){
         console.log(err);
@@ -209,14 +215,14 @@ router.route("/disease")
       });
       }
       else{
-        const list = diseaseList.map((d)=>{
-          d.cc = JSON.parse(d.cc);
-          d.advice = JSON.parse(d.advice);
-          d.investigation = JSON.parse(d.investigation);
-          d.counselling = JSON.parse(d.counselling);
-          return d;
-        })
-        res.render("diseaseList", {diseaseList: JSON.stringify(list)} );
+        // const list = diseaseList.map((d)=>{
+        //   d.cc = JSON.parse(d.cc);
+        //   d.advice = JSON.parse(d.advice);
+        //   d.investigation = JSON.parse(d.investigation);
+        //   d.counselling = JSON.parse(d.counselling);
+        //   return d;
+        // })
+        res.render("diseaseList", {diseaseList: JSON.stringify(diseaseList)} );
       }
     })
   }
@@ -229,7 +235,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling} = req.body;
+    special_note,cc,investigation,advice,counselling, medicine} = req.body;
 
     bp = bp.length ? bp : 'Absent';
     pulse = pulse.length ? pulse : 'Absent';
@@ -275,7 +281,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling) VALUES(?)`
+    special_note,cc,investigation,advice,counselling,medicine) VALUES(?)`
 
     db.query(sql,[[ name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -283,7 +289,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling]], (err,result)=>{
+    special_note,cc,investigation,advice,counselling,medicine]], (err,result)=>{
       if(err){
         console.log(err)
         if(err.code == 'ER_DUP_ENTRY'){
@@ -305,7 +311,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling,id} = req.body
+    special_note,cc,investigation,advice,counselling,medicine,id} = req.body
 
     let sql = `UPDATE disease_data SET name=?,bp=?,pulse=?,temp=?,heart=?,lungs=?,abd=?,anaemia=?,jaundice=?,cyanosis=?,oedema=?,
    se_nervous_system_palpation=?,se_nervous_system_inspection=?,se_nervous_system_percussion=?,se_nervous_system_auscultation=?,
@@ -313,7 +319,7 @@ router.route("/disease")
    se_alimentary_system_palpation=?,se_alimentary_system_inspection=?,se_alimentary_system_percussion=?,se_alimentary_system_auscultation=?,
    se_musculoskeletal_system_palpation=?,se_musculoskeletal_system_inspection=?,se_musculoskeletal_system_percussion=?,se_musculoskeletal_system_auscultation=?,
    se_respiratory_system_palpation=?,se_respiratory_system_inspection=?,se_respiratory_system_percussion=?,se_respiratory_system_auscultation=?,
-   special_note=?,cc=?,investigation=?,advice=?,counselling=? WHERE id=?`
+   special_note=?,cc=?,investigation=?,advice=?,counselling=?, medicine=?, WHERE id=?`
 
     db.query(sql,[name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -321,7 +327,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling,id], (err,result)=>{
+    special_note,cc,investigation,advice,counselling,medicine,id], (err,result)=>{
       if(err){
         console.log(err)
         res.json({ok:false, err: 'Insert error. Try again'})

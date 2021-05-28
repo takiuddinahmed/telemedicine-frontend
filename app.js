@@ -29,10 +29,10 @@ app.use(
     },
   })
 );
-app.use((req,res,next)=>{
-  console.log(req.method+" "+req.url);
-  next()
-})
+// app.use((req,res,next)=>{
+//   console.log(req.method+" "+req.url);
+//   next()
+// })
 app.use(bodyParser.urlencoded({limit:'100mb'}));
 app.use(express.static(path.join(rootDir, "public")));
 

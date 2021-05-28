@@ -45,63 +45,87 @@ router.post("/save", cors.corsWithOptions, (req, res) => {
   let d = req.body;
   console.log(req.body);
   if (d) {
-    let sql = `
-    INSERT INTO patient_disease_data (
-    patient_id, doctor_id, disease_name, bp, pulse, temp, heart, lungs, 
-    abd, anaemia, jaundice, cyanosis, oedema, se_nervousSystem, se_respiratorySystem, se_cvs,
-    se_alimentarySystem, se_musculoskeletalSystem, specialNote, cc, investigation, advice, 
-    counselling, medicine
-    )
-    VALUES(?)
-    `;
-    db.query(
-      sql,
-      [
-        [
-          d.patient_id,
-          d.doctor_id,
-          d.disease_name,
-          d.bp,
-          d.pulse,
-          d.temp,
-          d.heart,
-          d.lungs,
-          d.abd,
-          d.anaemia,
-          d.jaundice,
-          d.cyanosis,
-          d.oedema,
-          d.se_nervousSystem,
-          d.se_respiratorySystem,
-          d.se_cvs,
-          d.se_alimentarySystem,
-          d.se_musculoskeletalSystem,
-          d.specialNote,
-          d.cc,
-          d.investigation,
-          d.advice,
-          d.counselling,
-          d.medicine,
-          "",
-        ],
-      ],
-      (err, result) => {
+    let {
+      doctor_id, name, bp, pulse, temp, heart, lungs, abd, anaemia, jaundice, cyanosis, oedema,
+      se_nervous_system_palpation, se_nervous_system_inspection, se_nervous_system_percussion, se_nervous_system_auscultation,
+      se_cvs_palpation, se_cvs_inspection, se_cvs_percussion, se_cvs_auscultation,
+      se_alimentary_system_palpation, se_alimentary_system_inspection, se_alimentary_system_percussion, se_alimentary_system_auscultation,
+      se_musculoskeletal_system_palpation, se_musculoskeletal_system_inspection, se_musculoskeletal_system_percussion, se_musculoskeletal_system_auscultation,
+      se_respiratory_system_palpation, se_respiratory_system_inspection, se_respiratory_system_percussion, se_respiratory_system_auscultation,
+      special_note, cc, investigation, advice, counselling, medicine } = req.body;
+
+    bp = bp.length ? bp : 'Absent';
+    pulse = pulse.length ? pulse : 'Absent';
+    temp = temp.length ? temp : 'Absent';
+    heart = heart.length ? heart : 'Absent';
+    lungs = lungs.length ? lungs : 'Absent';
+    abd = abd.length ? abd : 'Absent';
+    anaemia = anaemia.length ? anaemia : 'Absent';
+    jaundice = jaundice.length ? jaundice : 'Absent';
+    cyanosis = cyanosis.length ? cyanosis : 'Absent';
+    oedema = oedema.length ? oedema : 'Absent';
+
+    se_nervous_system_palpation = se_nervous_system_palpation && se_nervous_system_palpation.length ? se_nervous_system_palpation : 'Absent';
+    se_nervous_system_inspection = se_nervous_system_inspection && se_nervous_system_inspection.length ? se_nervous_system_inspection : 'Absent';
+    se_nervous_system_percussion = se_nervous_system_percussion && se_nervous_system_percussion.length ? se_nervous_system_percussion : 'Absent';
+    se_nervous_system_auscultation = se_nervous_system_auscultation && se_nervous_system_auscultation.length ? se_nervous_system_auscultation : 'Absent';
+
+    se_cvs_palpation = se_cvs_palpation && se_cvs_palpation.length ? se_cvs_palpation : 'Absent';
+    se_cvs_inspection = se_cvs_inspection && se_cvs_inspection.length ? se_cvs_inspection : 'Absent';
+    se_cvs_percussion = se_cvs_percussion && se_cvs_percussion.length ? se_cvs_percussion : 'Absent';
+    se_cvs_auscultation = se_cvs_auscultation && length ? se_cvs_auscultation : 'Absent';
+
+    se_alimentary_system_palpation = se_alimentary_system_palpation.length ? se_alimentary_system_palpation : 'Absent';
+    se_alimentary_system_inspection = se_alimentary_system_inspection.length ? se_alimentary_system_inspection : 'Absent';
+    se_alimentary_system_percussion = se_alimentary_system_percussion.length ? se_alimentary_system_percussion : 'Absent';
+    se_alimentary_system_auscultation = se_alimentary_system_auscultation.length ? se_alimentary_system_auscultation : 'Absent';
+
+    se_musculoskeletal_system_palpation = se_musculoskeletal_system_palpation.length ? se_musculoskeletal_system_palpation : 'Absent';
+    se_musculoskeletal_system_inspection = se_musculoskeletal_system_inspection.length ? se_musculoskeletal_system_inspection : 'Absent';
+    se_musculoskeletal_system_percussion = se_musculoskeletal_system_percussion.length ? se_musculoskeletal_system_percussion : 'Absent';
+    se_musculoskeletal_system_auscultation = se_musculoskeletal_system_auscultation.length ? se_musculoskeletal_system_auscultation : 'Absent';
+
+    se_respiratory_system_palpation = se_respiratory_system_palpation.length ? se_respiratory_system_palpation : 'Absent';
+    se_respiratory_system_inspection = se_respiratory_system_inspection.length ? se_respiratory_system_inspection : 'Absent';
+    se_respiratory_system_percussion = se_respiratory_system_percussion.length ? se_respiratory_system_percussion : 'Absent';
+    se_respiratory_system_auscultation = se_respiratory_system_auscultation.length ? se_respiratory_system_auscultation : 'Absent';
+
+    special_note = special_note ? special_note.length : 'Absent';
+
+    let sql = `INSERT INTO disease_data ( doctor_id, name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
+    se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
+    se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
+    se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
+    se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
+    special_note,cc,investigation,advice,counselling,medicine) VALUES(?)`
+
+    db.query(sql, [[doctor_id, name, bp, pulse, temp, heart, lungs, abd, anaemia, jaundice, cyanosis, oedema,
+      se_nervous_system_palpation, se_nervous_system_inspection, se_nervous_system_percussion, se_nervous_system_auscultation,
+      se_cvs_palpation, se_cvs_inspection, se_cvs_percussion, se_cvs_auscultation,
+      se_alimentary_system_palpation, se_alimentary_system_inspection, se_alimentary_system_percussion, se_alimentary_system_auscultation,
+      se_musculoskeletal_system_palpation, se_musculoskeletal_system_inspection, se_musculoskeletal_system_percussion, se_musculoskeletal_system_auscultation,
+      se_respiratory_system_palpation, se_respiratory_system_inspection, se_respiratory_system_percussion, se_respiratory_system_auscultation,
+      special_note, cc, investigation, advice, counselling, medicine]], (err, result) => {
         if (err) {
-          console.log(err);
-          res.status(500).json({ ok: false, message: "Internal server error" });
-        } else {
-          res
-            .status(200)
-            .json({ ok: true, message: "success", id: result.insertId });
+          console.log(err)
+          if (err.code == 'ER_DUP_ENTRY') {
+            res.json({ ok: false, err: 'Disease already exists.' })
+          }
+          else
+            res.json({ ok: false, err: 'Insert error. Try again' })
         }
-      }
-    );
+        else {
+          res.json({ ok: true })
+        }
+      })
   } else {
-    res.status(400).json({ ok: false });
+    res.json({ ok: false , err: 'No data'});
   }
 });
 router.get("/template", cors.corsWithOptions, (req, res) => {
   console.log("------- template -------------");
+  let doctor_id = req.session.doctorId;
   let sql = `
   SELECT * FROM cc_template; 
   SELECT * FROM dose_list; 
@@ -109,16 +133,12 @@ router.get("/template", cors.corsWithOptions, (req, res) => {
   SELECT * FROM investigation; 
   SELECT * FROM advice; 
   SELECT * FROM counselling;
-  SELECT * FROM disease_data;
+  SELECT * FROM disease_data WHERE doctor_id = -1 OR doctor_id = ?;
   SELECT gd.*,td.* FROM trade_drug_data td LEFT JOIN generic_drug_data gd ON td.generic_name_id = gd.id;
   `;
-  utilDB.responseGetReq(sql, [], res);
+  utilDB.responseGetReq(sql, [doctor_id], res);
 });
 
-// router.get("/template/generic/:generic_id",cors.corsWithOptions,(req,res)=>{
-//   let generic_id = req.params.generic_id;
-//   let sql = `SELECT * FROM `
-// })
 
 
 router.get("/", cors.corsWithOptions, (req, res, next) => {

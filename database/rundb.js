@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     CREATE TABLE IF NOT EXISTS disease_data (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE,
+    doctor_id INT DEFAULT -1,
     bp VARCHAR(45)  DEFAULT "Absent",
     pulse VARCHAR(45)  DEFAULT "Absent",
     temp VARCHAR(45)  DEFAULT "Absent",
@@ -87,9 +88,11 @@ CREATE TABLE IF NOT EXISTS duration_list (
     
     special_note TEXT DEFAULT "Absent",
     cc TEXT,
+    drug MEDIUMTEXT,
     investigation MEDIUMTEXT,
     advice MEDIUMTEXT,
-    counselling MEDIUMTEXT, 
+    counselling MEDIUMTEXT,
+    medicine MEDIUMTEXT, 
 
     PRIMARY KEY (id));
     `,

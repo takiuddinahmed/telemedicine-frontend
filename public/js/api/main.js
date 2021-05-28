@@ -64,9 +64,20 @@ $(document).ready(() => {
   });
 });
 $(document).ready(() => {
-  fetch(server + "template/")
-    .then((response) => response.json())
-    .then((res) => {
+  $(async function () {
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "/template",
+      contentType: "application/json; charset=utf-8",
+      crossDomain: true,
+      jsonpCallback: "processJSONresponse",
+      error: (err, text, errThwon) => {
+        alert(err?.responseJSON?.err ?? "Doctor data fetch error.")
+      },
+      success: function (res) {
+        
+      
       // console.log(res)
       if (res.ok) {
         ccList = res.message[0];
@@ -103,10 +114,9 @@ $(document).ready(() => {
           "#drug_brand_name"
         );
       }
-    })
-    .catch((err) => {
-      console.log(err);
+      },
     });
+  });
 
   const update_template_auto_complete = (data, entry, jquery_selector) => {
     $(jquery_selector).easyAutocomplete({
@@ -120,6 +130,8 @@ $(document).ready(() => {
     });
   };
 });
+
+
 $(document).ready(() => {
   template_source.forEach((temp) => {
     $(temp.form).submit((e) => {
@@ -184,6 +196,7 @@ const updateDiseaseComponentSection = (d) => {
   const se_keyList = Object.keys(d)
                        .map(dd=>[...dd.matchAll(/^(se_[\w_]*)_(\w*)$/g)])
                        .filter(ddd=> ddd && ddd.length)
+  
   se_keyList.forEach((se_key)=>{
     se_key = se_key[0]
     const selector = `#${se_key[1]} .${se_key[2]}`;
@@ -191,49 +204,110 @@ const updateDiseaseComponentSection = (d) => {
     $(selector).val(value)
   })
 
-  const updateTemplateData = async (
-    sourceArray,
-    sourceName,
-    targetSelector,
-    summernote = true
-  ) => {
-    let selectedList = JSON.parse(sourceArray);
-    let text = "";
-    if(selectedList){
-      selectedList.forEach((c) => {
-        const iData = templateDataAll[sourceName].filter(t=>t.id == c.id)[0]
-        text += iData.details  + (summernote ? "<br/>" : "\n");
-      });
-      if (!summernote) {
-        $(targetSelector).val(text);
-      } else {
-        $(targetSelector).summernote(
-          "code",
-          text 
-        );
-      }
-    }
-    else{
+  if(d?.doctor_id == -1){
+    const updateTemplateData = async (
+      sourceArray,
+      sourceName,
+      targetSelector,
+      source,
+      summernote = true,
+    ) => {
+      let selectedList = JSON.parse(sourceArray);
+      let text = $(targetSelector).summernote("code");;
+      if(selectedList){
+        selectedList.forEach((c) => {
+          source.index += 1;
+          const iData = templateDataAll[sourceName].filter(t=>t.id == c.id)[0]
+          let details = iData.details;
+          let position = details.indexOf('<p>')
+          position = position > -1 ? position += 3 : 1;
+          txt = details.substring(0, position) + source.index + ". " + details.substring(position)
+          if (!d[0]?.details?.length) txt += '\n'
+          text += txt + (summernote ? "" : "\n");
+        });
+        text = text.replace("<p><br></p>", "")
         if (!summernote) {
-                $(targetSelector).val('');
-              } else {
-                $(targetSelector).summernote(
-                  "code",
-                  '' + "<br/>"
-                );
+          $(targetSelector).val(text);
+        } else {
+          console.log(text)
+          $(targetSelector).summernote(
+            "code",
+            text 
+          );
+        }
+      }
+      else{
+          if (!summernote) {
+                  $(targetSelector).val('');
+                } else {
+                  $(targetSelector).summernote(
+                    "code",
+                    '' + "<br/>"
+                  );
+                }
               }
-            }
-  };
-  //cc
-  updateTemplateData(d.cc,'cc',  "#cc");
-  updateTemplateData(d.investigation, 'investigation',"#ix");
-  updateTemplateData(d.advice,'advice', "#advice-summernote", true);
-  updateTemplateData(
-    d.counselling,
-    'counselling',
-    "#counselling_summernote",
-    true
-  );
+    };
+    //cc
+    updateTemplateData(d.cc, 'cc', "#cc", template_source[0] , true);
+    updateTemplateData(d.investigation, 'investigation',"#ix", template_source[1], true);
+    updateTemplateData(d.advice,'advice', "#advice-summernote",template_source[2] ,true);
+    updateTemplateData(
+      d.counselling,
+      'counselling',
+      "#counselling_summernote",
+      template_source[3],
+      true
+    );
+
+
+    // update medicine
+    let medicineList = JSON.parse(d.medicine);
+    medicineList.forEach(generic=>{
+      let medicine={};
+      medicine = drugList.filter(d=>d.generic_name_id == generic.id)[0] ?? {};
+      medicine.generic_id = generic.id;
+      const age_dose = JSON.parse(medicine?.dose_range);
+      const patient_age = patientInfo?.age ?? 0;
+      if (patient_age > 0) {
+        let given_dost = age_dose.filter(d => {
+          if (d.from_unit == 'Year' && patient_age >= d.from_val && patient_age <= d.to_val) {
+            return true
+          }
+        })
+        if(given_dost.length){
+          medicine.dose = given_dost[0]?.value ?? "";
+          medicine.dose_time = given_dost[0]?.time ?? "";
+          medicine.duration = given_dost[0]?.duration ?? ""
+        }
+      }
+      addMedicineToPrescription(medicine);
+    })
+  }
+  else{
+    // dieases data what doctors added
+    console.log("doctor selected")
+    d?.cc?.replace("<p><br></p>", "")
+    d?.investigation?.replace("<p><br></p>", "")
+    d?.advice?.replace("<p><br></p>", "")
+    d?.counselling?.replace("<p><br></p>", "")
+
+    $("#cc").summernote("code",d?.cc ?? "")
+    $("#ix").summernote("code", d?.investigation ?? "")
+    $("#advice-summernote").summernote("code",d?.advice ?? "")
+    $("#counselling_summernote").summernote("code",d?.counselling ?? "")
+    $("#medicine_prescription").summernote("code",d?.medicine ?? "")
+
+    // handle indexing
+    template_source[0].index =  d?.cc?.match(/<p>\d/g)?.length ?? 0;
+    template_source[1].index =  d?.investigation?.match(/<p>\d/g)?.length ?? 0;
+    template_source[2].index =  d?.advice?.match(/<p>\d/g)?.length ?? 0;
+    template_source[3].index =  d?.counselling?.match(/<p>\d/g)?.length ?? 0;
+
+
+    prescription_index = d?.medicine?.match(/<strong>[\s]*\d\./g)?.length ?? 0;
+    // console.log(d.medicine)
+    console.log(d?.medicine?.match(/<strong>[\s]*\d\./g))
+  }
 };
 
 
@@ -313,6 +387,7 @@ const addDrugInfo = async (medicine, check=false)=>{
 
 const checkAddedDrug = (medicine)=>{
   const drugInfo = drugList.filter(d=>d.generic_name_id == medicine.generic_id)
+  
   let html = ``;
   if(drugInfo.length){
     // get other drug names
@@ -335,10 +410,13 @@ const checkAddedDrug = (medicine)=>{
     let warning_result = false;
     const warnings_str = drugInfo[0]?.dose_warning_condition;
     const warnings = JSON.parse(warnings_str ?? '[]');
+    let warning_case = "";
     if(warnings.length){
+
       warning_result = warnings.some(w=>{
         const reg = new RegExp(`${w.warning_condition}`,'g')
         const r = cc.match(reg) 
+        if(r?.length) warning_case = w.warning_condition;
         return r?.length
       })
     }
@@ -347,9 +425,11 @@ const checkAddedDrug = (medicine)=>{
                 <i class="fas fa-exclamation-triangle text-warning warn-btn"></i>
                 <div class="warn-text" style="display: none">
                   <p>
+                      ${warning_case} is in warning condition.
                   </p>
                 </div>
                 `
+    
 
   }
   return html;
@@ -357,7 +437,8 @@ const checkAddedDrug = (medicine)=>{
 
 
 
-const addMedicineToPrescription = (medicine) => {
+const addMedicineToPrescription = (medicine
+) => {
   allSummerNoteUpdate()
   prescription_index += 1;
   const extra = checkAddedDrug(medicine)
@@ -380,18 +461,8 @@ const addMedicineToPrescription = (medicine) => {
     console.log(this.dataset.index)
     let data_index = this.dataset.index;
     let trade_name = this.dataset.tradename;
-    // let fullprescription = $("#medicine_prescription").summernote("code");
-    // let re = new RegExp(`${prescription_index}\.[\n ]+<tradename>[\n ]+(.+)[ \n]+<\/tradename>`)
-    // fullprescription.replace(re,"new");
-    // $("#medicine_prescription").summernote(
-    //   "code",
-    //   fullprescription
-    // );
-    // console.log(fullprescription)
     let selector = `#tradename-${data_index}`;
-
-    console.log(selector  + " " + trade_name)
-    console.log($(selector).html(trade_name))
+    $(selector).html(trade_name)
   })
 
 
@@ -416,7 +487,7 @@ const medicinePrescriptionHtmlFormat = (medicine,extra) => {
                   ${extra}
                 </extra>
                <br />
-                ${medicine.dose}    ${medicine.dose_time}
+                ${medicine.dose ? medicine.dose : ""}    ${medicine.dose_time ? medicine.dose_time : ""}
               </div>
   
   `;
@@ -465,26 +536,45 @@ const save_patient_disease = () => {
   d.cyanosis = $("#cyanosis").val();
   d.oedema = $("#oedema").val();
   d.specialNote = $("#special-note-input").val();
+  // se list 
+  let se_list = ["se_nervous_system_palpation", "se_nervous_system_inspection", "se_nervous_system_percussion", "se_nervous_system_auscultation",
+    "se_cvs_palpation", "se_cvs_inspection", "se_cvs_percussion", "se_cvs_auscultation",
+    "se_alimentary_system_palpation", "se_alimentary_system_inspection", "se_alimentary_system_percussion", "se_alimentary_system_auscultation",
+    "se_musculoskeletal_system_palpation", "se_musculoskeletal_system_inspection", "se_musculoskeletal_system_percussion", "se_musculoskeletal_system_auscultation",
+    "se_respiratory_system_palpation", "se_respiratory_system_inspection", "se_respiratory_system_percussion", "se_respiratory_system_auscultation"]
+  const se_keyList = se_list
+    .map(dd => [...dd.matchAll(/^(se_[\w_]*)_(\w*)$/g)])
+    .filter(ddd => ddd && ddd.length)
+
+  se_keyList.forEach((se_key) => {
+    se_key = se_key[0]
+    const selector = `#${se_key[1]} .${se_key[2]}`;
+    d[se_key[0]] = $(selector).val()
+  })
+
+
   d.cc = $("#cc").val();
   d.investigation = $("#ix").val();
   d.advice = $("#advice-summernote").summernote("code");
   d.counselling = $("#counselling_summernote").summernote("code");
   d.medicine = $("#medicine_prescription").summernote("code");
-  d.patient_id = patientInfo?.id;
   d.doctor_id = doctorInfo?.id;
-  d.disease_name = $("#disease").val();
-  d.se_nervousSystem = "";
-  d.se_respiratorySystem = "";
-  d.se_cvs = "";
-  d.se_alimentarySystem = "";
-  d.se_musculoskeletalSystem = "";
-  $.post("save", d, (res) => {
-    console.log(res);
+  d.name = $("#new-diesease-name").val();
+  console.log(d);
+  $.post("save", d, (res, state) => {
+    console.log({res,status});
     if (res.ok) {
       patient_disease_id = res.id;
     }
+    else{
+      alert(res?.err)
+    }
   });
 };
+
+const save_promt_modal = ()=>{
+  $("#save-promt-modal").modal('show');
+}
 
 const generatePDF = () => {
   getPreviewInfo();
