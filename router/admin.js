@@ -123,7 +123,7 @@ router.route("/disease")
   const add = req.query.add;
   const edit = req.query.edit;
   const del = req.query.delete;
-
+  
   if (add || edit) {
     const templateSql = `SELECT * FROM cc_template; 
     SELECT id,title FROM investigation; 
@@ -205,7 +205,7 @@ router.route("/disease")
     }
   }
    else {
-    const sql = ` SELECT id,name FROM disease_data`;
+    const sql = ` SELECT id,name FROM disease_data WHERE doctor_id=-1`;
     db.query(sql,[],(err, diseaseList)=>{
       if(err){
         console.log(err);

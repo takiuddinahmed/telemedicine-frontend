@@ -111,14 +111,23 @@ $(document).ready(() => {
         update_template_auto_complete(
           res.message[7],
           "trade_name",
-          "#drug_brand_name"
+          "#drug_brand_name",
+          ()=>{
+            const medicine = {};
+            medicine.trade_name = $("#drug_brand_name").val();
+            medicine.generic_id = drugList.filter(
+              (d) => d.trade_name == medicine.trade_name
+            )[0]?.generic_name_id;
+
+            addDrugInfo(medicine);
+          }
         );
       }
       },
     });
   });
 
-  const update_template_auto_complete = (data, entry, jquery_selector) => {
+  const update_template_auto_complete = (data, entry, jquery_selector, event = ()=>{}) => {
     $(jquery_selector).easyAutocomplete({
       data: data,
       getValue: entry,
@@ -126,6 +135,7 @@ $(document).ready(() => {
         match: {
           enabled: true,
         },
+        onChooseEvent: event,
       },
     });
   };
@@ -306,7 +316,7 @@ const updateDiseaseComponentSection = (d) => {
 
     prescription_index = d?.medicine?.match(/<strong>[\s]*\d\./g)?.length ?? 0;
     // console.log(d.medicine)
-    console.log(d?.medicine?.match(/<strong>[\s]*\d\./g))
+    // console.log(d?.medicine?.match(/<strong>[\s]*\d\./g))
   }
 };
 
@@ -341,7 +351,8 @@ $(document).ready(() => {
       addMedicineToPrescription(medicine);
       $("#drug_brand_name").val("");
       $("#dose_duration-").val("");
-      $("#dose-type").val("");
+      $("#dose_type").val("");
+      $("#dose_time_khabar").val("");
     }
     })
   });
@@ -458,7 +469,7 @@ const addMedicineToPrescription = (medicine
   });
 
   $(".pres-tradename-list").click(function(){
-    console.log(this.dataset.index)
+    //console.log(this.dataset.index)
     let data_index = this.dataset.index;
     let trade_name = this.dataset.tradename;
     let selector = `#tradename-${data_index}`;
@@ -560,9 +571,9 @@ const save_patient_disease = () => {
   d.medicine = $("#medicine_prescription").summernote("code");
   d.doctor_id = doctorInfo?.id;
   d.name = $("#new-diesease-name").val();
-  console.log(d);
+  //console.log(d);
   $.post("save", d, (res, state) => {
-    console.log({res,status});
+    //console.log({res,status});
     if (res.ok) {
       patient_disease_id = res.id;
     }
