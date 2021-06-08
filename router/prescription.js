@@ -14,6 +14,7 @@ const authDoctor = require("./auth").authDoctorMiddleware;
 const adminRouter = require("./admin");
 const multer = require('multer');
 const crypto = require('crypto');
+const pdf = require('html-pdf');
 router.use(express.json());
 
 const pdfStorage = multer.diskStorage({
@@ -226,33 +227,97 @@ router.get("/pdf/:filename", cors.corsWithOptions, (req, res)=>{
         }
 })
 
+router.get("/pdf-preview",cors.corsWithOptions,(req,res)=>{
+  let patient_id = req.session.patientId;
 
-router.post("/pdf",cors.corsWithOptions, uploadPdf.single('pdf'), async (req,res)=>{
-  const fileInfo = req.file.filename;
-  const p_id = req.session.patientId;
-  console.log(req.session)
-  if(fileInfo && p_id){
-    const result = await postReq(
-      `https://outdoorbd.com/rest-api/prescription`,
-      {
-        key: config.restKey,
-        message: 'https://prescription.outdoorbd.com/pdf/'+fileInfo,
-        patient_id: p_id
+  if (patient_id) {
+    let sql = `
+      SELECT * from previous_presciptions WHERE patient_id=?
+    `
+    db.query(sql, [patient_id], (err, result) => {
+      if (err) {
+        res.status(500).json({ msg: "Internal Server Error", err: err })
       }
-    )
-    if(result.ok){
-      // console.log(result)
-      res.json(result);
-    }
-    else{
-      res.status(404).json({ err: "error happened on api", message: result.err });
-    }
+      else {
+        res.render("prescriptionPdf", { htmlData: result[result.length-1].prescription_details })
+      }
+    })
   }
-  else{
-    console.log(p_id)
-    res.status(400).json({ err: "error happened", message: {fileInfo, p_id} });
+  else {
+    res.json(400).json({ msg: "Unauthorized patient" })
   }
 })
+
+
+router.post("/pdf",cors.corsWithOptions, async (req,res)=>{
+  const prescriptionHtmlData = req.body.prescriptionHtmlData;
+  const p_id = req.session.patientId;
+  const d_id = req.session.doctorId;
+
+  res.render("prescriptionPdf",{htmlData:prescriptionHtmlData},(error,html)=>{
+    const options = { format: 'Letter' };
+    let filename = crypto.pseudoRandomBytes(16).toString("hex") + ".pdf";
+    pdf.create(html, options).toFile("./pdfUpload/"+filename, async(err,result)=>{
+      if(err) res.json({ok:false,err:err});
+      else{
+        if(filename && p_id){
+          const result = await postReq(
+            `https://outdoorbd.com/rest-api/prescription`,
+            {
+              key: config.restKey,
+              message: 'https://prescription.outdoorbd.com/pdf/'+filename,
+              patient_id: p_id,
+              doctor_id: d_id
+            }
+          )
+          if(result.ok){
+            // console.log(result)
+            res.json(result);
+          }
+          else{
+            res.status(404).json({ err: "error happened on api", message: result.err });
+          }
+        }
+        else{
+          console.log(p_id)
+          res.status(400).json({ err: "error happened", message: {filename, p_id} });
+        }
+      }
+    })
+  });
+
+
+
+
+  
+})
+
+// router.post("/pdf",cors.corsWithOptions, uploadPdf.single('pdf'), async (req,res)=>{
+//   const fileInfo = req.file.filename;
+//   const p_id = req.session.patientId;
+//   console.log(req.session)
+//   if(fileInfo && p_id){
+//     const result = await postReq(
+//       `https://outdoorbd.com/rest-api/prescription`,
+//       {
+//         key: config.restKey,
+//         message: 'https://prescription.outdoorbd.com/pdf/'+fileInfo,
+//         patient_id: p_id
+//       }
+//     )
+//     if(result.ok){
+//       // console.log(result)
+//       res.json(result);
+//     }
+//     else{
+//       res.status(404).json({ err: "error happened on api", message: result.err });
+//     }
+//   }
+//   else{
+//     console.log(p_id)
+//     res.status(400).json({ err: "error happened", message: {fileInfo, p_id} });
+//   }
+// })
 
 
 router.post("/save-prescription",cors.corsWithOptions,async(req,res)=>{

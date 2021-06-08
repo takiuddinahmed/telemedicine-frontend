@@ -228,11 +228,13 @@ header .top-user-info button {
 
 /*-------------Preview--------------*/
 .preview-paper {
-  width: 700px;
+  width: 100%;
   overflow: auto;
   margin: auto;
   font-size: 0.9375rem;
 }
+
+
 
 .preview-paper .row {
   background: rgba(128, 189, 255, 0.2);

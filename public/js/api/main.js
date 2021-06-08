@@ -589,49 +589,74 @@ const save_promt_modal = ()=>{
 
 const generatePDF = () => {
   getPreviewInfo();
-  
-  const pdfDiv = document.getElementById("prescription-pdf");
-  const prescriptionHTML = prescriptionPDF();
-  pdfDiv.innerHTML = prescriptionHTML;
-  html2canvas(pdfDiv).then(function (canvasObj) {
-    const pdf = new jsPDF("p", "pt", "a4");
-    pdfConf = {
-      pagesplit: false,
-      background: "#fff",
-    };
-    pdfDiv.innerHTML = "";
-    document.body.appendChild(canvasObj);
-    pdf.addHTML(canvasObj, 0, 0, pdfConf, () => {
-      // pdf.save(patientInfo.name + ".pdf");
-      
-      const pdfOutput = pdf.output('blob');
-      const formData = new FormData();
-      formData.append('pdf', pdfOutput);
-      $.ajax('/pdf',
-            {
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data){console.log(data)},
-                error: function(data){console.log(data)}
-            });
 
-      let prescription_details = prescriptionHTML.replace(/<footer([.<>\s\w="-\/,:;\\\u0000-\uffff]+)footer>/g, '')
-      let today = new Date();
-      $.post("/save-prescription",{
-        prescription_details: prescription_details,
-        date : today.toLocaleDateString("en-US"),
-        doctor_name : doctorInfo?.name
-      },
+  const prescriptionHTML = prescriptionPDF2();
+  $.post("/pdf", { prescriptionHtmlData: prescriptionHTML },
       (data,status)=>{
         console.log({data,status})
-      }
-      )
+      })
+    
 
-    });
-  });
+    let prescription_details = prescriptionHTML.replace(/<footer([.<>\s\w="-\/,:;\\\u0000-\uffff]+)footer>/g, '')
+    let today = new Date();
+    $.post("/save-prescription",{
+      prescription_details: prescription_details,
+      date: today.toLocaleDateString("en-GB").split(',')[0],
+      doctor_name : doctorInfo?.name
+    },
+    (data,status)=>{
+      console.log({data,status})
+    })
 };
+
+
+// const generatePDF = () => {
+//   getPreviewInfo();
+  
+//   const pdfDiv = document.getElementById("prescription-pdf");
+//   const prescriptionHTML = prescriptionPDF();
+//   pdfDiv.innerHTML = prescriptionHTML;
+//   html2canvas(pdfDiv).then(function (canvasObj) {
+//     const pdf = new jsPDF("p", "pt", "a4");
+//     pdfConf = {
+//       pagesplit: false,
+//       background: "#fff",
+//     };
+//     pdfDiv.innerHTML = "";
+//     document.body.appendChild(canvasObj);
+//     pdf.addHTML(canvasObj, 0, 0, pdfConf, () => {
+//       // pdf.save(patientInfo.name + ".pdf");
+      
+//       const pdfOutput = pdf.output('blob');
+//       const formData = new FormData();
+//       formData.append('pdf', pdfOutput);
+//       $.ajax('/pdf',
+//             {
+//                 method: 'POST',
+//                 data: formData,
+//                 processData: false,
+//                 contentType: false,
+//                 success: function(data){console.log(data)},
+//                 error: function(data){console.log(data)}
+//             });
+
+//       let prescription_details = prescriptionHTML.replace(/<footer([.<>\s\w="-\/,:;\\\u0000-\uffff]+)footer>/g, '')
+//       let today = new Date();
+//       $.post("/save-prescription",{
+//         prescription_details: prescription_details,
+//         date : today.toLocaleDateString("en-US"),
+//         doctor_name : doctorInfo?.name
+//       },
+//       (data,status)=>{
+//         console.log({data,status})
+//       }
+//       )
+
+//     });
+//   });
+// };
+
+
 
 
 const allSummerNoteUpdate = ()=>{
