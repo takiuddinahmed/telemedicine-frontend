@@ -241,7 +241,8 @@ router.post("/pdf",cors.corsWithOptions, uploadPdf.single('pdf'), async (req,res
       }
     )
     if(result.ok){
-      res.json(res.res);
+      // console.log(result)
+      res.json(result);
     }
     else{
       res.status(404).json({ err: "error happened on api", message: result.err });

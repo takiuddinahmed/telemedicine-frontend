@@ -602,7 +602,7 @@ const generatePDF = () => {
     pdfDiv.innerHTML = "";
     document.body.appendChild(canvasObj);
     pdf.addHTML(canvasObj, 0, 0, pdfConf, () => {
-      pdf.save(patientInfo.name + ".pdf");
+      // pdf.save(patientInfo.name + ".pdf");
       
       const pdfOutput = pdf.output('blob');
       const formData = new FormData();
