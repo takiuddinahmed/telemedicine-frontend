@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const bcrypt = require("bcrypt")
+// const bcrypt = require("bcrypt")
+const crypto = require('crypto');
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const cors = require("../cors");
@@ -10,11 +11,12 @@ const db = require("../database/db");
 const { authAdminMiddleware, authAdminMiddlewareForLogin } = require("./auth");
 const { route } = require("./prescription");
 const { Template } = require("ejs");
-const authAdmin = require("./auth").authAdminMiddleware
+const authAdmin = require("./auth").authAdminMiddleware;
+
 
 router.use(express.json());
 router.use(
-  bodyParser.urlencoded(
+  express.urlencoded(
     {extended: true}
     )
   )
@@ -41,10 +43,13 @@ router.route("/login")
               });
     }
     else if (result.length){
-      const match = bcrypt.compareSync(password, result[0].password);
+      // const match = bcrypt.compareSync(password, result[0].password);
+      const newHash = crypto.scryptSync(password,config.salt,64).toString('hex');
+      // console.log({newHash, result})
+      const match = newHash === result[0].password;
       const options = {};
       if (!remember){
-        options.expiresIn = '1h';
+        options.expiresIn = '6h';
       }
       if (match){
         const token = jwt.sign(
@@ -73,30 +78,31 @@ router.route("/login")
   })
 })
 
-// router.post('/register',(req,res,next)=>{
-//   const {email, password} = req.body;
-//   const hash = bcrypt.hashSync(password, config.saltRounds);
-//   let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
-//   db.query(sql, [[email, hash]], (err, result)=>{
-//     if(err){
-//       res.render("error", {
-//         errorCode: 401,
-//         errorText: "Unauthorized User",
-//       });
+router.post('/register',(req,res,next)=>{
+  const {email, password} = req.body;
+  // const hash = bcrypt.hashSync(password, config.saltRounds);
+  const hash = crypto.scryptSync(password,config.salt,64).toString('hex');
+  let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
+  db.query(sql, [[email, hash]], (err, result)=>{
+    if(err){
+      res.render("error", {
+        errorCode: 401,
+        errorText: "Unauthorized User",
+      });
       
-//     }
-//     else{
-//       const token = jwt.sign(
-//         { admin: true, id: result.insertedId },
-//         config.jwtKey,
-//         { expiresIn: "2h" }
-//       );
-//       req.session.token = token;
-//       res.redirect("/prescription/admin");
-//     }
-//   })
+    }
+    else{
+      const token = jwt.sign(
+        { admin: true, id: result.insertedId },
+        config.jwtKey,
+        { expiresIn: "2h" }
+      );
+      req.session.token = token;
+      res.redirect("/prescription/admin");
+    }
+  })
 
-// })
+})
 
 
 router.get('/logout', (req,res)=>{
@@ -114,7 +120,6 @@ router.get('/', (req,res)=>{
 
 router.route('/disease/alternative')
 .get((req,res)=>{
-  
   res.render('alternativeName')
 })
 

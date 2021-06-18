@@ -33,7 +33,7 @@ app.use(
 //   console.log(req.method+" "+req.url);
 //   next()
 // })
-app.use(bodyParser.urlencoded({limit:'100mb'}));
+app.use(express.urlencoded({limit:'100mb'}));
 app.use(express.static(path.join(rootDir, "public")));
 
 app.use("/", prescription);

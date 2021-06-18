@@ -3,9 +3,14 @@ function prescriptionPreview() {
      <div class="modal-content" >
        <main class="container-md" id="prescriptionPreview">
          <div class="preview-paper border">
-           <div class="row m-0" 
-           style="background-color:${prescriptionHeaderData.background_color};color:${prescriptionHeaderData.font_color}">
-             <div class="col-6 text-left">
+         <style>
+            .back-color{
+              background-color:${prescriptionHeaderData.background_color} !important;
+              color:${prescriptionHeaderData.font_color} !important;
+            }
+            </style>
+           <div class="row m-0 back-color"> 
+            <div class="col-6 text-left">
                <div class="preview-header" >
                  <h4>${prescriptionHeaderData.name}</h4>
                  <h4>${prescriptionHeaderData.degree}</h4>
@@ -143,10 +148,16 @@ const prescriptionPDF = () => {
 
 const prescriptionPDF2= ()=>{
   return `
+    <style>
+    .back-color{
+      background-color:${prescriptionHeaderData.background_color} !important;
+      color:${prescriptionHeaderData.font_color} !important;
+    }
+    </style>
+
     <main class="container" id="prescriptionPreview">
          <div class="preview-paper border">
-           <div class="row m-0"
-           style="background-color:${prescriptionHeaderData.background_color};color:${prescriptionHeaderData.font_color}">
+           <div class="row m-0 back-color">
              <div class="col-5 text-left">
                <div class="preview-header" >
                  <h4>${prescriptionHeaderData.name}</h4>
@@ -178,7 +189,7 @@ const prescriptionPDF2= ()=>{
              <p>Mobile : <span>${patientInfo.phone}</span></p>
            </div>
            <div class="row middle">
-             <div class="col-5 border-right py-2">
+             <div class="col-4 border-right py-2">
                <div class="barcode-section border-bottom">
                  <div class="barcode"></div>
                </div>

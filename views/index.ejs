@@ -29,6 +29,10 @@
       .line-height .note-editable{
          line-height: 0.8
       }
+
+      .medicin-name:hover {
+        cursor: pointer;
+      }
       
     </style>
   </head>
@@ -38,7 +42,7 @@
     <header>
       <div class="container-fluid">
         <div class="top-user-info">
-          <a href="/logout">
+          <!-- <a href="/logout">
           <button type="button" class="btn btn-dark">
             Logout</button></a>
           <div class="barcode-input">
@@ -67,7 +71,7 @@
                 <li><a href="#">subscriptions valid till 12 Oct 2020</a></li>
               </ul>
             </div>
-          </div>
+          </div> -->
           <div class="save-options">
             <a onclick="preview_handle()" data-toggle="modal" data-target="#previewPrescriptionModal" id="previewPrescription">
               <i
@@ -85,14 +89,14 @@
                 class="fas fa-envelope-open"
               ></i
             ></a>
-            <a 
+            <!-- <a 
               ><i
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Save and Print Without Header"
                 class="fas fa-save"
               ></i
-            ></a>
+            ></a> -->
             <a data-toggle="modal" data-target="#save-promt-modal" 
               ><i
                 data-toggle="tooltip"
@@ -751,6 +755,15 @@
     <!-- preview modal -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="previewPrescriptionModal"></div>
     <!--Custom scripts-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"
+      integrity="sha512-jzL0FvPiDtXef2o2XZJWgaEpVAihqquZT/tT89qCVaxVuHwJ/1DFcJ+8TBMXplSJXE8gLbVAUv+Lj20qHpGx+A=="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="/js/api/dataFeeder.js"></script>
+    <script src="/js/api/main.js"></script>
+    <script src="/js/api/prescriptionPreview.js"></script>
     <script>
       $(".customTextbox").summernote({
         tabsize: 1,
@@ -786,6 +799,11 @@
           ['insert', ['link', 'picture', 'video']],
           ["view", ["fullscreen", "help"]],
         ],
+        callbacks: {
+          onChange: function (contents, $editable) {
+            checkDrugDrugInterection()
+          }
+        }
       });
 
       $('.customTextbox').next('div').addClass('line-height')
@@ -793,12 +811,7 @@
 
       
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js" integrity="sha512-jzL0FvPiDtXef2o2XZJWgaEpVAihqquZT/tT89qCVaxVuHwJ/1DFcJ+8TBMXplSJXE8gLbVAUv+Lj20qHpGx+A==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-   <script src="/js/scripts.js"></script>
-    <script src="/js/api/dataFeeder.js"></script>
-    <script src="/js/api/main.js"></script>
-    <script src="/js/api/prescriptionPreview.js"></script>
+   
     
   </body>
 </html>

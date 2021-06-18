@@ -14,8 +14,13 @@ const authDoctor = require("./auth").authDoctorMiddleware;
 const adminRouter = require("./admin");
 const multer = require('multer');
 const crypto = require('crypto');
-const pdf = require('html-pdf');
+const puppeteer = require('puppeteer')
 router.use(express.json());
+router.use(
+  express.urlencoded(
+    { extended: true }
+  )
+)
 
 const pdfStorage = multer.diskStorage({
   destination: function(req,file,callback){
@@ -254,36 +259,45 @@ router.post("/pdf",cors.corsWithOptions, async (req,res)=>{
   const p_id = req.session.patientId;
   const d_id = req.session.doctorId;
 
-  res.render("prescriptionPdf",{htmlData:prescriptionHtmlData},(error,html)=>{
-    const options = { format: 'Letter' };
+  res.render("prescriptionPdf",{htmlData:prescriptionHtmlData}, async (error,html)=>{
+    
     let filename = crypto.pseudoRandomBytes(16).toString("hex") + ".pdf";
-    pdf.create(html, options).toFile("./pdfUpload/"+filename, async(err,result)=>{
-      if(err) res.json({ok:false,err:err});
-      else{
-        if(filename && p_id){
-          const result = await postReq(
-            `https://outdoorbd.com/rest-api/prescription`,
-            {
-              key: config.restKey,
-              message: 'https://prescription.outdoorbd.com/pdf/'+filename,
-              patient_id: p_id,
-              doctor_id: d_id
-            }
-          )
-          if(result.ok){
-            // console.log(result)
-            res.json(result);
-          }
-          else{
-            res.status(404).json({ err: "error happened on api", message: result.err });
-          }
-        }
-        else{
-          console.log(p_id)
-          res.status(400).json({ err: "error happened", message: {filename, p_id} });
-        }
-      }
+
+    const browser = await puppeteer.launch({
+      headless: true
     })
+    const page = await browser.newPage();
+
+    await page.setContent(html, {
+      waitUntil: 'networkidle0'
+    })
+
+    // const pdfBuffer = await page.pdf ({format:'Letter'})
+
+    await page.pdf({ format: 'A4', path: "./pdfUpload/" + filename })
+    await browser.close();
+
+    if(filename && p_id){
+      const result = await postReq(
+        `https://outdoorbd.com/rest-api/prescription`,
+        {
+          key: config.restKey,
+          message: 'https://prescription.outdoorbd.com/pdf/'+filename,
+          patient_id: p_id,
+          doctor_id: d_id
+        }
+      )
+      if(result.ok){
+        res.json(result);
+      }
+      else{
+        res.status(404).json({ err: "error happened on api", message: result.err });
+      }
+    }
+    else{
+      console.log(p_id)
+      res.status(400).json({ err: "error happened", message: {filename, p_id} });
+    }
   });
 
 

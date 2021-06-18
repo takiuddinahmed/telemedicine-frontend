@@ -89,23 +89,36 @@ $(document).ready(() => {
         diseaseList = res.message[6];
         drugList = res.message[7];
         templateDataAll = {cc:ccList,investigation:investigationList,advice:adviceList,counselling:counsellingList}
-        update_template_auto_complete(res.message[0], "title", "#ixTemplate");
-        update_template_auto_complete(res.message[1], "name", "#dose_type");
+        update_template_auto_complete(
+          res.message[0], "title", "#ixTemplate",
+          ()=>{
+            $("#cc_form").submit();
+          }
+          );
+        update_template_auto_complete(
+          res.message[1], "name", "#dose_type",
+          ()=>{}
+          );
         update_template_auto_complete(
           res.message[2],
           "name",
-          "#dose_duration-"
+          "#dose_duration-",
+
         );
         update_template_auto_complete(
           res.message[3],
           "title",
-          "#investigation_input"
+          "#investigation_input", 
+          () => { $("#investigation_form").submit();}
         );
-        update_template_auto_complete(res.message[4], "title", "#advice_input");
+        update_template_auto_complete(
+          res.message[4], "title", "#advice_input",
+          () => { $("#advice_form").submit(); });
         update_template_auto_complete(
           res.message[5],
           "title",
-          "#counselling_input"
+          "#counselling_input",
+          () => { $("#counselling_form").submit(); }
         );
         update_template_auto_complete(res.message[6], "name", "#disease");
         update_template_auto_complete(
@@ -407,7 +420,7 @@ const checkAddedDrug = (medicine)=>{
     html += `
     <i class="reload fas fa-sync-alt"></i>
     <div class="medicin-name">
-                  <table class="table table-sm">
+                  <table class="table table-sm ">
                   <tr>
                     <th>Company Name </th>
                     <th>Trade Name </th>
@@ -427,31 +440,86 @@ const checkAddedDrug = (medicine)=>{
       warning_result = warnings.some(w=>{
         const reg = new RegExp(`${w.warning_condition}`,'g')
         const r = cc.match(reg) 
-        if(r?.length) warning_case = w.warning_condition;
+        if(r?.length) warning_case = w.warning_message;
         return r?.length
       })
     }
-    html += `<span>${drugInfo[0]?.generic_name}</span>`
+    html += `<span -id="genericname${prescription_index}">${drugInfo[0]?.generic_name}</span>`
+    html += `<span class="ddIneraction" style='display:none' id="dangerball-${prescription_index}" ></span>`
+
+    if (drugInfo[0]?.dose_drug_interection){
+      let interectionList = JSON.parse(drugInfo[0]?.dose_drug_interection)
+      let interection = interectionList.map(d=>{
+        return `<li class="interection-${prescription_index}">${d.drug}</li>`
+      })
+      html += `
+          <ul style="display:none">
+            ${interection}
+          </ul>
+      `
+    }
+    
     if(warning_result) html+= `
                 <i class="fas fa-exclamation-triangle text-warning warn-btn"></i>
                 <div class="warn-text" style="display: none">
                   <p>
-                      ${warning_case} is in warning condition.
+                      ${warning_case ?? "CC conflict"} 
                   </p>
                 </div>
                 `
     
 
   }
+
+
+
   return html;
+
 }   
+
+String.prototype.matchGroup = function (re){
+  let match
+  const matches = []
+  
+
+  while (match = re.exec(this)) {
+
+    matches.push([...match.slice(1)])
+  }
+
+  return matches
+}
+
+var checkDrugDrugInterection = ()=>{
+  $(".ddIneraction").hide();
+  let prescription_texts = $("#medicine_prescription").summernote("code");
+
+  let interectionList = prescription_texts.matchGroup(/class="interection-(\d*)">(.+)<\/li>/gi)
+  
+  
+  interectionList.forEach(interection=>{
+    let reg = new RegExp('id="genericname([0-9]*)">'+interection[1]+'<\/span><span',"gi");
+    let matchGeneric = prescription_texts.matchGroup(reg);
+    if(matchGeneric.length){
+      $("#dangerball-"+interection[0]).show();
+      $("#dangerball-"+matchGeneric[0][0]).show();
+    }
+    
+  })
+
+  
+  
+
+}
+
 
 
 
 const addMedicineToPrescription = (medicine
 ) => {
   allSummerNoteUpdate()
-  prescription_index += 1;
+  prescription_index = $("#medicine_prescription").summernote("code").match(/<strong>[\s]*\d\./g)?.length ?? 0;
+  prescription_index +=1;
   const extra = checkAddedDrug(medicine)
 
   $("#medicine_prescription").summernote(
@@ -474,6 +542,8 @@ const addMedicineToPrescription = (medicine
     let trade_name = this.dataset.tradename;
     let selector = `#tradename-${data_index}`;
     $(selector).html(trade_name)
+    // $(this).parent().parent().fadeToggle(300);
+    $("i.reload").click();
   })
 
 
