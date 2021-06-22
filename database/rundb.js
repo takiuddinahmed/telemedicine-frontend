@@ -86,16 +86,78 @@ CREATE TABLE IF NOT EXISTS duration_list (
     se_respiratory_system_percussion VARCHAR(45) DEFAULT "Absent",
     se_respiratory_system_auscultation VARCHAR(45) DEFAULT "Absent" ,
     
+    fixed_data TEXT,
+
+
+    special_note TEXT DEFAULT "Absent",
+    cc MEDIUMTEXT,
+    drug MEDIUMTEXT,
+    investigation MEDIUMTEXT,
+    advice MEDIUMTEXT,
+    counselling MEDIUMTEXT,
+    medicine MEDIUMTEXT,
+
+
+    PRIMARY KEY (id));
+    `,
+    `
+    CREATE TABLE IF NOT EXISTS patient_disease_data(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    patient_id INT NOT NULL UNIQUE,
+    doctor_id INT DEFAULT -1,
+    doctor_name VARCHAR(45) NOT NULL,
+    date VARCHAR(20) NOT NULL,
+    bp VARCHAR(45)  DEFAULT "Absent",
+    pulse VARCHAR(45)  DEFAULT "Absent",
+    temp VARCHAR(45)  DEFAULT "Absent",
+    heart VARCHAR(45)  DEFAULT "Absent",
+    lungs VARCHAR(45)  DEFAULT "Absent",
+    abd VARCHAR(45)  DEFAULT "Absent",
+    anaemia VARCHAR(45)  DEFAULT "Absent",
+    jaundice VARCHAR(45)  DEFAULT "Absent",
+    cyanosis VARCHAR(45)  DEFAULT "Absent",
+    oedema VARCHAR(45)  DEFAULT "Absent",
+
+    se_nervous_system_palpation VARCHAR(45) DEFAULT "Absent",
+    se_nervous_system_inspection VARCHAR(45) DEFAULT "Absent",
+    se_nervous_system_percussion VARCHAR(45) DEFAULT "Absent",
+    se_nervous_system_auscultation VARCHAR(45) DEFAULT "Absent",
+
+    se_cvs_palpation VARCHAR(45) DEFAULT "Absent",
+    se_cvs_inspection VARCHAR(45) DEFAULT "Absent",
+    se_cvs_percussion VARCHAR(45) DEFAULT "Absent",
+    se_cvs_auscultation VARCHAR(45) DEFAULT "Absent",
+
+    se_alimentary_system_palpation VARCHAR(45) DEFAULT "Absent",
+    se_alimentary_system_inspection VARCHAR(45) DEFAULT "Absent",
+    se_alimentary_system_percussion VARCHAR(45) DEFAULT "Absent",
+    se_alimentary_system_auscultation VARCHAR(45) DEFAULT "Absent",
+
+    se_musculoskeletal_system_palpation VARCHAR(45) DEFAULT "Absent",
+    se_musculoskeletal_system_inspection VARCHAR(45) DEFAULT "Absent",
+    se_musculoskeletal_system_percussion VARCHAR(45) DEFAULT "Absent",
+    se_musculoskeletal_system_auscultation VARCHAR(45) DEFAULT "Absent",
+
+    se_respiratory_system_palpation VARCHAR(45) DEFAULT "Absent",
+    se_respiratory_system_inspection VARCHAR(45) DEFAULT "Absent",
+    se_respiratory_system_percussion VARCHAR(45) DEFAULT "Absent",
+    se_respiratory_system_auscultation VARCHAR(45) DEFAULT "Absent",
+
+	fixed_data TEXT,
+	
     special_note TEXT DEFAULT "Absent",
     cc TEXT,
     drug MEDIUMTEXT,
     investigation MEDIUMTEXT,
     advice MEDIUMTEXT,
     counselling MEDIUMTEXT,
-    medicine MEDIUMTEXT, 
+    medicine MEDIUMTEXT,
 
-    PRIMARY KEY (id));
+    PRIMARY KEY(id));
+    
     `,
+
 
     `
     CREATE TABLE IF NOT EXISTS disease_alternative_name (
@@ -112,35 +174,6 @@ CREATE TABLE IF NOT EXISTS duration_list (
     
     `,
   `
-    CREATE TABLE IF NOT EXISTS patient_disease_data (
-    id INT NOT NULL AUTO_INCREMENT,
-    patient_id INT NOT NULL,
-    doctor_id  INT,
-    disease_name VARCHAR(50) NOT NULL,
-    bp VARCHAR(45) NULL,
-    pulse VARCHAR(45) NULL,
-    temp VARCHAR(45) NULL,
-    heart VARCHAR(45) NULL,
-    lungs VARCHAR(45) NULL,
-    abd VARCHAR(45) NULL,
-    anaemia VARCHAR(45) NULL,
-    jaundice VARCHAR(45) NULL,
-    cyanosis VARCHAR(45) NULL,
-    oedema VARCHAR(45) NULL,
-    se_nervousSystem VARCHAR(45) NULL,
-    se_respiratorySystem VARCHAR(45) NULL,
-    se_cvs VARCHAR(45) NULL,
-    se_alimentarySystem VARCHAR(45) NULL,
-    se_musculoskeletalSystem VARCHAR(45) NULL,
-    specialNote TEXT NULL,
-    cc MEDIUMTEXT,
-    investigation MEDIUMTEXT,
-    advice MEDIUMTEXT,
-    counselling MEDIUMTEXT, 
-    medicine MEDIUMTEXT,
-    PRIMARY KEY (id));
-    `,
-  `
   CREATE TABLE IF NOT EXISTS generic_drug_data (
     id INT NOT NULL AUTO_INCREMENT,
     generic_name VARCHAR(50) NOT NULL UNIQUE,
@@ -152,6 +185,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     dose_precautions_warnings TEXT,
     dose_pregnency_category TEXT,
     dose_warning_condition TEXT,
+    advice MEDIUMTEXT,
     PRIMARY KEY (id)
   );
   `,

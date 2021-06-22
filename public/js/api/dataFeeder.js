@@ -2,7 +2,8 @@
 let doctorInfo = {};
 let prescriptionHeaderData = {};
 let patientInfo = {};
-let previousPrescriptions = []
+let previousPrescriptions = [];
+
 
 $("#updateDoctorInfo").on("click", () => {
   doctorInfo.key = "XDXTBDOPQQRX69FD";
@@ -84,11 +85,21 @@ async function setDoctor(data) {
 }
 
 async function setPatient(data) {
+  // data manipulate for test
+  data.reg_no = data.id;
+
   $("#patientName").val(data.name);
   $("#patientWeight").val("wight: " + data.weight);
   $("#patientSex").val(data.gender);
   $("#patientAge").val("Age: " + data.age);
   $("#patientPregnancyStatus").val("No");
+  
+  if(data?.gender?.toLowerCase() != 'f'){
+    $("#patientPregnancyStatus").prop('disabled',true);
+  }
+  else{
+    $("#patientPregnancyStatus").val("0");
+  }
   patientInfo = data;
   
 }
@@ -145,32 +156,36 @@ const updatePreviousPrescription = async ()=>{
   previousPrescriptions.forEach((each,index)=>{
     html += `<option value='${index}'>${each?.date} | ${each?.doctor_name}</option>`
   })
+
+
   $("#previous-prescription").html(html)
   $("#previous-prescription").on('change',(e)=>{
-    if (previousPrescriptions[e.target.value]){
-    let modalHtml = `
-      <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      ${previousPrescriptions[e.target.value]?.prescription_details}
-      </div>
-      </div>
-    `
+    let index = e.target.value;
+    updateDiseaseComponentSection(previousPrescriptions[index])
+    // if (previousPrescriptions[e.target.value]){
+    // let modalHtml = `
+    //   <div class="modal-dialog modal-lg">
+    //   <div class="modal-content">
+    //   ${previousPrescriptions[e.target.value]?.prescription_details}
+    //   </div>
+    //   </div>
+    // `
 
-    $("#previewPrescriptionModal").html(modalHtml);
-    $('#previewPrescriptionModal').modal()
-    var listener = window.addEventListener('click',listenerFun)
+    // $("#previewPrescriptionModal").html(modalHtml);
+    // $('#previewPrescriptionModal').modal()
+    // var listener = window.addEventListener('click',listenerFun)
     
-    var listenerFun = (e)=>{
+    // var listenerFun = (e)=>{
         
-      console.log(e.target.id)
-      if (e.target.id == "previewPrescriptionModal") {
+    //   console.log(e.target.id)
+    //   if (e.target.id == "previewPrescriptionModal") {
         
-        $('#previewPrescriptionModal').html("")
-        $('#previewPrescriptionModal').modal('hide')
-        listener.removeEventListener();
-      }
-    }
-    }
+    //     $('#previewPrescriptionModal').html("")
+    //     $('#previewPrescriptionModal').modal('hide')
+    //     listener.removeEventListener();
+    //   }
+    // }
+    // }
   })
   
 }

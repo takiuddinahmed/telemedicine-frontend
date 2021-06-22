@@ -21,15 +21,14 @@ router.get("/header_edit", cors.corsWithOptions, (req,res,next)=>{
   
   let sql= `SELECT * FROM prescription_header WHERE doctor_id=?`;
   db.query(sql,[doctorId],(err,data)=>{
-    console.log({err,data});
+    // console.log({err,data});
     if(err){
       res.render("error", {
           errorCode: 401,
           errorText: "Unauthorized User",
         });
     }
-    console.log()
-    res.render("header_edit.ejs", {doctor:data[0]});
+    res.render("header_edit.ejs", {doctor:data.length ? data[0] : {}});
   })
 
 })

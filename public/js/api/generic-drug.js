@@ -63,8 +63,10 @@ const doseWeight = new Model(dose_weight,{form:'#dose-weight-form'}, ()=>{
         return(
             `
             <tr>
-              <td style="width: 50%">${d.from_val} ${d.from_unit} to ${d.to_val} ${d.to_unit}</td>
-              <td>${d.value}</td>
+              <td >${d.from_val} ${d.from_unit} to ${d.to_val} ${d.to_unit}</td>
+              <td>${d?.value}</td>
+              <td>${d?.duration}</td>
+              <td>${d?.time}</td>
               <td onclick="doseWeight.remove(${index})"><i class="fas text-danger fa-trash" d-id=${d.id} class="dose-range-remove-btn" ></i></td>
             </tr>
             `
@@ -248,7 +250,8 @@ const postDataToServer = ()=>{
         formData.dose_precautions_warnings = dosePrecautions.stringify();
         formData.dose_pregnency_category = dosePregnency.stringify()
         formData.dose_warning_condition = doseWarningCondition.stringify();
- 
+        formData.advice = $("#advice_summernot_box").summernote('code');
+        
         if (!editState){
         $.post(server+"/generic-drug", formData, (data,status)=>{
             console.log({data,status})

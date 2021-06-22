@@ -44,9 +44,9 @@ router.route("/login")
     }
     else if (result.length){
       // const match = bcrypt.compareSync(password, result[0].password);
-      const newHash = crypto.scryptSync(password,config.salt,64).toString('hex');
+      // const newHash = crypto.scryptSync(password,config.salt,64).toString('hex');
       // console.log({newHash, result})
-      const match = newHash === result[0].password;
+      const match = password === result[0].password;
       const options = {};
       if (!remember){
         options.expiresIn = '6h';
@@ -81,9 +81,9 @@ router.route("/login")
 router.post('/register',(req,res,next)=>{
   const {email, password} = req.body;
   // const hash = bcrypt.hashSync(password, config.saltRounds);
-  const hash = crypto.scryptSync(password,config.salt,64).toString('hex');
+  // const hash = crypto.scryptSync(password,config.salt,64).toString('hex');
   let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
-  db.query(sql, [[email, hash]], (err, result)=>{
+  db.query(sql, [[email, password]], (err, result)=>{
     if(err){
       res.render("error", {
         errorCode: 401,
@@ -233,6 +233,7 @@ router.route("/disease")
   }
 })
 .post(cors.corsWithOptions, (req, res,next)=>{
+
   let {
     name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -280,13 +281,27 @@ router.route("/disease")
 
     special_note = special_note ? special_note.length : 'Absent';
 
+    // get states
+  let fixed_datas = [];
+
+  for (const [key, value] of Object.entries(req.body)) {
+    if (key.match(/[\w_]*state/)) {
+      if (value == 'on') {
+        fixed_datas.push(key);
+      }
+    }
+  }
+
+  fixed_datas = JSON.stringify(fixed_datas);
+
+
     let sql = `INSERT INTO disease_data ( name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling,medicine) VALUES(?)`
+    special_note,cc,investigation,advice,counselling,medicine,fixed_data) VALUES(?)`
 
     db.query(sql,[[ name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -294,7 +309,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling,medicine]], (err,result)=>{
+    special_note,cc,investigation,advice,counselling,medicine,fixed_datas]], (err,result)=>{
       if(err){
         console.log(err)
         if(err.code == 'ER_DUP_ENTRY'){
@@ -317,6 +332,19 @@ router.route("/disease")
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
     special_note,cc,investigation,advice,counselling,medicine,id} = req.body
+  
+    // fixed data
+  let fixed_datas = [];
+
+  for (const [key, value] of Object.entries(req.body)) {
+    if (key.match(/[\w_]*state/)) {
+      if (value == 'on'){
+        fixed_datas.push(key);
+      }
+    }
+  }
+  
+  fixed_datas = JSON.stringify(fixed_datas);
 
     let sql = `UPDATE disease_data SET name=?,bp=?,pulse=?,temp=?,heart=?,lungs=?,abd=?,anaemia=?,jaundice=?,cyanosis=?,oedema=?,
    se_nervous_system_palpation=?,se_nervous_system_inspection=?,se_nervous_system_percussion=?,se_nervous_system_auscultation=?,
@@ -324,7 +352,7 @@ router.route("/disease")
    se_alimentary_system_palpation=?,se_alimentary_system_inspection=?,se_alimentary_system_percussion=?,se_alimentary_system_auscultation=?,
    se_musculoskeletal_system_palpation=?,se_musculoskeletal_system_inspection=?,se_musculoskeletal_system_percussion=?,se_musculoskeletal_system_auscultation=?,
    se_respiratory_system_palpation=?,se_respiratory_system_inspection=?,se_respiratory_system_percussion=?,se_respiratory_system_auscultation=?,
-   special_note=?,cc=?,investigation=?,advice=?,counselling=?, medicine=?, WHERE id=?`
+   special_note=?,cc=?,investigation=?,advice=?,counselling=?, medicine=?,fixed_data=? WHERE id=?`
 
     db.query(sql,[name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
@@ -332,7 +360,7 @@ router.route("/disease")
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling,medicine,id], (err,result)=>{
+    special_note,cc,investigation,advice,counselling,medicine,fixed_datas,parseInt(id)], (err,result)=>{
       if(err){
         console.log(err)
         res.json({ok:false, err: 'Insert error. Try again'})
@@ -379,16 +407,17 @@ router.route("/generic-drug")
                 drugData.dose_precautions_warnings = JSON.parse(drugData.dose_precautions_warnings);
                 drugData.dose_pregnency_category = JSON.parse(drugData.dose_pregnency_category);
                 drugData.dose_warning_condition = JSON.parse(drugData.dose_warning_condition);
+                let advicedata = drugData.advice; 
 
-                console.log(drugList)
-                res.render("genericDrug", {editState: true, drugData: JSON.stringify(drugData), drugList:drugList});
+                // console.log(drugList)
+                res.render("genericDrug", { editState: true, drugData: JSON.stringify(drugData), drugList: drugList, advice: advicedata});
               }
             })
           }
         }
       
       else{
-        res.render("genericDrug", {editState: false, drugData: {}, drugList:drugList});
+        res.render("genericDrug", {editState: false, drugData: {}, drugList:drugList,advice:''});
       }
     }
     })
@@ -427,18 +456,18 @@ router.route("/generic-drug")
         });
       }
       else{
-        console.log(result)
+        // console.log(result)\
         res.render("genericDrugList",{drugList:JSON.stringify(result)});
       }
     })
   }
 })
 .post(cors.corsWithOptions,(req,res,next)=>{
-  const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition} = req.body;
+  const {generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition,advice} = req.body;
   const sql = `
-  INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition) VALUES(?)
+  INSERT INTO generic_drug_data (generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition,advice) VALUES(?)
   `
-  db.query(sql,[[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition]], (err, result)=>{
+  db.query(sql,[[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition,advice]], (err, result)=>{
     if(err){
       res.json({ok: false, err: err})
     }
@@ -448,12 +477,12 @@ router.route("/generic-drug")
   })
 })
 .put(cors.corsWithOptions,(req,res,next)=>{
-  const {id,generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition} = req.body;
-  console.log(req.body)
+  const {id,generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category, dose_warning_condition,advice} = req.body;
+  // console.log(req.body)
   const sql = `
-    UPDATE generic_drug_data SET generic_name=?, dose_range=?, dose_weight=?, dose_drug_interection=?, dose_indication=?,  dose_constrains=?, dose_precautions_warnings=?,  dose_pregnency_category=?, dose_warning_condition=? WHERE id=?
+    UPDATE generic_drug_data SET generic_name=?, dose_range=?, dose_weight=?, dose_drug_interection=?, dose_indication=?,  dose_constrains=?, dose_precautions_warnings=?,  dose_pregnency_category=?, dose_warning_condition=?, advice=? WHERE id=?
   `
-  db.query(sql,[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category,dose_warning_condition, id], (err, result)=>{
+  db.query(sql,[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category,dose_warning_condition,advice, id], (err, result)=>{
     if(err){
       res.json({ok: false, err: 'Update error. Please try again.'})
     }

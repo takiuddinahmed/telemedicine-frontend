@@ -49,16 +49,16 @@ router.all("/prescription", (req,res)=>{
 
 router.post("/save", cors.corsWithOptions, (req, res) => {
   let d = req.body;
-  console.log(req.body);
+  let query = req.query.to;
   if (d) {
     let {
-      doctor_id, name, bp, pulse, temp, heart, lungs, abd, anaemia, jaundice, cyanosis, oedema,
+      doctor_id, patient_id,doctor_name,date, name, bp, pulse, temp, heart, lungs, abd, anaemia, jaundice, cyanosis, oedema,
       se_nervous_system_palpation, se_nervous_system_inspection, se_nervous_system_percussion, se_nervous_system_auscultation,
       se_cvs_palpation, se_cvs_inspection, se_cvs_percussion, se_cvs_auscultation,
       se_alimentary_system_palpation, se_alimentary_system_inspection, se_alimentary_system_percussion, se_alimentary_system_auscultation,
       se_musculoskeletal_system_palpation, se_musculoskeletal_system_inspection, se_musculoskeletal_system_percussion, se_musculoskeletal_system_auscultation,
       se_respiratory_system_palpation, se_respiratory_system_inspection, se_respiratory_system_percussion, se_respiratory_system_auscultation,
-      special_note, cc, investigation, advice, counselling, medicine } = req.body;
+      special_note, cc, investigation, advice, counselling, medicine,fixed_data } = req.body;
 
     bp = bp.length ? bp : 'Absent';
     pulse = pulse.length ? pulse : 'Absent';
@@ -98,21 +98,28 @@ router.post("/save", cors.corsWithOptions, (req, res) => {
 
     special_note = special_note ? special_note.length : 'Absent';
 
-    let sql = `INSERT INTO disease_data ( doctor_id, name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    let sql = `INSERT INTO ${query == 'patient' ? 'patient_' : ''}disease_data ( doctor_id, name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
     se_musculoskeletal_system_palpation,se_musculoskeletal_system_inspection,se_musculoskeletal_system_percussion,se_musculoskeletal_system_auscultation,
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
-    special_note,cc,investigation,advice,counselling,medicine) VALUES(?)`
-
-    db.query(sql, [[doctor_id, name, bp, pulse, temp, heart, lungs, abd, anaemia, jaundice, cyanosis, oedema,
+    special_note,cc,investigation,advice,counselling,medicine,fixed_data${query == 'patient' ? ',doctor_name,patient_id,date': ''}) VALUES(?)`
+    
+    const data_arr = [doctor_id, name, bp, pulse, temp, heart, lungs, abd, anaemia, jaundice, cyanosis, oedema,
       se_nervous_system_palpation, se_nervous_system_inspection, se_nervous_system_percussion, se_nervous_system_auscultation,
       se_cvs_palpation, se_cvs_inspection, se_cvs_percussion, se_cvs_auscultation,
       se_alimentary_system_palpation, se_alimentary_system_inspection, se_alimentary_system_percussion, se_alimentary_system_auscultation,
       se_musculoskeletal_system_palpation, se_musculoskeletal_system_inspection, se_musculoskeletal_system_percussion, se_musculoskeletal_system_auscultation,
       se_respiratory_system_palpation, se_respiratory_system_inspection, se_respiratory_system_percussion, se_respiratory_system_auscultation,
-      special_note, cc, investigation, advice, counselling, medicine]], (err, result) => {
+      special_note, cc, investigation, advice, counselling, medicine,fixed_data];
+    if(query == 'patient'){
+      data_arr.push(doctor_name);
+      data_arr.push(patient_id);
+      data_arr.push(date);
+    }
+
+    db.query(sql, [data_arr], (err, result) => {
         if (err) {
           console.log(err)
           if (err.code == 'ER_DUP_ENTRY') {
@@ -157,7 +164,7 @@ router.get("/", cors.corsWithOptions, (req, res, next) => {
       const token = jwt.sign(
         { patientId: patientId, doctorId: doctorId },
         config.jwtKey,
-        { expiresIn: "1h" }
+        { expiresIn: "5h" }
       );
       req.session.token = token;
       req.session.patientId = patientId;
@@ -198,7 +205,7 @@ router.get("/previous-prescription",cors.corsWithOptions,(req,res)=>{
 
   if(patient_id){
     let sql =`
-      SELECT * from previous_presciptions WHERE patient_id=?
+      SELECT * from patient_disease_data WHERE patient_id=?
     `
     db.query(sql,[patient_id],(err,result)=>{
       if(err){

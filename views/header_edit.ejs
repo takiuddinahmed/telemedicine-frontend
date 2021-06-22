@@ -11,42 +11,42 @@
     <main class="container mt-3">
         <div class="preview-paper">
             <div class="row m-0 custom-color-code border" 
-            style="background-color: <%=doctor.background_color%> ;color: <%=doctor.font_color%>"
+            style="background-color: <%= doctor.background_color ? doctor.background_color : '' %> ;color: <%=doctor.font_color ? doctor.font_color : ''%>"
             >
                 <div class="col-6 text-left">
                     <div class="preview-header">
-                        <p style="display: none;" id="doctor_id"><%=doctor.doctor_id%></p>
-                        <h4 contenteditable="true" id="name"><%=doctor.name%></h4>
-                        <h4 contenteditable="true" id="degree"><%=doctor.degree%></h4>
-                        <p contenteditable="true" id="speciality"><%=doctor.speciality%></p>
-                        <p contenteditable="true" id="department"><%=doctor.department%></p>
-                        <p contenteditable="true" id="institute"><%=doctor.institute%></p>
-                        <p contenteditable="true" id="reg_details"><%=doctor.reg_details %></p>
+                        <p style="display: none;" id="doctor_id"><%=doctor.doctor_id ? doctor.doctor_id : '' %></p>
+                        <h4 contenteditable="true" id="name"><%=doctor.name ? doctor.name : '' %></h4>
+                        <h4 contenteditable="true" id="degree"><%=doctor.degree ? doctor.degree : '' %></h4>
+                        <p contenteditable="true" id="speciality"><%=doctor.speciality ? doctor.speciality : '' %></p>
+                        <p contenteditable="true" id="department"><%=doctor.department ? doctor.department : '' %></p>
+                        <p contenteditable="true" id="institute"><%=doctor.institute ? doctor.institute : '' %></p>
+                        <p contenteditable="true" id="reg_details"><%=doctor.reg_details ? doctor.reg_details : '' %></p>
                         <div class="barcode"></div>
                     </div>
                 </div>
                 <div class="col-6 text-right">
                     <div class="preview-header">
                         <h4>Chember</h4>
-                        <p contenteditable="true" id="chember_place_name"><%=doctor.chember_place_name%></p>
-                        <p contenteditable="true" id="chember_place_address"><%=doctor.chember_place_address%></p>
-                        <p contenteditable="true" id="chember_contact"><%=doctor.chember_contact%></p>
-                        <p contenteditable="true" id="chember_visit_time"><%=doctor.chember_visit_time%></p>
-                        <p contenteditable="true" class="font-weight-bold" id="chember_special_note"><%=doctor.chember_special_note%></p>
+                        <p contenteditable="true" id="chember_place_name"><%=doctor.chember_place_name ? doctor.chember_place_name : '' %></p>
+                        <p contenteditable="true" id="chember_place_address"><%=doctor.chember_place_address ? doctor.chember_place_address : '' %></p>
+                        <p contenteditable="true" id="chember_contact"><%=doctor.chember_contact ? doctor.chember_contact : '' %></p>
+                        <p contenteditable="true" id="chember_visit_time"><%=doctor.chember_visit_time ? doctor.chember_visit_time : '' %></p>
+                        <p contenteditable="true" class="font-weight-bold" id="chember_special_note"><%=doctor.chember_special_note ? doctor.chember_special_note : '' %></p>
                     </div>
                 </div>
             </div>
             <div class="custom-bg-color text-center mt-4">
                 <p>Select Background Color: <input type="color" class="mr-3 bg-color"          
-                    value="<%=doctor.background_color%>"
+                    value="<%=doctor.background_color ? doctor.background_color : '' %>"
                     id="background_color"
                     >
-                    <span>HEX Color Code : <span id="bg-colorCode" ><%=doctor.background_color%></span></span>
+                    <span>HEX Color Code : <span id="bg-colorCode" ><%=doctor.background_color ? doctor.background_color : '' %></span></span>
                 </p>
                 <p>Select Font Color: <input type="color" class="mr-3 font-color"
-                     value="<%=doctor.font_color%>"
+                     value="<%=doctor.font_color ? doctor.font_color : '' %>"
                     id="font_color">
-                    <span>HEX Color Code : <span id="font-colorCode" ><%=doctor.font_color%></span></span>
+                    <span>HEX Color Code : <span id="font-colorCode" ><%=doctor.font_color ? doctor.font_color : '' %></span></span>
                 </p>
                 <div class="text-center mt-3">
                     <a href="/" class="btn btn-sm btn-success">Back</a>
@@ -60,7 +60,7 @@
     --All Right Reserved by HurtleBee LTD
     -->
     <!--Custom scripts-->
-    <script>
+    <!-- <script>
         $(".barcode").barcode(
 
             "1234567890128", // Value barcode (dependent on the type of barcode)
@@ -68,7 +68,7 @@
             "ean13" // type (string)
 
         );
-    </script>
+    </script> -->
     <script src="js/scripts.js"></script>
     <script src="js/api/headerEdit.js"></script>
 </body>
