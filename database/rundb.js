@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     CREATE TABLE IF NOT EXISTS disease_data (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE,
+    alternative_name TEXT,
     doctor_id INT DEFAULT -1,
     bp VARCHAR(45)  DEFAULT "Absent",
     pulse VARCHAR(45)  DEFAULT "Absent",
@@ -144,7 +145,7 @@ CREATE TABLE IF NOT EXISTS duration_list (
     se_respiratory_system_percussion VARCHAR(45) DEFAULT "Absent",
     se_respiratory_system_auscultation VARCHAR(45) DEFAULT "Absent",
 
-	fixed_data TEXT,
+	  fixed_data TEXT,
 	
     special_note TEXT DEFAULT "Absent",
     cc TEXT,
@@ -253,6 +254,24 @@ CREATE TABLE IF NOT EXISTS trade_drug_data (
     PRIMARY KEY(id)
   );
 
+  `,
+  `
+   CREATE TABLE IF NOT EXISTS doctor_drug_entry(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(40) NOT NULL,
+    duration VARCHAR(30),
+    dose VARCHAR(30),
+    time VARCHAR(40),
+    PRIMARY KEY(id)
+  );
+  `,
+  `
+  CREATE TABLE IF NOT EXISTS patient_drug_history(
+    id INT NOT NULL AUTO_INCREMENT,
+    patient_id INT NOT NULL UNIQUE,
+    drug_history TEXT,
+    PRIMARY KEY(id)
+  );
   `
 ];
 

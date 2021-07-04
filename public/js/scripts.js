@@ -211,3 +211,68 @@ $(".warn-btn").click(function () {
 $(".payment").click(function () {
   $(".payment-sec").fadeToggle(300);
 });
+
+
+
+$('i.change').click(function () {
+  $(this).next().fadeToggle(300)
+  $('.overlay').toggleClass('active')
+})
+
+//Warning text
+$('.warn-btn').click(function (e) {
+  $(this).next().fadeToggle(300)
+  $('.overlay').toggleClass('active')
+})
+$('.overlay').click(function () {
+  $('.warn-btn').next().fadeOut(300)
+  $('i.change').next().fadeOut(300)
+  $('.payment-sec').fadeOut(300)
+  $('.overlay').removeClass('active')
+})
+
+
+// drag and drop function
+let selected = null
+
+function dragOver(e) {
+  if (isBefore(selected, e.target)) {
+    e.target.parentNode.insertBefore(selected, e.target)
+  } else {
+    e.target.parentNode.insertBefore(selected, e.target.nextSibling)
+  }
+}
+
+function dragEnd() {
+  selected = null
+}
+
+function dragStart(e) {
+  e.dataTransfer.effectAllowed = 'move'
+  e.dataTransfer.setData('text/plain', null)
+  selected = e.target
+}
+
+function isBefore(el1, el2) {
+  let cur
+  if (el2.parentNode === el1.parentNode) {
+    for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {
+      if (cur === el2) return true
+    }
+  }
+  return false
+}
+
+//remove tab-item
+$('.close-btn').click(function () {
+  // console.log($(this).parent())
+  $(this).parent().parent().remove()
+  // if ($('.tab-list').children().length === 1) {
+  //   document.querySelectorAll('.tab-item')[0].classList.remove('d-none')
+  // } else {
+  //   // console.log(
+  //   //   document.querySelectorAll('.tab-item')[0].classList.add('d-none')
+  //   // )
+  //   document.querySelectorAll('.tab-item')[0].classList.add('d-none')
+  // }
+})

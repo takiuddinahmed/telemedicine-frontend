@@ -235,7 +235,7 @@ router.route("/disease")
 .post(cors.corsWithOptions, (req, res,next)=>{
 
   let {
-    name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    name,alternative_name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
@@ -295,7 +295,7 @@ router.route("/disease")
   fixed_datas = JSON.stringify(fixed_datas);
 
 
-    let sql = `INSERT INTO disease_data ( name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    let sql = `INSERT INTO disease_data ( name, alternative_name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
@@ -303,7 +303,7 @@ router.route("/disease")
     se_respiratory_system_palpation,se_respiratory_system_inspection,se_respiratory_system_percussion,se_respiratory_system_auscultation,
     special_note,cc,investigation,advice,counselling,medicine,fixed_data) VALUES(?)`
 
-    db.query(sql,[[ name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    db.query(sql,[[ name,alternative_name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
@@ -325,7 +325,7 @@ router.route("/disease")
 })
 .put(cors.corsWithOptions,(req, res,next)=>{
   const {
-    name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+    name,alternative_name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
@@ -346,7 +346,7 @@ router.route("/disease")
   
   fixed_datas = JSON.stringify(fixed_datas);
 
-    let sql = `UPDATE disease_data SET name=?,bp=?,pulse=?,temp=?,heart=?,lungs=?,abd=?,anaemia=?,jaundice=?,cyanosis=?,oedema=?,
+  let sql = `UPDATE disease_data SET name=?,alternative_name=?,bp=?,pulse=?,temp=?,heart=?,lungs=?,abd=?,anaemia=?,jaundice=?,cyanosis=?,oedema=?,
    se_nervous_system_palpation=?,se_nervous_system_inspection=?,se_nervous_system_percussion=?,se_nervous_system_auscultation=?,
    se_cvs_palpation=?,se_cvs_inspection=?,se_cvs_percussion=?,se_cvs_auscultation=?,
    se_alimentary_system_palpation=?,se_alimentary_system_inspection=?,se_alimentary_system_percussion=?,se_alimentary_system_auscultation=?,
@@ -354,7 +354,7 @@ router.route("/disease")
    se_respiratory_system_palpation=?,se_respiratory_system_inspection=?,se_respiratory_system_percussion=?,se_respiratory_system_auscultation=?,
    special_note=?,cc=?,investigation=?,advice=?,counselling=?, medicine=?,fixed_data=? WHERE id=?`
 
-    db.query(sql,[name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
+  db.query(sql, [name,alternative_name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,
     se_cvs_palpation,se_cvs_inspection,se_cvs_percussion,se_cvs_auscultation,
     se_alimentary_system_palpation,se_alimentary_system_inspection,se_alimentary_system_percussion,se_alimentary_system_auscultation,
@@ -507,7 +507,7 @@ router.route("/drug").get((req, res, next) => {
       }
       else{
         if(add){
-          res.render("drug", {genericDrugList:genericDrugList, mode:"POST", tradeDrug:{}, edit:false});
+          res.render("drug", {genericDrugList:genericDrugList, mode:"POST", tradeDrug:JSON.stringify([]), edit:false});
         }
         else{
           id=req.query.id;
@@ -566,11 +566,11 @@ router.route("/drug").get((req, res, next) => {
   }
 })
 .post(cors.corsWithOptions,(req,res)=>{
-  const {trade_name, company_name, generic_name_id, price,id,_method} = req.body;
+  const { tradeDrugArray, trade_name, company_name, generic_name_id, price, id, _method} = req.body;
   let sql = `
-    INSERT INTO trade_drug_data (trade_name, company_name, generic_name_id, price) VALUES(?)
+    INSERT INTO trade_drug_data (trade_name, company_name,price, generic_name_id) VALUES ?
   `
-  let arr = [[trade_name, company_name, generic_name_id, price]];
+  let arr = [tradeDrugArray];
   if(_method === 'PUT'){
     sql = `UPDATE trade_drug_data SET trade_name=?, company_name=?, generic_name_id=?, price=? WHERE id=?`
     arr = [trade_name, company_name, generic_name_id, price,id]
@@ -579,14 +579,20 @@ router.route("/drug").get((req, res, next) => {
   db.query(sql,arr, (err, result)=>{
     if(err){
       console.log(err)
-      res.render("error", {
-        errorCode: 500,
-        errorText: "Unexpected request. Please try again.",
-      });
+      if (_method === 'PUT') {
+        res.render("error", {
+          errorCode: 500,
+          errorText: "Unexpected request. Please try again.",
+        });
+      }
+       else res.json({ok:false,err, result})
     }
     else{
       console.log(result)
-      res.redirect('/admin/drug')
+      if (_method === 'PUT') {
+       res.redirect('/admin/drug')
+      }
+      else res.json({ok:true,result})
     }
   })
   
@@ -688,6 +694,32 @@ router.route("/templates/:template")
   })
   
 })
+
+
+router.get("/doctor-drug-entry",(req,res)=>{
+  if(req.query.id){
+    let id = req.query.id;
+    let delete_sql = `DELETE FROM doctor_drug_entry WHERE id=?`
+    db.query(delete_sql, [id],(err,result)=>{
+      res.redirect('/admin/doctor-drug-entry')
+    })
+  }
+  else{
+    let sql = `SELECT * FROM doctor_drug_entry`;
+    db.query(sql, [],(err,result)=>{
+      if (err) {
+        res.render("error", {
+          errorCode: 500,
+          errorText: "Unexpected request. Please try again.",
+        });
+      }
+      else {
+        res.render('doctor-drug-entry',
+          {drugList:result}
+    )}
+    })
+  }})
+
 
 
 router.route("/doctor").get((req, res, next) => {

@@ -205,7 +205,7 @@ router.get("/previous-prescription",cors.corsWithOptions,(req,res)=>{
 
   if(patient_id){
     let sql =`
-      SELECT * from patient_disease_data WHERE patient_id=?
+      SELECT * from patient_disease_data  WHERE patient_id=? ORDER BY id DESC
     `
     db.query(sql,[patient_id],(err,result)=>{
       if(err){
@@ -369,6 +369,60 @@ router.post("/save-prescription",cors.corsWithOptions,async(req,res)=>{
     res.status(400).json({msg:"Invalid req"})
   }
 })
+
+
+router.post("/doctor-drug-entry", cors.corsWithOptions, (req,res)=>{
+  const { trade_name, duration, dose, dose_time} = req.body;
+
+  let sql= `
+            INSERT INTO doctor_drug_entry(name,duration,dose,time) VALUES(?)
+  `
+
+  db.query(sql, [[trade_name, duration, dose, dose_time]],(err, result)=>{
+    if (err) {
+      res.status(500).json({ msg: "Internal server error", err: err });
+      console.log(err)
+    }
+    else {
+      res.status(200).json({ msg: "success" })
+    }
+  })
+})
+
+
+router.route("/drug-history", cors.corsWithOptions)
+  .get((req,res)=>{
+    let id = req.session.patientId;
+    if(!id){
+      res.status(404).json({ok:false,msg:"no id given"})
+    }
+    else{
+      let sql = `SELECT * from patient_drug_history WHERE patient_id=?`
+      db.query(sql, [id],(err,result)=>{
+        if (err) {
+          res.status(500).json({ok:false, msg: "Internal server error", err: err });
+          console.log(err)
+        }
+        else {
+          res.status(200).json({ok:true, res:result[0], msg: "success" })
+        }
+      })
+    }
+  })
+  .post((req,res)=>{
+    const {drug_history,patient_id} = req.body;
+    let sql = `
+      REPLACE INTO patient_drug_history (patient_id,drug_history) VALUES(?)
+    `
+    db.query(sql,[[parseInt(patient_id),drug_history]],(err,result)=>{
+      if (err) {
+        res.status(500).json({ msg: "internal server error", err: err });
+      }
+      else {
+        res.status(200).json({ ok: true, data: result })
+      }
+    })
+  })
 
 
 router.get("/logout", cors.corsWithOptions, authDoctor, (req, res) => {

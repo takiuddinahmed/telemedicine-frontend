@@ -36,11 +36,15 @@
       .hide {
         visibility: hidden;
       }
+      #drug-history {
+        line-height: 0.8;
+      }
       
     </style>
   </head>
 
   <body>
+    <div class="overlay"></div>
     <!--Header Section Start-->
     <header>
       <div class="container-fluid">
@@ -341,6 +345,159 @@
               </div>
             </div>
 
+            <div class="pbox-oe-section p-3 border-top">
+              <div class="form-group row">
+                <label for="dHistory">Drug History</label>
+                <div class="input-group mb-3">
+                  
+                
+                      <input type="text" class="form-control suggest-box" id="add-drug-history-input" placeholder="Drugs" />
+                   
+                
+                </div>
+                <div class="custom-textarea mb-3" contenteditable="true" id="drug-history"></div>
+              </div>
+            </div>
+            <!--Health calculateing section-->
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-bmi-tab" data-toggle="tab" href="#nav-bmi" role="tab"
+                  aria-controls="nav-bmi" aria-selected="true">BMI</a>
+                <a class="nav-item nav-link" id="nav-bmr-tab" data-toggle="tab" href="#nav-bmr" role="tab" aria-controls="nav-bmr"
+                  aria-selected="false">BMR</a>
+                <a class="nav-item nav-link" id="nav-z-score-tab" data-toggle="tab" href="#nav-z-score" role="tab"
+                  aria-controls="nav-z-score" aria-selected="false">Z-Score</a>
+                <a class="nav-item nav-link" id="nav-edd-tab" data-toggle="tab" href="#nav-edd" role="tab" aria-controls="nav-edd"
+                  aria-selected="false">EDD</a>
+              </div>
+            </nav>
+            <div class="tab-content pt-3" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-bmi" role="tabpanel" aria-labelledby="nav-bmi-tab">
+                <div class="form-row">
+                  <div class="form-group col-4">
+                    <label for="bmiWeight">Weight (KG)</label>
+                    <input type="number" class="form-control form-control-sm" id="bmiWeight" aria-describedby="Weight"
+                      placeholder="Weight" />
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="bmiHeight">Height (Feet)</label>
+                    <input type="number" class="form-control form-control-sm" id="bmiHeight" aria-describedby="Height"
+                      placeholder="Height" />
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="bmi">BMI</label>
+                    <input type="number" class="form-control form-control-sm" id="bmi" aria-describedby="bmi" placeholder="BMI"
+                      disabled />
+                  </div>
+                  <div class="form-group col-12">
+                    <label for="bmiClass">Class : <span id="bmiClass"></span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-bmr" role="tabpanel" aria-labelledby="nav-bmr-tab">
+                <div class="form-row">
+                  <div class="form-group col-4">
+                    <label for="bmrWeight">Weight (KG)</label>
+                    <input type="number" class="form-control form-control-sm" id="bmrWeight" aria-describedby="Weight"
+                      placeholder="Weight" />
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="bmrHeight">Height (Feet)</label>
+                    <input type="number" class="form-control form-control-sm" id="bmrHeight" aria-describedby="Height"
+                      placeholder="Height" />
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="bmrAge">Age</label><input type="number" class="form-control form-control-sm" id="bmrAge"
+                      aria-describedby="bmr age" placeholder="Age" />
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="d-block">Gender</label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="bmrGenderMale" name="bmrGender" class="custom-control-input" />
+                      <label class="custom-control-label" for="bmrGenderMale">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="bmrGenderFemale" name="bmrGender" class="custom-control-input" />
+                      <label class="custom-control-label" for="bmrGenderFemale">Female</label>
+                    </div>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="bmrExcercise">Activity</label><select id="bmrExcercise" class="custom-select custom-select-sm">
+                      <option selected disabled>Choose</option>
+                      <option value="1">No excercise</option>
+                      <option value="2">Light excercise</option>
+                      <option value="3">Moderate</option>
+                      <option value="4">Very active</option>
+                      <option value="5">Heavy active</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-5">
+                    <label for="bmr">BMR</label><input type="number" class="form-control form-control-sm" id="bmr"
+                      aria-describedby="bmr" placeholder="BMR" disabled />
+                  </div>
+                  <div class="form-group col-7">
+                    <label for="calorie">Calorie Need</label><input type="number" class="form-control form-control-sm" id="calorie"
+                      aria-describedby="calorie" placeholder="Calorie" disabled />
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-z-score" role="tabpanel" aria-labelledby="nav-z-score-tab">
+                <div class="form-row">
+                  <div class="form-group col-8">
+                    <label for="zScore-ddmmyy">Date of Birth</label>
+                    <input type="date" class="form-control form-control-sm" id="zScore-ddmmyy" aria-describedby="Date of Birth" />
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="zScoreWeight">Weight (KG)</label>
+                    <input type="number" class="form-control form-control-sm" id="zScoreWeight" aria-describedby="Weight"
+                      placeholder="Weight" />
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="d-block">Gender</label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="zScoreGenderMale" name="zScoreGender" class="custom-control-input" />
+                      <label class="custom-control-label" for="zScoreGenderMale">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="zScoreGenderFemale" name="zScoreGender" class="custom-control-input" />
+                      <label class="custom-control-label" for="zScoreGenderFemale">Female</label>
+                    </div>
+                  </div>
+                  <div class="form-group col-8">
+                    <label for="zScoreResult">Result</label><input type="text" class="form-control form-control-sm"
+                      id="zScoreResult" aria-describedby="Result" placeholder="Result" disabled />
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="zScoreDays">Days</label><input type="number" class="form-control form-control-sm" id="zScoreDays"
+                      aria-describedby="Days" placeholder="Days" disabled />
+                  </div>
+            
+                  <div class="form-group col-12">
+                    <input type="text" class="form-control form-control-sm" aria-describedby="Ideal Weight"
+                      placeholder="Ideal Weight" disabled />
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-edd" role="tabpanel" aria-labelledby="nav-edd-tab">
+                <div class="form-row">
+                  <div class="form-group col-12">
+                    <label for="edd-lmp">LMP</label>
+                    <input type="date" class="form-control form-control-sm" id="edd-lmp" aria-describedby="LMP" required />
+                  </div>
+                  <div class="form-group col-7">
+                    <label>Gestational Age (LMP)</label>
+                    <input type="text" class="form-control form-control-sm" aria-describedby="Gestational Age (LMP)"
+                      id="edd-lmp-out" placeholder="Gestational Age (LMP)" disabled />
+                  </div>
+                  <div class="form-group col-5">
+                    <label>EDD (LMP)</label>
+                    <input type="text" class="form-control form-control-sm" aria-describedby="EDD (LMP)" placeholder="EDD (LMP)"
+                     id="edd-output" disabled />
+                  </div>
+                </div>
+              </div>
+
+            </div>
             
             <div class="printOpt">
               <div class="form-group">
@@ -476,6 +633,7 @@
                 </div>
               </div>
             </form>
+            
             <div class="form-row">
               <div class="input-group col-sm-5 mb-3">
                 <input
@@ -494,7 +652,10 @@
                 <button class="btn btn-sm btn-info text-nowrap"
                 id="new-prescription-btn"
                 >
-                  New Prescription
+                  Add 
+                </button>
+                <button class="btn btn-sm btn-info text-nowrap" id="clear-prescription-btn">
+                  Clear
                 </button>
               </div>
               <div class="form-group col-md-7">
@@ -543,8 +704,31 @@
                 >Add</button>
               </div>
             </div>
-            <div class="bg-white p-3 border editor" id="medicine_prescription">
+            <h4 class="mt-3">Drag List</h4>
+            <ul class="tab-list" id="medicine-list">
+              
+            </ul>
+
+
+            <!-- <div class="bg-white p-3 border editor" id="medicine_prescription">
+            </div> -->
+
+            <label for="dx-input" class="mt-4">
+              <h4 class="m-0">Dx</h4>
+            </label>
+            <div class="form-row">
+              <div class="input-group col-sm-10 mb-3">
+                <textarea placeholder="Disease/Condition/Dx" type="text" class="suggest-box form-control form-control-sm"
+                  id="dx-text-input" rows="1"> </textarea>
+              </div>
+              <div class="col-sm-2 my-1 my-sm-0">
+                <div class="form-check form-check-inline">
+                  <input class="custom-checkbox  form-check-input ml-1 mt-1" type="checkbox" id="dx-view-check" value="dx-view" checked>
+                  <label class="form-check-label mt-1" for="dx-view-check">Dx view</label>
+                </div>
+              </div>
             </div>
+
             <label for="ix" class="mt-4">
               <h4 class="m-0">Investigation</h4>
             </label>
@@ -592,9 +776,10 @@
               <div class="form-group pr-0" style="width: 70px">
             
                 <input
-                  type="number"
+                  type="text"
                   class="form-control form-control-sm"
                   style="border-radius: 0; border-right: 0"
+                  id="pres-day-"
                 />
 
                 
@@ -603,9 +788,10 @@
                 <select
                   class="custom-select custom-select-sm"
                   style="border-radius: 0; border-left: 0; width: 70px"
+                  id="pres-select-"
                 >
-                  <option value="day">দিন</option>
-                  <option value="month">মাস</option>
+                  <option value="দিন">দিন</option>
+                  <option value="মাস">মাস</option>
                 </select>
                 <span class="ml-2">পর আসবেন।</span>
               </div>
@@ -750,6 +936,10 @@
 
     </main>
 
+    <script>
+      // console.log = ()=>{}
+    </script>
+
     <!--Middle Content End-->
     <!-- 
     --All Right Reserved by HurtleBee LTD
@@ -766,6 +956,7 @@
     <script src="/js/api/dataFeeder.js"></script>
     <script src="/js/api/main.js"></script>
     <script src="/js/api/prescriptionPreview.js"></script>
+    <script src="/js/api/main2.js"></script>
     <script>
       $(".customTextbox").summernote({
         tabsize: 1,
@@ -810,7 +1001,9 @@
 
       $('.customTextbox').next('div').addClass('line-height')
 
-
+      ("#medicine-list").change(()=>{
+        checkDrugDrugInterection()
+      })
       
     </script>
    

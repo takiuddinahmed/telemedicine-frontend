@@ -162,30 +162,7 @@ const updatePreviousPrescription = async ()=>{
   $("#previous-prescription").on('change',(e)=>{
     let index = e.target.value;
     updateDiseaseComponentSection(previousPrescriptions[index])
-    // if (previousPrescriptions[e.target.value]){
-    // let modalHtml = `
-    //   <div class="modal-dialog modal-lg">
-    //   <div class="modal-content">
-    //   ${previousPrescriptions[e.target.value]?.prescription_details}
-    //   </div>
-    //   </div>
-    // `
-
-    // $("#previewPrescriptionModal").html(modalHtml);
-    // $('#previewPrescriptionModal').modal()
-    // var listener = window.addEventListener('click',listenerFun)
     
-    // var listenerFun = (e)=>{
-        
-    //   console.log(e.target.id)
-    //   if (e.target.id == "previewPrescriptionModal") {
-        
-    //     $('#previewPrescriptionModal').html("")
-    //     $('#previewPrescriptionModal').modal('hide')
-    //     listener.removeEventListener();
-    //   }
-    // }
-    // }
   })
   
 }

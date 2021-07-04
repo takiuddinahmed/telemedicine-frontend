@@ -26,9 +26,15 @@
                         value='<%= editDiseaseData.name   %>'
                       />
                     </div>
+                    </div>
+                    <div class="row form-group">
+                      <label for="" class="col-sm-3 col-form-label">Alternative name <br/><span style="font-size: smaller;">separate using (;)</span></label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Alternative name" id="disease_alternative_name_input"
+                          value='<%= editDiseaseData.alternative_name   %>' />
+                      </div>
+                      </div>
                   </div>
-
-                  
 
                   
                   <% for(var i=0; i<templateData.length; i++){ %>

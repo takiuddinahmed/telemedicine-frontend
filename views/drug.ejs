@@ -10,15 +10,41 @@
     <div class="container-fluid">
       <div class="row">
         <%-include('partials/sidebar.ejs')%>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-          <form method="POST">
-              <div class="row mt-5 mb-3">
-                <h4 class="mb-3 col-md-3">Add Drug to database</h4>
-              </div>
-              <div class="row mt-5 mb-3">
-                <h6 class="mb-3 col-md-3">Drug Trade name</h6>
-                <input class="form-control col-md-9" type="text" name="trade_name" value="<%= tradeDrug.trade_name %>">
-              </div>
+
+        
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 text-center">
+          
+
+          <% if (mode=="POST" ) { %>
+          <div class="row mt-5 mb-3">
+            <h4 class="mb-3 col-md-12">Add Drug to database</h4>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Trade Name</th>
+                  <th scope="col">Company Name</th>
+                  <th scope="col">Price</th>
+                  <td scope="col">Action</td>
+                </tr>
+              </thead>
+              <tbody id="drugList">
+                
+              </tbody>
+              <tr>
+                <form id="new-drug-form">
+                  <input type="hidden" name="id" />
+                  <td><input type="text" class="form-control" name="trade_name" required /></td>
+                  <td><input type="text" class="form-control" name="company_name" required/></td>
+                  <td><input type="number" class="form-control" name="price" required/></td>
+                  <td><button type="submit" class="btn btn-primary">Add</td>
+                </form>
+              </tr>
+            </table>
+          </div>
+          
               <div class="row mt-5 mb-3">
                 <h6 class="mb-3 col-md-3">Drug Generic name</h6>
 
@@ -29,23 +55,52 @@
                 </select>
 
               </div>
-              <div class="row mt-5 mb-3">
-                <h6 class="mb-3 col-md-3">Drug Company name</h6>
-                <input class="form-control col-md-9" type="text" name="company_name" value="<%= tradeDrug.company_name %>">
-              </div>
-              <div class="row mt-5 mb-3">
-                <h6 class="mb-3 col-md-3">Drug Price </h6>
-                <input class="form-control col-md-9" type="number" name="price" value="<%= tradeDrug.price %>">
-              </div>
-              <input type="hidden" name="_method" value="<%= mode %>"/>
-              <input type="hidden" name="id" value="<%= tradeDrug.id %>"/>
-              <button type="submit" class="btn btn-success">Save drug</button>
-        </form>
+             
+              <input type="hidden" id="method" name="_method" value="<%= mode %>"/>
+              <button id="submit-drug" class="btn btn-success">Save drug</button>
+        
+              <% }  else {%>
+            <div class="row mt-5 mb-3">
+              <h4 class="mb-3 col-md-12">Edit Drug from database</h4>
+            </div>
+              <form method="POST">
+                <div class="row mt-5 mb-3">
+                  <h6 class="mb-3 col-md-3">Drug Trade name</h6>
+                  <input class="form-control col-md-9" type="text" name="trade_name" value="<%= tradeDrug.trade_name %>">
+                </div>
+                <div class="row mt-5 mb-3">
+                  <h6 class="mb-3 col-md-3">Drug Generic name</h6>
+              
+                  <select class="selectpicker form-control col-md-9 " id="generic-drug-select" name="generic_name_id"
+                    value="<%= tradeDrug.generic_name_id %>" data-live-search="true">
+                    <% for (var i=0; i<genericDrugList.length; i++) { %>
+                      <option value=<%=genericDrugList[i].id %>> <%= genericDrugList[i].generic_name %>
+                      </option>
+                      <% } %>
+                  </select>
+              
+                </div>
+                <div class="row mt-5 mb-3">
+                  <h6 class="mb-3 col-md-3">Drug Company name</h6>
+                  <input class="form-control col-md-9" type="text" name="company_name" value="<%= tradeDrug.company_name %>">
+                </div>
+                <div class="row mt-5 mb-3">
+                  <h6 class="mb-3 col-md-3">Drug Price </h6>
+                  <input class="form-control col-md-9" type="number" name="price" value="<%= tradeDrug.price %>">
+                </div>
+                <input type="hidden" name="_method" value="<%= mode %>" />
+                <input type="hidden" name="id" value="<%= tradeDrug.id %>" />
+                <button type="submit" class="btn btn-success">Save drug</button>
+              </form>
+
+              <% } %>
+
         </main>
       </div>
     </div>
     <script>
       var genericNameList = '<%- genericDrugList %>'
+      var tradeDrugListString = '<%- tradeDrug %>'
     </script>
 
     <script src="/prescription/plugins/bootstrap/bootstrap.bundle.min.js"></script>
@@ -54,7 +109,10 @@
     <script src="/plugins/bootstrap-select/js/i18n/defaults-en_US.min.js" ></script>
   
     <script src="/prescription/js/scripts.js"></script>
-      <script src="/prescription/js/api/addDrugList.js"></script>
+    <% if (mode=="POST" ) { %>
+        <script src="/js/api/addDrugList.js"></script>
+      <% } %>
+    
    <script>
      $(document).ready(()=>{
         $("select").selectpicker({

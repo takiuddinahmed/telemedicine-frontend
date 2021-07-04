@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('partials/header.ejs')%>
+
+    <body>
+        <%-include('partials/nav.ejs')%>
+        <div class="row">
+            <%-include('partials/sidebar.ejs')%>
+        
+        
+        
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 text-center">
+
+        <div class="container-fluid">
+            <div class="table-responsive text-nowrap">
+                <div class="table-responsive">
+                    <table class="table table-hover text-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Trade Name</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Dose</th>
+                                <th scope="col">Dose Time</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="drug-table">
+                            <% for (var i=0; i<drugList.length;i++) {  %>
+                                <tr>
+                                    <td><%= drugList[i]?.name %></td>
+                                    <td><%= drugList[i]?.duration %></td>
+                                    <td><%= drugList[i]?.dose %></td>
+                                    <td><%= drugList[i]?.time %></td>
+                                    <td><a href="/admin/doctor-drug-entry/?id=<%= drugList[i].id %>" class="btn btn-danger">Delete</a></td>
+                                </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </main>
+    </div>
+
+          
+    </body>
+
+</html>

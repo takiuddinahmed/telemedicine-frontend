@@ -47,6 +47,7 @@ $(document).ready(()=>{
         const formArray = formSelector.serializeArray();
         const formData = arrayToObject(formArray)
         formData.name = $("#disease_name_input").val()
+        formData.alternative_name = $("#disease_alternative_name_input").val()
         Object.keys(templateValues).forEach((t)=>{
             formData[t] = JSON.stringify(templateValues[t])
         })

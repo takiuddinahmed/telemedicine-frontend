@@ -47,8 +47,25 @@ let drugList = [];
 
 let templateDataAll = {};
 
-let prescription_index = 0;
+let prescription_index = new Date().getTime();
 let fixed_datas = "";
+let arrow = '<i class="fas fa-arrow-right"></i> ';
+let dx_text = '';
+let dx_view_status = false;
+
+String.prototype.matchGroup = function (re) {
+  let match
+  const matches = []
+
+
+  while (match = re.exec(this)) {
+
+    matches.push([...match.slice(1)])
+  }
+
+  return matches
+}
+
 
 const updateTemplateData = async (
   sourceArray,
@@ -61,15 +78,18 @@ const updateTemplateData = async (
   let text = $(targetSelector).summernote("code");
   if (selectedList) {
     selectedList.forEach((c) => {
-      
       source.index += 1;
       const iData = templateDataAll[sourceName].filter(t => t.id == c.id)[0]
       let details = iData.details;
-      let position = details.indexOf('<p>')
-      position = position > -1 ? position += 3 : 1;
-      txt = details.substring(0, position) + source.index + ". " + details.substring(position)
-      if (!iData[0]?.details?.length) txt += '\n'
-      text += txt + (summernote ? "" : "\n");
+      let m = details.substr(3,details.length - 7)
+      const reg = new RegExp(`i> ${m}<`, 'g')
+      if (!text.match(reg)){
+        let position = details.indexOf('<p>')
+        position = position > -1 ? position += 3 : 1;
+        txt = details.substring(0, position) + arrow+ details.substring(position)
+        if (!iData[0]?.details?.length) txt += '\n'
+        text += txt + (summernote ? "" : "\n");
+      }
     });
     text = text.replace("<p><br></p>", "")
     if (!summernote) {
@@ -80,6 +100,7 @@ const updateTemplateData = async (
         "code",
         text
       );
+      // console.log($(targetSelector).summernote('code'))
     }
   }
   else {
@@ -94,18 +115,46 @@ const updateTemplateData = async (
   }
 };
 
-// disease selection
+// dx view
+const update_dx_text = (txt, previous_text = false)=>{
+  if(previous_text){
+    dx_text += " with " + txt;
+  }
+  else {
+    dx_text += txt
+  }
+  
+  update_dx_dom();
+}
 
+const update_dx_dom = ()=>{
+  $("#dx-text-input").val(dx_text)
+}
+
+
+
+
+
+// disease selection
 $(document).ready(() => {
   $("#new-prescription-btn").click(() => {
     let diseaseInput = $("#disease").val();
     diseaseInput.trim();
     if (diseaseInput.length) {
+      update_dx_text(diseaseInput, dx_text.length > 0);
       let d = diseaseList.filter((d) => d.name == diseaseInput)[0];
       updateDiseaseComponentSection(d);
+      
     } else {
       alert("Add a disease");
     }
+  });
+  $("#clear-prescription-btn").click(() => {
+    template_source.forEach(ts=>{
+      $(ts.target).summernote("code", "")
+      // $("#medicine_prescription").summernote("code","")
+    })
+    $("#medicine-list").html("")
   });
 });
 $(document).ready(() => {
@@ -131,8 +180,10 @@ $(document).ready(() => {
         investigationList = res.message[3];
         adviceList = res.message[4];
         counsellingList = res.message[5];
-        diseaseList = res.message[6];
+        diseaseList = includeAltDisease(res.message[6]);
+        // console.log(diseaseList)
         drugList = res.message[7];
+        update_drug_history();
         templateDataAll = {cc:ccList,investigation:investigationList,advice:adviceList,counselling:counsellingList}
         update_template_auto_complete(
           res.message[0], "title", "#ixTemplate",
@@ -165,7 +216,7 @@ $(document).ready(() => {
           "#counselling_input",
           () => { $("#counselling_form").submit(); }
         );
-        update_template_auto_complete(res.message[6], "name", "#disease");
+        update_template_auto_complete(diseaseList, "name", "#disease");
         update_template_auto_complete(
           res.message[7],
           "trade_name",
@@ -210,31 +261,39 @@ $(document).ready(() => {
       let txt = $(temp.source).val();
       $(temp.source).val("");
       txt.trim();
+      let text = "";
       if (txt.length) {
         // check if available in data list
         const d = templateDataAll[temp.name]?.filter(each=>each.title == txt)
         if(d.length) {
           // console.log(d);
           let details = d[0]?.details;
+          txt = d[0]?.details;
+          txt = txt.substr(3, txt.length - 7)
           let position = details.indexOf('<p>')
           position = position > -1 ? position += 3 : 1;
-          txt = details.substring(0,position) + temp.index + ". " + details.substring(position)
+          text = details.substring(0, position) + arrow+ details.substring(position)
           
-          if(!d[0]?.details?.length) txt += '\n'
+          if(!d[0]?.details?.length) text += '\n'
         }
         else{
-          txt = '<p>'+ temp.index +'. ' + txt + '</p>'
+          text = '<p>' + arrow + txt + '</p>'
+          
         }
         if (!temp.summernote) {
-          $(temp.target).val(temp.index + '. ' +$(temp.target).val() + txt + "\n");
+          $(temp.target).val(arrow + ' ' +$(temp.target).val() + text + "\n");
         } else {
-          let  finalText = $(temp.target).summernote("code") + txt;
-          finalText = finalText.replace("<p><br></p>","")
-          // console.log(finalText)
-          $(temp.target).summernote(
-            "code",
-            finalText
-          );
+          const reg = new RegExp(`i> ${txt}<`, 'g')
+          
+          if (!$(temp.target).summernote("code").match(reg)) {
+            let finalText = $(temp.target).summernote("code")+ text;
+            finalText = finalText.replace("<p><br></p>","")
+            // console.log(finalText)
+            $(temp.target).summernote(
+              "code",
+              finalText
+            );
+          }
         }
       }
     });
@@ -336,12 +395,25 @@ const updateDiseaseComponentSection = (d) => {
     d?.advice?.replace("<p><br></p>", "")
     d?.counselling?.replace("<p><br></p>", "")
 
+    // $("#cc").summernote("code",$("#cc").summernote("code")+d?.cc ?? "")
+    // $("#ix").summernote("code", $("#ix").summernote("code") +d?.investigation ?? "")
+    // $("#advice-summernote").summernote("code", $("#advice-summernote").summernote("code") + d?.advice ?? "")
+    // $("#counselling_summernote").summernote("code", $("#counselling_summernote").summernote("code") +d?.counselling ?? "")
+    // // $("#medicine_prescription").summernote("code", $("#medicine_prescription").summernote("code") +d?.medicine ?? "")
+    // $("#medicine-list").html($("#medicine-list").html() + d?.medicine ?? "")
+
+
     $("#cc").summernote("code",d?.cc ?? "")
-    $("#ix").summernote("code", d?.investigation ?? "")
+    $("#ix").summernote("code",d?.investigation ?? "")
     $("#advice-summernote").summernote("code",d?.advice ?? "")
     $("#counselling_summernote").summernote("code",d?.counselling ?? "")
-    $("#medicine_prescription").summernote("code",d?.medicine ?? "")
+    $("#medicine-list").html(d?.medicine ?? "")
 
+
+    $("#cc").summernote("code",$("#cc").summernote("code").replace("<p><br></p>", ""))
+    $("#ix").summernote("code",$("#ix").summernote("code").replace("<p><br></p>", ""))
+    $("#advice-summernote").summernote("code",$("#advice-summernote").summernote("code").replace("<p><br></p>", ""))
+    $("#counselling_summernote").summernote("code",(("#counselling_summernote").summernote("code")).replace("<p><br></p>", ""))
     // handle indexing
     template_source[0].index =  d?.cc?.match(/<p>\d/g)?.length ?? 0;
     template_source[1].index =  d?.investigation?.match(/<p>\d/g)?.length ?? 0;
@@ -349,7 +421,7 @@ const updateDiseaseComponentSection = (d) => {
     template_source[3].index =  d?.counselling?.match(/<p>\d/g)?.length ?? 0;
 
 
-    prescription_index = d?.medicine?.match(/<strong>[\s]*\d\./g)?.length ?? 0;
+    // prescription_index = d?.medicine?.match(/<strong>[\s]*\d\./g)?.length ?? 0;
     // console.log(d.medicine)
     // console.log(d?.medicine?.match(/<strong>[\s]*\d\./g))
   }
@@ -374,41 +446,65 @@ $(document).ready(() => {
     const medicine = {};
     medicine.trade_name = $("#drug_brand_name").val();
     
-    let m = drugList.filter(
-      (d) => d.trade_name == medicine.trade_name
-    )[0];
-    medicine.generic_id = m.generic_name_id;
-    medicine.advice = m.advice ?? "";
-
-    addDrugInfo(medicine,true)
-    .then(()=>{
-
-    medicine.duration = $("#dose_duration-").val();
-    medicine.dose = $("#dose_type").val();
-    medicine.dose_time = $("#dose_time_khabar").val();
-    if (medicine.trade_name) {
-      addMedicineToPrescription(medicine);
-      $("#drug_brand_name").val("");
-      $("#dose_duration-").val("");
-      $("#dose_type").val("");
-      $("#dose_time_khabar").val("");
-      if(medicine?.advice?.length > 3){
-        template_source[2].index += 1;
-        let details = medicine.advice;
-        let position = details.indexOf('<p>')
-        position = position > -1 ? position += 3 : 1;
-        let txt = details.substring(0, position) + template_source[2].index + ". " + details.substring(position)
-        let text = $("#advice-summernote").summernote("code") + txt;
-        text = text.replace("<p><br></p>", "")
-        
-        $("#advice-summernote").summernote(
-            "code",
-            text
-          );
+    if(medicine.trade_name[0] == '?'){
+      medicine.duration = $("#dose_duration-").val();
+      medicine.dose = $("#dose_type").val();
+      medicine.dose_time = $("#dose_time_khabar").val();
+      if (medicine.trade_name.length > 1) {
+        medicine.trade_name = medicine.trade_name.substring(1)
+        addMedicineToPrescription(medicine,true);
+        $("#drug_brand_name").val("");
+        $("#dose_duration-").val("");
+        $("#dose_type").val("");
+        $("#dose_time_khabar").val("");
       }
-      
+      $.post("/doctor-drug-entry", medicine, (data, status) => {
+        console.log({ data, status })
+      })
     }
-    })
+
+    
+  
+
+    else{
+
+      let m = drugList.filter(
+        (d) => d.trade_name == medicine.trade_name
+      )[0];
+      
+      medicine.generic_id = m.generic_name_id;
+      medicine.advice = m.advice ?? "";
+
+      addDrugInfo(medicine,true)
+      .then(()=>{
+
+      medicine.duration = $("#dose_duration-").val();
+      medicine.dose = $("#dose_type").val();
+      medicine.dose_time = $("#dose_time_khabar").val();
+      if (medicine.trade_name) {
+        addMedicineToPrescription(medicine);
+        $("#drug_brand_name").val("");
+        $("#dose_duration-").val("");
+        $("#dose_type").val("");
+        $("#dose_time_khabar").val("");
+        if(medicine?.advice?.length > 3){
+          template_source[2].index += 1;
+          let details = medicine.advice;
+          let position = details.indexOf('<p>')
+          position = position > -1 ? position += 3 : 1;
+          let txt = details.substring(0, position) + template_source[2].index + ". " + details.substring(position)
+          let text = $("#advice-summernote").summernote("code") + txt;
+          text = text.replace("<p><br></p>", "")
+          
+          $("#advice-summernote").summernote(
+              "code",
+              text
+            );
+        }
+        
+      }
+      })
+    }
   });
 });
 
@@ -511,6 +607,7 @@ const checkAddedDrug = (medicine)=>{
     }
     
     if(warning_result) html+= `
+              
                 <i class="fas fa-exclamation-triangle text-warning warn-btn"></i>
                 <div class="warn-text" style="display: none">
                   <p>
@@ -534,22 +631,12 @@ const checkAddedDrug = (medicine)=>{
 
 }   
 
-String.prototype.matchGroup = function (re){
-  let match
-  const matches = []
-  
-
-  while (match = re.exec(this)) {
-
-    matches.push([...match.slice(1)])
-  }
-
-  return matches
-}
 
 var checkDrugDrugInterection = ()=>{
+  console.log("check drug interection")
   $(".ddIneraction").hide();
-  let prescription_texts = $("#medicine_prescription").summernote("code");
+  // let prescription_texts = $("#medicine_prescription").summernote("code");
+  let prescription_texts = $("#medicine-list").html();
   let interectionList = prescription_texts.matchGroup(/class="interection-(\d*)">(.+)<\/li>/gi)
   
   
@@ -571,47 +658,85 @@ var checkDrugDrugInterection = ()=>{
 
 
 
-const addMedicineToPrescription = (medicine
+const addMedicineToPrescription = (medicine,custom=false
 ) => {
   allSummerNoteUpdate()
-  prescription_index = $("#medicine_prescription").summernote("code").match(/<strong>[\s]*\d\./g)?.length ?? 0;
-  prescription_index +=1;
-  const extra = checkAddedDrug(medicine)
+  // prescription_index = $("#medicine_prescription").summernote("code").match(/<strong>[\s]*\d\./g)?.length ?? 0;
 
-  $("#medicine_prescription").summernote(
-    "code",
-    $("#medicine_prescription").summernote("code") +
-      medicinePrescriptionHtmlFormat(medicine,extra)
-  );
+  let reg = new RegExp(medicine.trade_name,'g')
+  const medicine_html = $("#medicine-list").html();
+  if(!medicine_html.match(reg)){
 
-  $(".warn-btn").click(function () {
-    $(this).next().fadeToggle(300);
-  });
+    prescription_index = new Date().getTime();
+    let extra = '';
+    if(!custom)
+      extra = checkAddedDrug(medicine)
+    
 
-  $("i.reload").click(function () {
-    $(this).next().fadeToggle(300);
-  });
+    // $("#medicine_prescription").summernote(
+    //   "code",
+    //   $("#medicine_prescription").summernote("code") +
+    //     medicinePrescriptionHtmlFormat(medicine,extra)
+    // );
+    $("#medicine-list").html( medicine_html + medicinePrescriptionHtmlFormat(medicine, extra) )
+    checkDrugDrugInterection()
+    if(!custom){
+      // console.log("operations")
+      $(".warn-btn").click(function () {
+        $(this).next().fadeToggle(300);
+        $('.overlay').toggleClass('active')
+      });
 
-  $(".pres-tradename-list").click(function(){
-    //console.log(this.dataset.index)
-    let data_index = this.dataset.index;
-    let trade_name = this.dataset.tradename;
-    let selector = `#tradename-${data_index}`;
-    $(selector).html(trade_name)
-    // $(this).parent().parent().fadeToggle(300);
-    $("i.reload").click();
-  })
+      $("i.reload").click(function () {
+        $(this).next().fadeToggle(300);
+        $('.overlay').toggleClass('active')
+      });
+      $('.overlay').click(function () {
+        $('.warn-btn').next().fadeOut(300)
+        $('i.reload').next().fadeOut(300)
+        $('.payment-sec').fadeOut(300)
+        $('.overlay').removeClass('active')
+      })
 
+      $(".pres-tradename-list").click(function(){
+        //console.log(this.dataset.index)
+        let data_index = this.dataset.index;
+        let trade_name = this.dataset.tradename;
+        let selector = `#tradename-${data_index}`;
+        $(selector).html(trade_name)
+        // $(this).parent().parent().fadeToggle(300);
+        // $("i.reload").click();
+      })
+
+      //remove tab-item
+      $('.close-btn').click(function () {
+        $(this).parent().parent().remove()
+        checkDrugDrugInterection()
+        // if ($('.tab-list').children().length === 1) {
+        //   document.querySelectorAll('.tab-item')[0].classList.remove('d-none')
+        // } else {
+        //   // console.log(
+        //   //   document.querySelectorAll('.tab-item')[0].classList.add('d-none')
+        //   // )
+        //   document.querySelectorAll('.tab-item')[0].classList.add('d-none')
+        // }
+      })
+    }
+  }
+  else{
+    console.log("Medicine Exist")
+  }
 
 };
 
 const medicinePrescriptionHtmlFormat = (medicine,extra) => {
-  
+  // console.log({medicine,extra})
   return `
-   <div class="tab-name">
-
-                <strong>
-                  ${prescription_index}.  
+   <li contenteditable="true" draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
+                ondragstart="dragStart(event)" class="tab-item">
+                <extra><div class="close-btn"><i class="fas fa-times"></i></div></extra><span style="display:none"> ~</span>
+                <span class="tab-inner">
+                  <strong>
                   <tradename id='tradename-${prescription_index}'>
                     ${medicine.trade_name}
                   </tradename>
@@ -625,7 +750,7 @@ const medicinePrescriptionHtmlFormat = (medicine,extra) => {
                 </extra> <span style="display:none"> ~</span>
                <br />
                 ${medicine.dose ? medicine.dose : ""}    ${medicine.dose_time ? medicine.dose_time : ""}
-              </div>
+              </li>
   
   `;
 
@@ -636,17 +761,24 @@ const prescription = {};
 
 const getPreviewInfo = () => {
   allSummerNoteUpdate();
+  prescription.bp = $("#bp").val()
+  prescription.pulse = $("#pluse").val()
+  prescription.temp = $("#temp").val()
   prescription.cc = $("#cc").val();
   prescription.heart = $("#heart").val();
   prescription.lungs = $("#lungs").val();
   prescription.abd = $("#abd").val();
   prescription.advice = $("#advice-summernote").summernote("code");
 
-  prescription.medicine = $("#medicine_prescription")
-    .summernote("code")
+  // console.log($("#medicine-list").html())
+
+  // prescription.medicine = $("#medicine_prescription")
+  prescription.medicine = $("#medicine-list")
+    .html()
     .replace(/tab-name/g, "")
     .replace(/style=""/g, 'style="display:none;"')
     .replace(/<extra([.<>\s\w="-\/,:;]+)extra>/g,'')
+    .replace(/-------/g,'--------------')
 
   prescription.patient = patientInfo;
   prescription.doctorInfo = doctorInfo;
@@ -695,7 +827,8 @@ const get_disease_data = () => {
   d.investigation = $("#ix").val();
   d.advice = $("#advice-summernote").summernote("code");
   d.counselling = $("#counselling_summernote").summernote("code");
-  d.medicine = $("#medicine_prescription").summernote("code");
+  // d.medicine = $("#medicine_prescription").summernote("code");
+  d.medicine = $("#medicine-list").html();
   d.doctor_id = doctorInfo?.id;
   d.doctor_name = doctorInfo?.name;
   return d
@@ -729,6 +862,7 @@ const save_patient_disease = ()=>{
       alert(res?.err)
     }
   });
+  post_drug_history();
 }
 
 const save_promt_modal = ()=>{
@@ -821,10 +955,10 @@ const allSummerNoteUpdate = ()=>{
     }
 
   })
-  $("#medicine_prescription").summernote(
-      "code",
-      $("#medicine_prescription").summernote("code") 
-    );
+  // $("#medicine_prescription").summernote(
+  //     "code",
+  //     $("#medicine_prescription").summernote("code") 
+  //   );
 
     $(".warn-btn").click(function () {
     $(this).next().fadeToggle(300);
@@ -834,6 +968,22 @@ const allSummerNoteUpdate = ()=>{
   $(this).next().fadeToggle(300);
 });
 
+}
+
+const includeAltDisease = (disease) =>{
+  const alt_disease_data = [];
+  disease.forEach(d=>{
+    if (d.alternative_name){
+      const alt_names = d.alternative_name;
+      let alt_name_list = alt_names.split(";");
+      alt_name_list.forEach(al=>{
+        let n_al = {...d}
+        n_al.name = al
+        alt_disease_data.push(n_al);
+      })
+  }
+  })
+  return [...disease,...alt_disease_data]
 }
 
 
