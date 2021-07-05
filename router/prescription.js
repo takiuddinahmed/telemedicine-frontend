@@ -123,10 +123,10 @@ router.post("/save", cors.corsWithOptions, (req, res) => {
         if (err) {
           console.log(err)
           if (err.code == 'ER_DUP_ENTRY') {
-            res.json({ ok: false, err: 'Disease already exists.' })
+            res.json({ ok: false, err: 'Disease already exists.',errmsg:err })
           }
           else
-            res.json({ ok: false, err: 'Insert error. Try again' })
+            res.json({ ok: false, err: 'Insert error. Try again', errmsg: err  })
         }
         else {
           res.json({ ok: true })

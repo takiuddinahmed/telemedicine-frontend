@@ -27,10 +27,10 @@
                         <tbody id="drug-table">
                             <% for (var i=0; i<drugList.length;i++) {  %>
                                 <tr>
-                                    <td><%= drugList[i]?.name %></td>
-                                    <td><%= drugList[i]?.duration %></td>
-                                    <td><%= drugList[i]?.dose %></td>
-                                    <td><%= drugList[i]?.time %></td>
+                                    <td><%= drugList[i].name %></td>
+                                    <td><%= drugList[i].duration %></td>
+                                    <td><%= drugList[i].dose %></td>
+                                    <td><%= drugList[i].time %></td>
                                     <td><a href="/admin/doctor-drug-entry/?id=<%= drugList[i].id %>" class="btn btn-danger">Delete</a></td>
                                 </tr>
                             <% }%>

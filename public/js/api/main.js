@@ -857,8 +857,10 @@ const save_patient_disease = ()=>{
   $.post("save?to=patient", d, (res, state) => {
     if (res.ok) {
       patient_disease_id = res.id;
+      alert("Operation complete.")
     }
     else {
+      console.log(res)
       alert(res?.err)
     }
   });

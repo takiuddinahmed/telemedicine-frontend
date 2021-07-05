@@ -78,7 +78,7 @@ function prescriptionPreview() {
              </div>
            </div>
            <div class="preview-footer border-top bg-light">
-             ${getDays()} পরে আসবেন
+             ${getDays()}
            </div>
            <div class="preview-footer border-top">
              নিয়ম মাফিক ঔষধ খাবেন। ডাক্তারের পরামর্শ ব্যতীত ঔষধ পরিবর্তন নিষেধ।
