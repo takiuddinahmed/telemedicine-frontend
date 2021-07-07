@@ -101,6 +101,7 @@ async function setPatient(data) {
     $("#patientPregnancyStatus").val("0");
   }
   patientInfo = data;
+  updateHealthData(data);
   
 }
 

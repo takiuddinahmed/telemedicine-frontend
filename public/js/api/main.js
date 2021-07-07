@@ -216,7 +216,16 @@ $(document).ready(() => {
           "#counselling_input",
           () => { $("#counselling_form").submit(); }
         );
-        update_template_auto_complete(diseaseList, "name", "#disease");
+        update_template_auto_complete(diseaseList, "name", "#disease",()=>{
+          let diseaseInput = $("#disease").val();
+          diseaseInput.trim();
+          if (diseaseInput.length) {
+            update_dx_text(diseaseInput, dx_text.length > 0);
+            let d = diseaseList.filter((d) => d.name == diseaseInput)[0];
+            updateDiseaseComponentSection(d);
+
+          }
+        });
         update_template_auto_complete(
           res.message[7],
           "trade_name",
@@ -770,6 +779,14 @@ const getPreviewInfo = () => {
   prescription.abd = $("#abd").val();
   prescription.advice = $("#advice-summernote").summernote("code");
 
+  prescription.anaemia = $("#anaemia").val();
+  prescription.jaundice = $("#jaundice").val();
+  prescription.cyanosis = $("#cyanosis").val();
+  prescription.oedema = $("#oedema").val();
+  prescription.specialNote = $("#special-note-input").val();
+
+
+  
   // console.log($("#medicine-list").html())
 
   // prescription.medicine = $("#medicine_prescription")

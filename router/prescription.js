@@ -15,6 +15,7 @@ const adminRouter = require("./admin");
 const multer = require('multer');
 const crypto = require('crypto');
 const puppeteer = require('puppeteer')
+const diseaseData = require("./defaultdata/disease");
 router.use(express.json());
 router.use(
   express.urlencoded(
@@ -60,43 +61,43 @@ router.post("/save", cors.corsWithOptions, (req, res) => {
       se_respiratory_system_palpation, se_respiratory_system_inspection, se_respiratory_system_percussion, se_respiratory_system_auscultation,
       special_note, cc, investigation, advice, counselling, medicine,fixed_data } = req.body;
 
-    bp = bp.length ? bp : 'Absent';
-    pulse = pulse.length ? pulse : 'Absent';
-    temp = temp.length ? temp : 'Absent';
-    heart = heart.length ? heart : 'Absent';
-    lungs = lungs.length ? lungs : 'Absent';
-    abd = abd.length ? abd : 'Absent';
-    anaemia = anaemia.length ? anaemia : 'Absent';
-    jaundice = jaundice.length ? jaundice : 'Absent';
-    cyanosis = cyanosis.length ? cyanosis : 'Absent';
-    oedema = oedema.length ? oedema : 'Absent';
+    bp = bp.length ? bp : diseaseData.bp;
+    pulse = pulse.length ? pulse : diseaseData.pulse;
+    temp = temp.length ? temp : diseaseData.temp;
+    heart = heart.length ? heart : diseaseData.heart;
+    lungs = lungs.length ? lungs : diseaseData.lungs;
+    abd = abd.length ? abd : diseaseData.abd;
+    anaemia = anaemia.length ? anaemia : diseaseData.default;
+    jaundice = jaundice.length ? jaundice : diseaseData.default;
+    cyanosis = cyanosis.length ? cyanosis : diseaseData.default;
+    oedema = oedema.length ? oedema : diseaseData.default;
 
-    se_nervous_system_palpation = se_nervous_system_palpation && se_nervous_system_palpation.length ? se_nervous_system_palpation : 'Absent';
-    se_nervous_system_inspection = se_nervous_system_inspection && se_nervous_system_inspection.length ? se_nervous_system_inspection : 'Absent';
-    se_nervous_system_percussion = se_nervous_system_percussion && se_nervous_system_percussion.length ? se_nervous_system_percussion : 'Absent';
-    se_nervous_system_auscultation = se_nervous_system_auscultation && se_nervous_system_auscultation.length ? se_nervous_system_auscultation : 'Absent';
+    se_nervous_system_palpation = se_nervous_system_palpation && se_nervous_system_palpation.length ? se_nervous_system_palpation : diseaseData.default;
+    se_nervous_system_inspection = se_nervous_system_inspection && se_nervous_system_inspection.length ? se_nervous_system_inspection : diseaseData.default;
+    se_nervous_system_percussion = se_nervous_system_percussion && se_nervous_system_percussion.length ? se_nervous_system_percussion : diseaseData.default;
+    se_nervous_system_auscultation = se_nervous_system_auscultation && se_nervous_system_auscultation.length ? se_nervous_system_auscultation : diseaseData.default;
 
-    se_cvs_palpation = se_cvs_palpation && se_cvs_palpation.length ? se_cvs_palpation : 'Absent';
-    se_cvs_inspection = se_cvs_inspection && se_cvs_inspection.length ? se_cvs_inspection : 'Absent';
-    se_cvs_percussion = se_cvs_percussion && se_cvs_percussion.length ? se_cvs_percussion : 'Absent';
-    se_cvs_auscultation = se_cvs_auscultation && length ? se_cvs_auscultation : 'Absent';
+    se_cvs_palpation = se_cvs_palpation && se_cvs_palpation.length ? se_cvs_palpation : diseaseData.default;
+    se_cvs_inspection = se_cvs_inspection && se_cvs_inspection.length ? se_cvs_inspection : diseaseData.default;
+    se_cvs_percussion = se_cvs_percussion && se_cvs_percussion.length ? se_cvs_percussion : diseaseData.default;
+    se_cvs_auscultation = se_cvs_auscultation && length ? se_cvs_auscultation : diseaseData.default;
 
-    se_alimentary_system_palpation = se_alimentary_system_palpation.length ? se_alimentary_system_palpation : 'Absent';
-    se_alimentary_system_inspection = se_alimentary_system_inspection.length ? se_alimentary_system_inspection : 'Absent';
-    se_alimentary_system_percussion = se_alimentary_system_percussion.length ? se_alimentary_system_percussion : 'Absent';
-    se_alimentary_system_auscultation = se_alimentary_system_auscultation.length ? se_alimentary_system_auscultation : 'Absent';
+    se_alimentary_system_palpation = se_alimentary_system_palpation.length ? se_alimentary_system_palpation : diseaseData.default;
+    se_alimentary_system_inspection = se_alimentary_system_inspection.length ? se_alimentary_system_inspection : diseaseData.default;
+    se_alimentary_system_percussion = se_alimentary_system_percussion.length ? se_alimentary_system_percussion : diseaseData.default;
+    se_alimentary_system_auscultation = se_alimentary_system_auscultation.length ? se_alimentary_system_auscultation : diseaseData.default;
 
-    se_musculoskeletal_system_palpation = se_musculoskeletal_system_palpation.length ? se_musculoskeletal_system_palpation : 'Absent';
-    se_musculoskeletal_system_inspection = se_musculoskeletal_system_inspection.length ? se_musculoskeletal_system_inspection : 'Absent';
-    se_musculoskeletal_system_percussion = se_musculoskeletal_system_percussion.length ? se_musculoskeletal_system_percussion : 'Absent';
-    se_musculoskeletal_system_auscultation = se_musculoskeletal_system_auscultation.length ? se_musculoskeletal_system_auscultation : 'Absent';
+    se_musculoskeletal_system_palpation = se_musculoskeletal_system_palpation.length ? se_musculoskeletal_system_palpation : diseaseData.default;
+    se_musculoskeletal_system_inspection = se_musculoskeletal_system_inspection.length ? se_musculoskeletal_system_inspection : diseaseData.default;
+    se_musculoskeletal_system_percussion = se_musculoskeletal_system_percussion.length ? se_musculoskeletal_system_percussion : diseaseData.default;
+    se_musculoskeletal_system_auscultation = se_musculoskeletal_system_auscultation.length ? se_musculoskeletal_system_auscultation : diseaseData.default;
 
-    se_respiratory_system_palpation = se_respiratory_system_palpation.length ? se_respiratory_system_palpation : 'Absent';
-    se_respiratory_system_inspection = se_respiratory_system_inspection.length ? se_respiratory_system_inspection : 'Absent';
-    se_respiratory_system_percussion = se_respiratory_system_percussion.length ? se_respiratory_system_percussion : 'Absent';
-    se_respiratory_system_auscultation = se_respiratory_system_auscultation.length ? se_respiratory_system_auscultation : 'Absent';
+    se_respiratory_system_palpation = se_respiratory_system_palpation.length ? se_respiratory_system_palpation : diseaseData.default;
+    se_respiratory_system_inspection = se_respiratory_system_inspection.length ? se_respiratory_system_inspection : diseaseData.default;
+    se_respiratory_system_percussion = se_respiratory_system_percussion.length ? se_respiratory_system_percussion : diseaseData.default;
+    se_respiratory_system_auscultation = se_respiratory_system_auscultation.length ? se_respiratory_system_auscultation : diseaseData.default;
 
-    special_note = special_note ? special_note.length : 'Absent';
+    special_note = special_note ? special_note.length : diseaseData.default;
 
     let sql = `INSERT INTO ${query == 'patient' ? 'patient_' : ''}disease_data ( doctor_id, name,bp,pulse,temp,heart,lungs,abd,anaemia,jaundice,cyanosis,oedema,
     se_nervous_system_palpation,se_nervous_system_inspection,se_nervous_system_percussion,se_nervous_system_auscultation,

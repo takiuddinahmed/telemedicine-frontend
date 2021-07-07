@@ -76,3 +76,30 @@ $("#edd-lmp").change( ()=>{
     $("#edd-lmp-out").val(lmp.toLocaleDateString("en-GB"));
     $("#edd-output").val(edd.toLocaleDateString("en-GB"));
 })
+
+//bmi
+const calc_bmi = ()=>{
+    let weight = $("#bmiWeight").val();
+    let height = Math.pow(($("#bmiHeight").val() * 0.3048)/12, 2);
+    let bmi = (weight / height).toFixed(2);
+    $("#bmi").val(parseFloat(bmi));
+    if (bmi >= 18 && bmi <= 24) {
+        $("#bmiClass").text("Normal");
+        $("#bmiClass").addClass("text-success");
+    } else if (bmi < 18) {
+        $("#bmiClass").text("Under Weight");
+        $("#bmiClass").addClass("text-danger");
+    } else {
+        $("#bmiClass").text("Over Weight");
+        $("#bmiClass").addClass("text-danger");
+    }
+}
+
+$("#bmiHeight").keyup(calc_bmi)
+$("#bmiWeight").keyup(calc_bmi)
+
+const updateHealthData = (data)=>{
+    $("#bmiHeight").val(data.height);
+    $("#bmiWeight").val(data.weight);
+    calc_bmi();
+}

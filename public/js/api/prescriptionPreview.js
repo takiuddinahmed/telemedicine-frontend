@@ -52,7 +52,7 @@ function prescriptionPreview() {
            <div class="row middle">
              <div class="col-5 border-right py-2">
                <div class="barcode-section border-bottom">
-                 <div class="barcode"></div>
+                 <div class="barcode" id="barcode"></div>
                </div>
                <div class="cc border-bottom">
                  <span>C/C</span>
@@ -61,7 +61,9 @@ function prescriptionPreview() {
                <div class="oe border-bottom">
                  <span>O/E</span>
                  ${getOe()}
+                 ${getOESe()}
                </div>
+              ${getDrugHistory()}
                ${dx}
              </div>
              <div class="col-7 py-2">
@@ -85,6 +87,15 @@ function prescriptionPreview() {
            </div>
          </div>
        </main>
+       <script>
+       var value = ${getBarcodeValue()} + ""
+       
+        $(".barcode").barcode(
+        value, // Value barcode (dependent on the type of barcode)
+
+        "ean13" // type (string)
+      );
+       </script>
      </div>`;
 }
 
@@ -150,7 +161,10 @@ const prescriptionPDF2= ()=>{
                <div class="oe border-bottom">
                  <span>O/E</span>
                   ${getOe()}
+                  ${getOESe()}
                </div>
+               ${getDrugHistory()}
+               ${getDx()}
              </div>
              <div class="col-7 py-2">
                <h3 style="margin-bottom:20px !important">Rx.</h3>
@@ -170,6 +184,15 @@ const prescriptionPDF2= ()=>{
              নিয়ম মাফিক ঔষধ খাবেন। ডাক্তারের পরামর্শ ব্যতীত ঔষধ পরিবর্তন নিষেধ।
            </div>
          </div>
+         <script>
+       var value = ${getBarcodeValue()} + ""
+       console.log(valueee)
+        $(".barcode").barcode(
+        value, // Value barcode (dependent on the type of barcode)
+
+        "ean13" // type (string)
+      );
+       </script>
        </main>
   
   `
@@ -180,9 +203,9 @@ const getDx = ()=>{
   if($("#dx-view-check").is(":checked")){
     return (
     `
-      <div class="oe border-bottom">
-        <span>D/H</span>
-        <p>${$("#dx-text-input").val()}</p>
+      <div class="oe text-center">
+        
+        <p><b> 	&#9660 ${$("#dx-text-input").val()}</b></p>
       </div>
     `
     )
@@ -190,18 +213,51 @@ const getDx = ()=>{
   return ""
 }
 
+let default_d = 'Absent';
 const getOe  = ()=>{
+  
+  console.log(prescription)
   return (
     `
-      ${prescription.bp != 'Absent' ? '<p>Bp : <span>'+prescription.bp+'</span></p>' : ''}
-      ${prescription.pulse != 'Absent' ? '<p>Pulse : <span>'+prescription.pulse+'</span></p>' : ''}
-      ${prescription.temp != 'Absent' ? '<p>Heart : <span>'+prescription.temp+'</span></p>' : ''}
-      ${prescription.heart != 'Absent' ? '<p>Heart : <span>'+prescription.heart+'</span></p>' : ''}
-      ${prescription.lungs != 'Absent' ? '<p>Lungs : <span>'+prescription.lungs+'</span></p>' : '' }
-      ${prescription.lungs != 'Absent' ? '<p>Abd : <span>'+prescription.abd+'</span></p>' : '' }
+      ${prescription.bp != default_d ? '<p>Bp : <span>'+prescription.bp+'</span></p>' : ''}
+      ${prescription.pulse != default_d ? '<p>Pulse : <span>'+prescription.pulse+'</span></p>' : ''}
+      ${prescription.temp != default_d ? '<p>Heart : <span>'+prescription.temp+'</span></p>' : ''}
+      ${prescription.heart != default_d ? '<p>Heart : <span>'+prescription.heart+'</span></p>' : ''}
+      ${prescription.lungs != default_d ? '<p>Lungs : <span>'+prescription.lungs+'</span></p>' : '' }
+      ${prescription.abd != default_d ? '<p>Abd : <span>'+prescription.abd+'</span></p>' : '' }
+      ${prescription.anaemia != default_d ? '<p>Anaemia : <span>'+prescription.anaemia+'</span></p>' : '' }
+      ${prescription.jaundice != default_d ? '<p>Jaundice : <span>'+prescription.jaundice+'</span></p>' : '' }
+      ${prescription.oedema != default_d ? '<p>Oedema : <span>'+prescription.oedema+'</span></p>' : '' }
       
     `
   )
+}
+
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+const getOESe = ()=>{
+  let d = "";
+  let se_list = ["se_nervous_system_palpation", "se_nervous_system_inspection", "se_nervous_system_percussion", "se_nervous_system_auscultation",
+    "se_cvs_palpation", "se_cvs_inspection", "se_cvs_percussion", "se_cvs_auscultation",
+    "se_alimentary_system_palpation", "se_alimentary_system_inspection", "se_alimentary_system_percussion", "se_alimentary_system_auscultation",
+    "se_musculoskeletal_system_palpation", "se_musculoskeletal_system_inspection", "se_musculoskeletal_system_percussion", "se_musculoskeletal_system_auscultation",
+    "se_respiratory_system_palpation", "se_respiratory_system_inspection", "se_respiratory_system_percussion", "se_respiratory_system_auscultation"]
+  const se_keyList = se_list
+    .map(dd => [...dd.matchAll(/^(se_[\w_]*)_(\w*)$/g)])
+    .filter(ddd => ddd && ddd.length)
+
+  se_keyList.forEach((se_key) => {
+    se_key = se_key[0]
+    const selector = `#${se_key[1]} .${se_key[2]}`;
+    // d[se_key[0]] = $(selector).val()
+    let val = $(selector).val();
+    let name_arr = se_key[0].split('_')
+    if (val && val != default_d)
+      d += `<p> ${name_arr[1].capitalize()} ${name_arr[2].capitalize()} (${name_arr[3].capitalize()}) : ${val} </p>`
+  })
+  return d;
 }
 
 const getDays = ()=>{
@@ -210,4 +266,24 @@ const getDays = ()=>{
         ${$("#pres-day-").val()} ${$("#pres-select-").val()} পরে আসবেন। 
       `
   )
+}
+
+const getBarcodeValue = ()=>{
+  console.log("bar code call")
+  return "1122334455667"
+}
+
+const getDrugHistory = ()=>{
+  let dh = $("#drug-history").html();
+  if (dh.length) {
+    return (
+      `
+      <div class="oe border-bottom">
+        <span>D/H</span>
+        <p>${dh}</p>
+      </div>
+    `
+    )
+  }
+  return ""
 }

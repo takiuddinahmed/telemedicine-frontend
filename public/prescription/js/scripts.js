@@ -30,38 +30,23 @@ $("#boxToOeNav").click(function () {
 /*------------------OE to Box converting End------------------*/
 /*------------------Health Calculation Start------------------*/
 //BMI calculation
-$("#bmiWeight").keyup(function () {
-  let weight = $(this).val();
-  let height = Math.pow($("#bmiHeight").val() * 0.3048, 2);
-  let bmi = (weight / height).toFixed(2);
-  $("#bmi").val(bmi);
-  if (bmi >= 18 && bmi <= 24) {
-    $("#bmiClass").text("Normal");
-    $("#bmiClass").addClass("text-success");
-  } else if (bmi < 18) {
-    $("#bmiClass").text("Under Weight");
-    $("#bmiClass").addClass("text-danger");
-  } else {
-    $("#bmiClass").text("Over Weight");
-    $("#bmiClass").addClass("text-danger");
-  }
-});
-$("#bmiHeight").keyup(function () {
-  let weight = $("#bmiWeight").val();
-  let height = Math.pow($(this).val() * 0.3048, 2);
-  let bmi = (weight / height).toFixed(2);
-  $("#bmi").val(bmi);
-  if (bmi >= 18 && bmi <= 24) {
-    $("#bmiClass").text("Normal");
-    $("#bmiClass").addClass("text-success");
-  } else if (bmi < 18) {
-    $("#bmiClass").text("Under Weight");
-    $("#bmiClass").addClass("text-danger");
-  } else {
-    $("#bmiClass").text("Over Weight");
-    $("#bmiClass").addClass("text-danger");
-  }
-});
+
+// $("#bmiHeight").keyup(function () {
+//   let weight = $("#bmiWeight").val();
+//   let height = Math.pow($(this).val() * 0.3048, 2);
+//   let bmi = (weight / height).toFixed(2);
+//   $("#bmi").val(bmi);
+//   if (bmi >= 18 && bmi <= 24) {
+//     $("#bmiClass").text("Normal");
+//     $("#bmiClass").addClass("text-success");
+//   } else if (bmi < 18) {
+//     $("#bmiClass").text("Under Weight");
+//     $("#bmiClass").addClass("text-danger");
+//   } else {
+//     $("#bmiClass").text("Over Weight");
+//     $("#bmiClass").addClass("text-danger");
+//   }
+// });
 /*------------------Health Calculation End------------------*/
 
 /*------------------Aside Start------------------*/
