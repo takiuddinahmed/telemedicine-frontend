@@ -99,7 +99,7 @@ $("#bmiHeight").keyup(calc_bmi)
 $("#bmiWeight").keyup(calc_bmi)
 
 const updateHealthData = (data)=>{
-    $("#bmiHeight").val(data.height);
+    $("#bmiHeight").val(data.height*12);
     $("#bmiWeight").val(data.weight);
     calc_bmi();
 }

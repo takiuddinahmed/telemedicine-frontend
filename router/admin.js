@@ -79,31 +79,31 @@ router.route("/login")
   })
 })
 
-router.post('/register',(req,res,next)=>{
-  const {email, password} = req.body;
-  // const hash = bcrypt.hashSync(password, config.saltRounds);
-  // const hash = crypto.scryptSync(password,config.salt,64).toString('hex');
-  let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
-  db.query(sql, [[email, password]], (err, result)=>{
-    if(err){
-      res.render("error", {
-        errorCode: 401,
-        errorText: "Unauthorized User",
-      });
+// router.post('/register',(req,res,next)=>{
+//   const {email, password} = req.body;
+//   // const hash = bcrypt.hashSync(password, config.saltRounds);
+//   // const hash = crypto.scryptSync(password,config.salt,64).toString('hex');
+//   let sql = `INSERT INTO admin_user (email, password) VALUES(?)`;
+//   db.query(sql, [[email, password]], (err, result)=>{
+//     if(err){
+//       res.render("error", {
+//         errorCode: 401,
+//         errorText: "Unauthorized User",
+//       });
       
-    }
-    else{
-      const token = jwt.sign(
-        { admin: true, id: result.insertedId },
-        config.jwtKey,
-        { expiresIn: "2h" }
-      );
-      req.session.token = token;
-      res.redirect("/prescription/admin");
-    }
-  })
+//     }
+//     else{
+//       const token = jwt.sign(
+//         { admin: true, id: result.insertedId },
+//         config.jwtKey,
+//         { expiresIn: "2h" }
+//       );
+//       req.session.token = token;
+//       res.redirect("/prescription/admin");
+//     }
+//   })
 
-})
+// })
 
 
 router.get('/logout', (req,res)=>{
@@ -317,7 +317,7 @@ router.route("/disease")
           res.json({ok:false, err: 'Disease already exists.'})
         }
         else
-        res.json({ok:false, err: 'Insert error. Try again'})
+        res.json({ok:false, err: 'Insert error. Try again', msg: err})
       }
       else{
         res.json({ok:true})
@@ -364,7 +364,7 @@ router.route("/disease")
     special_note,cc,investigation,advice,counselling,medicine,fixed_datas,parseInt(id)], (err,result)=>{
       if(err){
         console.log(err)
-        res.json({ok:false, err: 'Insert error. Try again'})
+        res.json({ ok: false, err: 'Insert error. Try again', msg: err})
       }
       else{
         res.json({ok:true})
@@ -409,7 +409,7 @@ router.route("/generic-drug")
                 drugData.dose_pregnency_category = JSON.parse(drugData.dose_pregnency_category);
                 drugData.dose_warning_condition = JSON.parse(drugData.dose_warning_condition);
                 let advicedata = drugData.advice; 
-
+                delete drugData.advice;
                 // console.log(drugList)
                 res.render("genericDrug", { editState: true, drugData: JSON.stringify(drugData), drugList: drugList, advice: advicedata});
               }
@@ -485,7 +485,7 @@ router.route("/generic-drug")
   `
   db.query(sql,[generic_name, dose_range, dose_weight,dose_drug_interection, dose_indication,  dose_constrains,dose_precautions_warnings,  dose_pregnency_category,dose_warning_condition,advice, id], (err, result)=>{
     if(err){
-      res.json({ok: false, err: 'Update error. Please try again.'})
+      res.json({ok: false, err: 'Update error. Please try again.',msg:err})
     }
     else{
       res.json({ok:true});

@@ -257,6 +257,12 @@ const getOESe = ()=>{
     if (val && val != default_d)
       d += `<p> ${name_arr[1].capitalize()} ${name_arr[2].capitalize()} (${name_arr[3].capitalize()}) : ${val} </p>`
   })
+
+  let special_note = $("#special-note-input").val();
+  if (special_note && special_note.length > 0 && special_note != default_d){
+    d+= `<p> Special note : ${special_note} </p>`
+  }
+
   return d;
 }
 

@@ -496,12 +496,12 @@ $(document).ready(() => {
         $("#dose_duration-").val("");
         $("#dose_type").val("");
         $("#dose_time_khabar").val("");
-        if(medicine?.advice?.length > 3){
+        if (medicine?.advice?.length > 3 && medicine?.advice != '<p><br></p>'){
           template_source[2].index += 1;
           let details = medicine.advice;
           let position = details.indexOf('<p>')
           position = position > -1 ? position += 3 : 1;
-          let txt = details.substring(0, position) + template_source[2].index + ". " + details.substring(position)
+          let txt = details.substring(0, position) + arrow + details.substring(position)
           let text = $("#advice-summernote").summernote("code") + txt;
           text = text.replace("<p><br></p>", "")
           

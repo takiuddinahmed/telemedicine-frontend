@@ -486,7 +486,7 @@
     <script>
       let editState = '<%- editState  %>'
       const drugString = '<%- drugData %>'
-      
+      var drugData = {}
       if(editState === 'true'){
         editState = true  
         drugData = JSON.parse(drugString.toString());
